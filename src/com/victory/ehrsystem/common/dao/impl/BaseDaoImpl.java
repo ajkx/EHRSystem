@@ -1,8 +1,8 @@
 package com.victory.ehrsystem.common.dao.impl;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +22,10 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     public SessionFactory getSessionFactory() {
         return this.sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

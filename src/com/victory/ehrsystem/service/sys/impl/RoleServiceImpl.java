@@ -1,9 +1,12 @@
 package com.victory.ehrsystem.service.sys.impl;
 
 import com.victory.ehrsystem.dao.sys.SysRoleDao;
+import com.victory.ehrsystem.domain.sys.SysResource;
 import com.victory.ehrsystem.domain.sys.SysRole;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.service.sys.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,10 +19,11 @@ import java.util.Set;
  * @author ajkx_Du
  * @create 2016-11-01 17:18
  */
+@Service
 public class RoleServiceImpl implements RoleService{
-
+    @Autowired
     private SysRoleDao sysRoleDao;
-
+    @Autowired
     private ResourceService resourceService;
 
     @Override
@@ -49,26 +53,43 @@ public class RoleServiceImpl implements RoleService{
         return sysRoleDao.findAll(SysRole.class);
     }
 
-    @Override
-    public Set<String> findRoles(Serializable[] roleIds) {
-        Set<String> roles = new HashSet<String>();
-        for (Serializable roleId : roleIds) {
-            SysRole role = findOne(roleId);
-            if (role != null) {
-                roles.add(role.getName());
-            }
-        }
-        return roles;
-    }
+    //@Override
+    //public Set<String> findRoles(Serializable[] roleIds) {
+    //    Set<String> roles = new HashSet<String>();
+    //    for (Serializable roleId : roleIds) {
+    //        SysRole role = findOne(roleId);
+    //        if (role != null) {
+    //            roles.add(role.getName());
+    //        }
+    //    }
+    //    return roles;
+    //}
 
     @Override
-    public Set<String> findPermissions(Serializable[] roleIds) {
-        Set<Long> resourceIds = new HashSet<Long>();
-        for (Serializable roleId : roleIds) {
-            SysRole role = findOne(roleId);
-            if (role != null) {
-                resourceIds.addAll(role.getResourcesStr());
-            }
+    public Set<String> findRoles(Set<SysRole> roles) {
+        Set<String> role_str = new HashSet<String>();
+        for (SysRole role : roles) {
+            role_str.add(role.getName());
+        }
+        return role_str;
+    }
+
+    //@Override
+    //public Set<String> findPermissions(Serializable[] roleIds) {
+    //    Set<Long> resourceIds = new HashSet<Long>();
+    //    for (Serializable roleId : roleIds) {
+    //        SysRole role = findOne(roleId);
+    //        if (role != null) {
+    //            resourceIds.addAll(role.getResourcesStr());
+    //        }
+    //    }
+    //    return resourceService.findPermissions(resourceIds);
+    //}
+    @Override
+    public Set<String> findPermissions(Set<SysRole> roles) {
+        Set<SysResource> resourceIds = new HashSet<SysResource>();
+        for (SysRole role : roles) {
+            resourceIds.addAll(role.getResources());
         }
         return resourceService.findPermissions(resourceIds);
     }

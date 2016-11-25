@@ -25,7 +25,6 @@ public class HrmJobCall {
     }
 
     public HrmJobCall(String name, String description) {
-
         this.name = name;
         this.description = description;
     }

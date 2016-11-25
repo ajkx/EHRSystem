@@ -30,7 +30,7 @@ public interface UserService {
     List<User> findAll();
 
     /**
-     * 根据用户民寻找用户
+     * 根据用户名寻找用户
      * @param username
      * @return
      */

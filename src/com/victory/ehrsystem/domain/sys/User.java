@@ -5,7 +5,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 管理员表
@@ -29,20 +31,24 @@ public class User {
     @Column
     private String salt;
 
-    @Column(name = "role_ids")
-    private String roleids;
 
+    @ManyToMany(targetEntity = SysRole.class)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<SysRole> roleids = new HashSet<SysRole>();
+
+    //默认为false 0
     @Column
     private boolean locked;
 
     public User() {
     }
 
-    public User(String name, String password, String salt, String roleids, boolean locked) {
+    public User(String name, String password, String salt, boolean locked) {
         this.name = name;
         this.password = password;
         this.salt = salt;
-        this.roleids = roleids;
         this.locked = locked;
     }
 
@@ -54,15 +60,15 @@ public class User {
         this.salt = salt;
     }
 
-    public String getRoleids() {
+    public Set<SysRole> getRoleids() {
         return roleids;
     }
 
-    public void setRoleids(String roleids) {
+    public void setRoleids(Set<SysRole> roleids) {
         this.roleids = roleids;
     }
 
-    public boolean isLocked() {
+    public boolean getLocked() {
         return locked;
     }
 
@@ -94,34 +100,34 @@ public class User {
         this.password = password;
     }
 
-    //设置user的roles的字符串
-    public List<Long> getRoleIdsStr() {
-        if (StringUtil.isEmpty(roleids)) {
-            return null;
-        }
-        String[] roleIdStrs = roleids.split(",");
-        List<Long> list = new ArrayList<Long>();
-        for (String roleId : roleIdStrs) {
-            if (StringUtil.isEmpty(roleId)) {
-                continue;
-            }
-            list.add(Long.parseLong(roleId));
-        }
-        return list;
-    }
-
-    public void setRoleIdsStr(List<Long> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            this.roleids = "";
-        }
-
-        StringBuilder s = new StringBuilder();
-        for (Long l : list) {
-            s.append(l);
-            s.append(",");
-        }
-        this.roleids = s.toString();
-    }
+    ////设置user的roles的字符串
+    //public List<Long> getRoleIdsStr() {
+    //    if (StringUtil.isEmpty(roleids)) {
+    //        return null;
+    //    }
+    //    String[] roleIdStrs = roleids.split(",");
+    //    List<Long> list = new ArrayList<Long>();
+    //    for (String roleId : roleIdStrs) {
+    //        if (StringUtil.isEmpty(roleId)) {
+    //            continue;
+    //        }
+    //        list.add(Long.parseLong(roleId));
+    //    }
+    //    return list;
+    //}
+    //
+    //public void setRoleIdsStr(List<Long> list) {
+    //    if (CollectionUtils.isEmpty(list)) {
+    //        this.roleids = "";
+    //    }
+    //
+    //    StringBuilder s = new StringBuilder();
+    //    for (Long l : list) {
+    //        s.append(l);
+    //        s.append(",");
+    //    }
+    //    this.roleids = s.toString();
+    //}
 
     public String getCredentialsSalt() {
         return name + salt;

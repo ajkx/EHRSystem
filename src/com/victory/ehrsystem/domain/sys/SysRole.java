@@ -5,7 +5,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色表
@@ -27,8 +29,18 @@ public class SysRole {
     @Column
     private String description;
 
-    @Column(name = "resource_ids")
-    private String resources;
+    @ManyToMany(targetEntity = SysResource.class)
+    @JoinTable(name = "role_resource",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"))
+    private Set<SysResource> resources = new HashSet<SysResource>();
+
+
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<User>();
 
     @Column
     private boolean available;
@@ -37,7 +49,7 @@ public class SysRole {
 
     }
 
-    public SysRole(String name, String description, String resources, boolean available) {
+    public SysRole(String name, String description, Set<SysResource> resources, boolean available) {
         this.name = name;
         this.description = description;
         this.resources = resources;
@@ -68,13 +80,22 @@ public class SysRole {
         this.description = description;
     }
 
-    public String getResources() {
+    public Set<SysResource> getResources() {
         return resources;
     }
 
-    public void setResources(String resources) {
+    public void setResources(Set<SysResource> resources) {
         this.resources = resources;
     }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     public boolean isAvailable() {
         return available;
     }
@@ -83,30 +104,30 @@ public class SysRole {
         this.available = available;
     }
 
-    public void setResourcesStr(List<Long> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            this.resources  = "";
-        }
-        StringBuilder s = new StringBuilder();
-        for (Long resourceId : list) {
-            s.append(resourceId);
-            s.append(",");
-        }
-        this.resources = s.toString();
-    }
-
-    public List<Long> getResourcesStr() {
-        if (StringUtil.isEmpty(this.resources)) {
-            return null;
-        }
-        String[] resourceIdstrs = resources.split(",");
-        List<Long> list = new ArrayList<Long>();
-        for (String resourceIdstr : resourceIdstrs) {
-            if (StringUtil.isEmpty(resourceIdstr)) {
-                continue;
-            }
-            list.add(Long.parseLong(resourceIdstr));
-        }
-        return list;
-    }
+    //public void setResourcesStr(List<Long> list) {
+    //    if (CollectionUtils.isEmpty(list)) {
+    //        this.resources  = "";
+    //    }
+    //    StringBuilder s = new StringBuilder();
+    //    for (Long resourceId : list) {
+    //        s.append(resourceId);
+    //        s.append(",");
+    //    }
+    //    this.resources = s.toString();
+    //}
+    //
+    //public List<Long> getResourcesStr() {
+    //    if (StringUtil.isEmpty(this.resources)) {
+    //        return null;
+    //    }
+    //    String[] resourceIdstrs = resources.split(",");
+    //    List<Long> list = new ArrayList<Long>();
+    //    for (String resourceIdstr : resourceIdstrs) {
+    //        if (StringUtil.isEmpty(resourceIdstr)) {
+    //            continue;
+    //        }
+    //        list.add(Long.parseLong(resourceIdstr));
+    //    }
+    //    return list;
+    //}
 }

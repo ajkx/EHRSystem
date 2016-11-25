@@ -20,4 +20,8 @@ public interface HrmSubCompanyDao extends BaseDao<HrmSubCompany>{
      */
     List<HrmSubCompany> findByHrmSubCompany(HrmSubCompany supcompany);
 
+    /**
+     *
+     */
+    List<HrmSubCompany> findAll_NoParent();
 }

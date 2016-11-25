@@ -1,6 +1,8 @@
 package com.victory.ehrsystem.domain.sys;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 权限表
@@ -13,10 +15,16 @@ import javax.persistence.*;
 public class SysResource {
 
     public static enum ResourceType {
-        menu("菜单"),button("按钮");
+        menu("菜单"), button("按钮");
         private final String info;
-        private ResourceType(String info){this.info = info;}
-        public String getInfo(){return info;}
+
+        private ResourceType(String info) {
+            this.info = info;
+        }
+
+        public String getInfo() {
+            return info;
+        }
     }
 
     @Id
@@ -30,6 +38,7 @@ public class SysResource {
     private String description;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private ResourceType type = ResourceType.menu;
 
     @Column
@@ -44,13 +53,26 @@ public class SysResource {
     @Column
     private String permission;
 
+    @ManyToOne(targetEntity = SysModule.class)
+    @JoinColumn(name = "module_id", referencedColumnName = "id")
+    private SysModule module;
+
     @Column
     private boolean available;
+
+    @Column
+    private String url;
+
+    @ManyToMany(targetEntity = SysRole.class)
+    @JoinTable(name = "role_resource",
+            joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<SysRole> roles = new HashSet<SysRole>();
 
     public SysResource() {
     }
 
-    public SysResource(String name, String description, ResourceType type, Integer priority, Integer parent_id, String parent_ids, String permission, boolean available) {
+    public SysResource(String name, String description, ResourceType type, Integer priority, Integer parent_id, String parent_ids, String permission, boolean available,String url) {
         this.name = name;
         this.description = description;
         this.type = type;
@@ -59,6 +81,15 @@ public class SysResource {
         this.parent_ids = parent_ids;
         this.permission = permission;
         this.available = available;
+        this.url = url;
+    }
+
+    public Set<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<SysRole> roles) {
+        this.roles = roles;
     }
 
     public Integer getId() {
@@ -133,5 +164,23 @@ public class SysResource {
         this.available = available;
     }
 
-    public boolean isRootNode(){ return parent_id == 0;}
+    public boolean isRootNode() {
+        return parent_id == 0;
+    }
+
+    public SysModule getModule() {
+        return module;
+    }
+
+    public void setModule(SysModule module) {
+        this.module = module;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

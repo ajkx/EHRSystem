@@ -8,6 +8,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 用户的权限Realm
@@ -17,6 +18,7 @@ import org.apache.shiro.util.ByteSource;
  */
 public class UserRealm extends AuthorizingRealm{
 
+    @Autowired
     private UserService userService;
 
     //分配权限
@@ -42,7 +44,7 @@ public class UserRealm extends AuthorizingRealm{
         }
 
         //账号锁定
-        if (Boolean.TRUE.equals(user.isLocked())) {
+        if (Boolean.TRUE.equals(user.getLocked())) {
             throw new LockedAccountException();
         }
 

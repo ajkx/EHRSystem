@@ -1,16 +1,17 @@
 package com.victory.ehrsystem.service.sys.impl;
 
+import com.victory.ehrsystem.dao.sys.SysModuleDao;
 import com.victory.ehrsystem.dao.sys.SysResourceDao;
+import com.victory.ehrsystem.domain.sys.SysModule;
 import com.victory.ehrsystem.domain.sys.SysResource;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.util.StringUtil;
 import org.apache.shiro.authz.permission.WildcardPermission;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 权限资源数据处理层
@@ -19,9 +20,13 @@ import java.util.Set;
  * @author ajkx_Du
  * @create 2016-11-01 9:09
  */
+@Service
 public class ResourceServiceImpl implements ResourceService {
-
+    @Autowired
     private SysResourceDao sysResourceDao;
+
+    @Autowired
+    private SysModuleDao sysModuleDao;
 
     @Override
     public SysResource createResource(SysResource resource) {
@@ -52,24 +57,31 @@ public class ResourceServiceImpl implements ResourceService {
 
 
     @Override
-    public Set<String> findPermissions(Set<Long> resourdIds) {
+    public Set<String> findPermissions(Set<SysResource> resources) {
         Set<String> permissions = new HashSet<>();
-        for (Long resourceId : resourdIds) {
-            SysResource resource = findOne(resourceId);
+        for (SysResource resource : resources) {
             if (resource != null && !StringUtil.isEmpty(resource.getPermission())) {
                 permissions.add(resource.getPermission());
             }
         }
         return permissions;
-
     }
 
     @Override
-    public List<SysResource> findMenus(Set<String> permissions) {
+    public Map<SysModule, ArrayList<SysResource>> findMenus(Set<String> permissions) {
         List<SysResource> allResources = findAll();
-        List<SysResource> menus = new ArrayList<SysResource>();
+
+        LinkedHashMap<SysModule,ArrayList<SysResource>> menus = new LinkedHashMap<SysModule,ArrayList<SysResource>>();
+
+        List<SysResource> resources = new ArrayList<SysResource>();
+        List<SysModule> modulename = new ArrayList<SysModule>();
+
+        //获取该用户有为menu的资源
         for (SysResource resource : allResources) {
-            if (resource.isRootNode()) {
+            //if (resource.isRootNode()) {
+            //    continue;
+            //}
+            if (resource.getParent_id() != null) {
                 continue;
             }
             if (resource.getType() != SysResource.ResourceType.menu) {
@@ -78,7 +90,20 @@ public class ResourceServiceImpl implements ResourceService {
             if (!hasPermission(permissions, resource)) {
                 continue;
             }
-            menus.add(resource);
+            if(!modulename.contains(resource.getModule()) && resource.getModule() != null){
+                modulename.add(resource.getModule());
+            }
+            resources.add(resource);
+        }
+
+        for (SysModule module : modulename) {
+            ArrayList<SysResource> list = new ArrayList<SysResource>();
+            for (SysResource resource : resources) {
+                if (resource.getModule().getId() == module.getId()) {
+                    list.add(resource);
+                }
+            }
+            menus.put(module, list);
         }
         return menus;
     }

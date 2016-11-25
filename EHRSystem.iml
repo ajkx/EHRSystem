@@ -10,22 +10,15 @@
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
       </configuration>
-      <facet type="Struts2" name="Struts 2">
-        <configuration>
-          <fileset id="s2fileset" name="Default File Set " removed="false">
-            <file>file://$MODULE_DIR$/src/struts.xml</file>
-            <file>jar://$MODULE_DIR$/lib/struts2-core.jar!/struts-default.xml</file>
-          </fileset>
-          <propertiesKeys disabled="false" />
-        </configuration>
-      </facet>
     </facet>
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
     <facet type="hibernate" name="Hibernate">
       <configuration>
-        <datasource-map />
+        <datasource-map>
+          <unit-entry name="sessionFactory" value="dataSource" />
+        </datasource-map>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -37,9 +30,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="spring4.0" level="application" />
-    <orderEntry type="library" name="Struts 2-2.3.20.1" level="project" />
     <orderEntry type="library" name="Hibernate 5.2.3-5.2.3" level="project" />
-    <orderEntry type="library" name="shiro" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="web" level="project" />
   </component>
 </module>

@@ -20,8 +20,14 @@ public class HrmDepartmentDaoImpl extends BaseDaoImpl<HrmDepartment> implements 
     }
 
     @Override
+    public List<HrmDepartment> findRootDepByHrmSubCompany(HrmSubCompany supcompany) {
+        return find("select d from HrmDepartment d where d.subcomid = ?0 and d.supid is null",supcompany);
+    }
+
+    @Override
     public List<HrmDepartment> findBysupDepartment(HrmDepartment supdepartment) {
         return find("select d from HrmDepartment d where d.supid = ?0",supdepartment);
     }
+
 
 }

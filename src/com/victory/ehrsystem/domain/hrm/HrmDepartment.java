@@ -20,19 +20,19 @@ public class HrmDepartment {
 
     @ManyToOne(targetEntity = HrmSubCompany.class)
     @JoinColumn(name = "subcompanyid",nullable = false)
-    private int subcomid;
+    private HrmSubCompany subcomid;
 
     @ManyToOne(targetEntity = HrmDepartment.class)
     @JoinColumn(name = "supdepid")
     private HrmDepartment supid;
 
     @Column(name = "cancel")
-    private char cancel;
+    private boolean cancel;
 
     public HrmDepartment() {
     }
 
-    public HrmDepartment(String name, int subcomid, HrmDepartment supid, char cancel) {
+    public HrmDepartment(String name, HrmSubCompany subcomid, HrmDepartment supid, boolean cancel) {
         this.name = name;
         this.subcomid = subcomid;
         this.supid = supid;
@@ -55,11 +55,11 @@ public class HrmDepartment {
         this.name = name;
     }
 
-    public int getSubcomid() {
+    public HrmSubCompany getSubcomid() {
         return subcomid;
     }
 
-    public void setSubcomid(int subcomid) {
+    public void setSubcomid(HrmSubCompany subcomid) {
         this.subcomid = subcomid;
     }
 
@@ -71,11 +71,11 @@ public class HrmDepartment {
         this.supid = supid;
     }
 
-    public char getCancel() {
+    public boolean getCancel() {
         return cancel;
     }
 
-    public void setCancel(char cancel) {
+    public void setCancel(boolean cancel) {
         this.cancel = cancel;
     }
 }

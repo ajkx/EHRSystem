@@ -23,10 +23,10 @@ public interface RoleService {
 
     /**
      * 根据角色编号获取角色标识符列表
-     * @param roleIds
+     * @param roles
      * @return
      */
-    Set<String> findRoles(Serializable[] roleIds);
+    Set<String> findRoles(Set<SysRole> roles);
 
-    Set<String> findPermissions(Serializable[] roleIds);
+    Set<String> findPermissions(Set<SysRole> roles);
 }

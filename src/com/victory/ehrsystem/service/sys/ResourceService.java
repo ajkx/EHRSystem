@@ -1,9 +1,12 @@
 package com.victory.ehrsystem.service.sys;
 
+import com.victory.ehrsystem.domain.sys.SysModule;
 import com.victory.ehrsystem.domain.sys.SysResource;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,15 +31,15 @@ public interface ResourceService {
 
     /**
      * 得到资源对应的权限字符串
-     * @param resourdIds
+     * @param resources
      * @return
      */
-    Set<String> findPermissions(Set<Long> resourdIds);
+    Set<String> findPermissions(Set<SysResource> resources);
 
     /**
      * 根据用户权限得到菜单
      * @param permissions
      * @return
      */
-    List<SysResource> findMenus(Set<String> permissions);
+    Map<SysModule, ArrayList<SysResource>> findMenus(Set<String> permissions);
 }

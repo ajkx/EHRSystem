@@ -11,7 +11,7 @@ import java.util.List;
  * Created by ajkx_Du on 2016/10/27.
  */
 public interface SysRoleDao extends BaseDao<SysRole>{
-    public List<SysRole> findByUser(User user);
+    public List<User> findUsers(SysRole role);
 
     public String findRoleStr();
 

@@ -26,12 +26,12 @@ public class HrmSubCompany{
     private HrmSubCompany supid;
 
     @Column(name = "cancel")
-    private char cancel;
+    private boolean cancel;
 
     public HrmSubCompany() {
     }
 
-    public HrmSubCompany(String name, String desc, HrmSubCompany supid, char cancel) {
+    public HrmSubCompany(String name, String desc, HrmSubCompany supid, boolean cancel) {
         this.name = name;
         this.desc = desc;
         this.supid = supid;
@@ -54,7 +54,7 @@ public class HrmSubCompany{
         this.supid = supid;
     }
 
-    public void setCancel(char cancel) {
+    public void setCancel(boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -74,7 +74,7 @@ public class HrmSubCompany{
         return supid;
     }
 
-    public char getCancel() {
+    public boolean getCancel() {
         return cancel;
     }
 }

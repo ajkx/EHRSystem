@@ -17,6 +17,7 @@
       <root url="jar://$PROJECT_DIR$/lib/javax.inject-1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jsr250-api-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/c3p0-0.9.2.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -17,4 +17,9 @@ public class HrmSubCompanyDaoImpl extends BaseDaoImpl<HrmSubCompany> implements 
     public List<HrmSubCompany> findByHrmSubCompany(HrmSubCompany supcompany) {
         return find("select s from HrmSubCompany s where s.supid = ?0",supcompany);
     }
+
+    @Override
+    public List<HrmSubCompany> findAll_NoParent() {
+        return find("select s from HrmSubCompany s where s.supid is null");
+    }
 }
