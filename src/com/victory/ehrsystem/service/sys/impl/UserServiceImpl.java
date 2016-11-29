@@ -75,8 +75,6 @@ public class UserServiceImpl implements UserService{
         if (user == null) {
             return Collections.EMPTY_SET;
         }
-        ////将获取的角色集合转换为数组
-        //return roleService.findRoles(user.getRoleIdsStr().toArray(new Long[0]));
         return roleService.findRoles(user.getRoleids());
     }
 

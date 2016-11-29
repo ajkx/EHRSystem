@@ -3,9 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    <!--<welcome-file-list>-->
-        <!--<welcome-file>index.jsp</welcome-file>-->
-    <!--</welcome-file-list>-->
 
     <!--Spring配置开始-->
     <context-param>
@@ -16,6 +13,16 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <!--Spring配置结束-->
+
+    <!--  配置拦截器用来处理 把 POST 转为 DELETE和 PUT 请求-->
+    <filter>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!--servlet编码开始-->
     <filter>

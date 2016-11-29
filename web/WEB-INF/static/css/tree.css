@@ -1,0 +1,27 @@
+#treeview{
+	width:250px;
+	height:100%;
+	float:left;
+	border-right: 1px solid #DFDEDA;
+	background-color: #F7F6F2;
+	overflow:auto;
+
+}
+#treeview li{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.fa-folder{
+	font-size: 10px;
+	/*color: #F9EAAA;*/
+	color: #6D6C6A
+}
+.fa-home{
+	color: #f7c893;
+}
+
+#detail-content{
+	height:100%;
+	float:left;
+	background-color: #F7F6F2;
+}

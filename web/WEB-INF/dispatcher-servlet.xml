@@ -16,13 +16,26 @@
                                 expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation"
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-
     </context:component-scan>
 
     <mvc:annotation-driven/>
 
     <!-- 静态资源映射 -->
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+
+    <!--配置pjax拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login" />
+            <mvc:exclude-mapping path="/logout" />
+            <mvc:exclude-mapping path="/static/**"/>
+            <mvc:exclude-mapping path="/common/**"/>
+            <mvc:exclude-mapping path="/topic"/>
+            <mvc:exclude-mapping path="/layout"/>
+            <bean class="com.victory.ehrsystem.interceptor.PjaxInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:order="1">

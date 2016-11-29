@@ -33,7 +33,10 @@ public class OrganizationController {
     @Autowired
     private UserService userService;
 
-
+    /**
+     * 进入组织架构的主页
+     * @return
+     */
     @RequiresPermissions(value = "organization:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
@@ -41,6 +44,10 @@ public class OrganizationController {
 
     }
 
+    /**
+     * 返回组织机构树的json数据
+     * @return
+     */
     @RequiresPermissions(value = "organization:view")
     @RequestMapping(value = "/tree")
     public @ResponseBody List<JsonTreeData> getTree(){
