@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
+import com.victory.ehrsystem.domain.hrm.HrmDepartment;
 import com.victory.ehrsystem.domain.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.hrm.OrganizationService;
 import com.victory.ehrsystem.service.sys.ResourceService;
@@ -9,6 +10,7 @@ import com.victory.ehrsystem.vo.JsonTreeData;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,9 +58,34 @@ public class OrganizationController {
         return tree;
     }
 
+    /**
+     * 返回分部详细
+     * @param id
+     * @return
+     */
     @RequiresPermissions(value = "organization:view")
     @RequestMapping(value = "/subcompany/{id}")
-    public String viewSubcompany(@PathVariable(value = "id") int id) {
-        return "/organization/detail";
+    public String viewSubcompany(@PathVariable(value = "id") int id,Model model) {
+        HrmSubCompany subCompany = organizationService.findOne_SubCompany(id);
+        List<HrmDepartment> list_dep = organizationService.findAllDepartmentBySubcompany(subCompany);
+        model.addAttribute("entity", subCompany);
+        model.addAttribute("list", list_dep);
+        return "/organization/sub_detail";
+    }
+
+    /**
+     * 返回部门详细
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "organization:view")
+    @RequestMapping(value = "/department/{id}")
+    public String viewDepartment(@PathVariable(value = "id") int id,Model model) {
+        HrmDepartment department = organizationService.findOne_Department(id);
+        List<HrmDepartment> list_dep = organizationService.findAllDepartmentByDepartment(department);
+        model.addAttribute("entity", department);
+        model.addAttribute("list", list_dep);
+        return "/organization/dep_detail";
     }
 }

@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Hrm;
 import com.victory.ehrsystem.domain.hrm.HrmJobCall;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobCallService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,42 +42,80 @@ public class HrmJobCallController {
         }
         model.addAttribute("topic","职称管理");
         model.addAttribute("simplename","职称");
-        model.addAttribute("url","jobcall");
+        model.addAttribute("url","/jobcall");
         model.addAttribute("map",map);
-        model.addAttribute("editlist", CollectionUtil.getObjectFields(HrmJobCall.class));
         return "topic";
     }
 
-    @RequiresPermissions(value = "jobCall:create")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(HrmJobCall jobcall,Model model) {
-        jobCallService.save(jobcall);
-        model.addAttribute("list",jobCallService.findAll(HrmJobCall.class));
-        return "topic";
+    /**
+     * 返回创建模态框
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "jobcall:create")
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String modal_create(Model model) {
+        model.addAttribute("topic","职称信息创建");
+        model.addAttribute("action","/jobcall/create");
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobCall.class));
+        return "common/modal";
     }
-
-    @RequiresPermissions(value = "jobCall:update")
-    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public @ResponseBody HrmJobCall showupdate(@PathVariable("id") int id) {
-        HrmJobCall jobcall = jobCallService.findOne(HrmJobCall.class, id);
-        return jobcall;
-    }
-
-    @RequiresPermissions(value = "jobCall:update")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(HrmJobCall jobcall,Model model) {
-        jobCallService.update(HrmJobCall.class, jobcall);
-        model.addAttribute("list",jobCallService.findAll(HrmJobCall.class));
-        return "topic";
-    }
-
-    @RequiresPermissions(value = "jobCall:delete")
-    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    /**
+     * 执行创建的操作
+     * @param jobcall
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "jobcall:create")
+    @RequestMapping(value = "/create")
     public @ResponseBody
-    Map<String,String> delete(@PathVariable("id") int id) {
+    JsonVo create(HrmJobCall jobcall) {
+        jobCallService.save(jobcall);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("添加成功");
+        return jsonVo;
+    }
+
+    /**
+     * 返回修改模态框
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "jobcall:update")
+    @RequestMapping(value = "/{id}")
+    public String modal_update(@PathVariable int id, Model model) {
+        model.addAttribute("topic", "职称信息修改");
+        model.addAttribute("action","/jobcall/update");
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobCallService.findOne(HrmJobCall.class, id)));
+        return "common/modal";
+    }
+
+    /**
+     * 执行修改操作
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "jobcall:update")
+    @RequestMapping(value = "/update")
+    public @ResponseBody JsonVo update(HrmJobCall jobcall,Model model) {
+        jobCallService.update(HrmJobCall.class, jobcall);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("修改成功");
+        return jsonVo;
+    }
+
+    /**
+     * 执行删除操作
+     * @param id
+     * @return
+     */
+    @RequiresPermissions(value = "jobcall:delete")
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
         jobCallService.delete(HrmJobCall.class,id);
-        Map<String, String> map = new HashMap<>();
-        map.put("msg","success");
-        return map;
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
     }
 }

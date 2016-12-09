@@ -33,7 +33,7 @@ public class TreeNodeUtil {
                 List<JsonTreeData> deplist = convertDepTreeList(organizationService.findRootDepartmentBySubcompany(subCompany),organizationService);
                 deplist.addAll(sublist);
                 temp.setIcon("fa fa-home");
-                temp.setHref("/organization/subcompany/{"+subCompany.getId()+"}");
+                temp.setHref("/organization/subcompany/"+subCompany.getId()+".html");
                 temp.setNodes(deplist.size() == 0 ? null : deplist);
                 tree.add(temp);
             }
@@ -52,7 +52,7 @@ public class TreeNodeUtil {
             //temp.setType("dep");
             temp.setText(department.getName());
             temp.setIcon("fa fa-folder");
-            temp.setHref("/organization/department/{"+department.getId()+"}");
+            temp.setHref("/organization/department/"+department.getId()+".html");
             //temp.setPid(department.getSupid().toString());
             List<JsonTreeData> deplist = convertDepTreeList(organizationService.findAllDepartmentByDepartment(department),organizationService);
             temp.setNodes(deplist.size() == 0 ? null : deplist);

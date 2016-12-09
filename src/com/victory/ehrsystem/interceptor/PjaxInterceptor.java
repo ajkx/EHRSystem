@@ -17,7 +17,6 @@ public class PjaxInterceptor implements HandlerInterceptor{
 
     private static final String PJAX = "_pjax";
     private static final String DESC = "desc";
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String accept = request.getHeader("Accept");

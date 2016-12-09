@@ -36,9 +36,6 @@ public class HrmLocation {
     @Column(name = "fax")
     private String fax;
 
-    @Column(name = "showOrder")
-    private double showOrder;
-
     public Integer getId() {
         return id;
     }
@@ -103,19 +100,12 @@ public class HrmLocation {
         this.fax = fax;
     }
 
-    public double getShowOrder() {
-        return showOrder;
-    }
-
-    public void setShowOrder(double showOrder) {
-        this.showOrder = showOrder;
-    }
 
     public HrmLocation() {
 
     }
 
-    public HrmLocation(String name, String address, String postcode, String city, int countryid, String phone, String fax, double showOrder) {
+    public HrmLocation(String name, String address, String postcode, String city, int countryid, String phone, String fax) {
 
         this.name = name;
         this.address = address;
@@ -124,6 +114,5 @@ public class HrmLocation {
         this.countryid = countryid;
         this.phone = phone;
         this.fax = fax;
-        this.showOrder = showOrder;
     }
 }

@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Hrm;
 import com.victory.ehrsystem.domain.hrm.HrmJobGroups;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobGroupsService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,42 +42,80 @@ public class HrmJobGroupController {
         }
         model.addAttribute("topic","职务类别");
         model.addAttribute("simplename","类别");
-        model.addAttribute("url","jobgroup");
+        model.addAttribute("url", "/jobgroup");
         model.addAttribute("map",map);
-        model.addAttribute("editlist", CollectionUtil.getObjectFields(HrmJobGroups.class));
         return "topic";
     }
 
+    /**
+     * 返回创建模态框
+     * @param model
+     * @return
+     */
     @RequiresPermissions(value = "jobGroup:create")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(HrmJobGroups jobgroup,Model model) {
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String modal_create(Model model) {
+        model.addAttribute("topic","职务类别信息创建");
+        model.addAttribute("action","/jobgroup/create");
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobGroups.class));
+        return "common/modal";
+    }
+    /**
+     * 执行创建的操作
+     * @param jobgroup
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "jobGroup:create")
+    @RequestMapping(value = "/create")
+    public @ResponseBody
+    JsonVo create(HrmJobGroups jobgroup) {
         jobGroupsService.save(jobgroup);
-        model.addAttribute("list",jobGroupsService.findAll(HrmJobGroups.class));
-        return "topic";
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("添加成功");
+        return jsonVo;
     }
 
+    /**
+     * 返回修改模态框
+     * @param id
+     * @param model
+     * @return
+     */
     @RequiresPermissions(value = "jobGroup:update")
-    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public @ResponseBody HrmJobGroups showupdate(@PathVariable("id") int id) {
-        HrmJobGroups jobgroup = jobGroupsService.findOne(HrmJobGroups.class, id);
-        return jobgroup;
+    @RequestMapping(value = "/{id}")
+    public String modal_update(@PathVariable int id, Model model) {
+        model.addAttribute("topic", "职务类别信息修改");
+        model.addAttribute("action","/jobgroup/update");
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobGroupsService.findOne(HrmJobGroups.class, id)));
+        return "common/modal";
     }
 
+    /**
+     * 执行修改操作
+     * @param
+     * @return
+     */
     @RequiresPermissions(value = "jobGroup:update")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(HrmJobGroups jobgroup,Model model) {
+    @RequestMapping(value = "/update")
+    public @ResponseBody JsonVo update(HrmJobGroups jobgroup,Model model) {
         jobGroupsService.update(HrmJobGroups.class, jobgroup);
-        model.addAttribute("list",jobGroupsService.findAll(HrmJobGroups.class));
-        return "topic";
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("修改成功");
+        return jsonVo;
     }
 
+    /**
+     * 执行删除操作
+     * @param id
+     * @return
+     */
     @RequiresPermissions(value = "jobGroup:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String,String> delete(@PathVariable("id") int id) {
+    public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
         jobGroupsService.delete(HrmJobGroups.class,id);
-        Map<String, String> map = new HashMap<>();
-        map.put("msg","success");
-        return map;
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
     }
 }

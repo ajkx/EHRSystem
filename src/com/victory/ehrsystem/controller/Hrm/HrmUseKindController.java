@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Hrm;
 import com.victory.ehrsystem.domain.hrm.HrmUsekind;
 import com.victory.ehrsystem.service.hrm.impl.HrmUseKindService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,42 +42,80 @@ public class HrmUseKindController {
         }
         model.addAttribute("topic","用工性质");
         model.addAttribute("simplename","性质");
-        model.addAttribute("url","usekind");
+        model.addAttribute("url", "/usekind");
         model.addAttribute("map",map);
-        model.addAttribute("editlist", CollectionUtil.getObjectFields(HrmUsekind.class));
         return "topic";
     }
 
+    /**
+     * 返回创建模态框
+     * @param model
+     * @return
+     */
     @RequiresPermissions(value = "useKind:create")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(HrmUsekind usekind,Model model) {
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String modal_create(Model model) {
+        model.addAttribute("topic","用工性质创建");
+        model.addAttribute("action","/usekind/create");
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmUsekind.class));
+        return "common/modal";
+    }
+    /**
+     * 执行创建的操作
+     * @param usekind
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "useKind:create")
+    @RequestMapping(value = "/create")
+    public @ResponseBody
+    JsonVo create(HrmUsekind usekind) {
         useKindService.save(usekind);
-        model.addAttribute("list",useKindService.findAll(HrmUsekind.class));
-        return "topic";
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("添加成功");
+        return jsonVo;
     }
 
+    /**
+     * 返回修改模态框
+     * @param id
+     * @param model
+     * @return
+     */
     @RequiresPermissions(value = "useKind:update")
-    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public @ResponseBody HrmUsekind showupdate(@PathVariable("id") int id) {
-        HrmUsekind usekind = useKindService.findOne(HrmUsekind.class, id);
-        return usekind;
+    @RequestMapping(value = "/{id}")
+    public String modal_update(@PathVariable int id, Model model) {
+        model.addAttribute("topic", "用工性质修改");
+        model.addAttribute("action","/usekind/update");
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(useKindService.findOne(HrmUsekind.class, id)));
+        return "common/modal";
     }
 
+    /**
+     * 执行修改操作
+     * @param
+     * @return
+     */
     @RequiresPermissions(value = "useKind:update")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(HrmUsekind usekind,Model model) {
+    @RequestMapping(value = "/update")
+    public @ResponseBody JsonVo update(HrmUsekind usekind,Model model) {
         useKindService.update(HrmUsekind.class, usekind);
-        model.addAttribute("list",useKindService.findAll(HrmUsekind.class));
-        return "topic";
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("修改成功");
+        return jsonVo;
     }
 
+    /**
+     * 执行删除操作
+     * @param id
+     * @return
+     */
     @RequiresPermissions(value = "useKind:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String,String> delete(@PathVariable("id") int id) {
+    public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
         useKindService.delete(HrmUsekind.class,id);
-        Map<String, String> map = new HashMap<>();
-        map.put("msg","success");
-        return map;
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
     }
 }

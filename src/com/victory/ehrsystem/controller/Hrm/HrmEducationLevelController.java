@@ -47,55 +47,79 @@ public class HrmEducationLevelController {
         }
         model.addAttribute("topic","学历管理");
         model.addAttribute("simplename","学历");
-        model.addAttribute("url","educationlevel");
+        model.addAttribute("url","/educationlevel");
         model.addAttribute("map",map);
-        model.addAttribute("editlist", CollectionUtil.getObjectFields(HrmEducationLevel.class));
         return "topic";
     }
 
-    @RequiresPermissions(value = "educationLevel:create")
-    @RequestMapping(value = "/edit",method = RequestMethod.GET)
-    public String dialog_create(Model model) {
-        return "/location/dialog";
-    }
-
     /**
-     * 执行创建的操作
-     * @param educationlevel
+     * 返回创建模态框
      * @param model
      * @return
      */
     @RequiresPermissions(value = "educationLevel:create")
-    @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody JsonVo create(HrmEducationLevel educationlevel,Model model) {
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String modal_create(Model model) {
+        model.addAttribute("topic","学历信息创建");
+        model.addAttribute("action","/educationlevel/create");
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmEducationLevel.class));
+        return "common/modal";
+    }
+    /**
+     * 执行创建的操作
+     * @param educationlevel
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "educationLevel:create")
+    @RequestMapping(value = "/create")
+    public @ResponseBody JsonVo create(HrmEducationLevel educationlevel) {
         educationLevelService.save(educationlevel);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("添加成功");
         return jsonVo;
     }
 
-    @RequiresPermissions(value = "jobCall:update")
-    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public @ResponseBody HrmEducationLevel showupdate(@PathVariable("id") int id) {
-        HrmEducationLevel educationlevel = educationLevelService.findOne(HrmEducationLevel.class, id);
-        return educationlevel;
+    /**
+     * 返回修改模态框
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "educationLevel:update")
+    @RequestMapping(value = "/{id}")
+    public String modal_update(@PathVariable int id, Model model) {
+        model.addAttribute("topic", "学历信息修改");
+        model.addAttribute("action","/educationlevel/update");
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(educationLevelService.findOne(HrmEducationLevel.class, id)));
+        return "common/modal";
     }
 
-    @RequiresPermissions(value = "jobCall:update")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(HrmEducationLevel educationlevel,Model model) {
+    /**
+     * 执行修改操作
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "educationLevel:update")
+    @RequestMapping(value = "/update")
+    public @ResponseBody JsonVo update(HrmEducationLevel educationlevel,Model model) {
         educationLevelService.update(HrmEducationLevel.class, educationlevel);
-        model.addAttribute("list",educationLevelService.findAll(HrmEducationLevel.class));
-        return "topic";
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("修改成功");
+        return jsonVo;
     }
 
-    @RequiresPermissions(value = "jobCall:delete")
+    /**
+     * 执行删除操作
+     * @param id
+     * @return
+     */
+    @RequiresPermissions(value = "educationLevel:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String,String> delete(@PathVariable("id") int id) {
+    public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
         educationLevelService.delete(HrmEducationLevel.class,id);
-        Map<String, String> map = new HashMap<>();
-        map.put("msg","success");
-        return map;
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
     }
 }

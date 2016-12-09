@@ -1,8 +1,7 @@
 package com.victory.ehrsystem.util;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 自定义集合工具类
@@ -12,7 +11,8 @@ import java.util.List;
  */
 public class CollectionUtil {
 
-    public static List getObjectFields(Class clazz){
+    public static LinkedHashMap getObjectFields(Class clazz){
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
         Field[] fs = clazz.getDeclaredFields();
         List<String> list = new ArrayList<>();
         for (int i = 0;i < fs.length;i++) {
@@ -21,8 +21,28 @@ public class CollectionUtil {
             if(f.getName().equals("id")){
                 continue;
             }
-            list.add(f.getName());
+            map.put(f.getName(), "");
         }
-        return list;
+        return map;
+    }
+
+    public static LinkedHashMap getObejctValueAndFields(Object obj) {
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        Field[] fs = obj.getClass().getDeclaredFields();
+        for (Field field : fs) {
+            boolean accessFlag = field.isAccessible();
+            String varname = field.getName();
+            field.setAccessible(true);
+            try {
+                Object o = field.get(obj);
+                if (o != null) {
+                    map.put(varname, o.toString());
+                }
+                field.setAccessible(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
     }
 }

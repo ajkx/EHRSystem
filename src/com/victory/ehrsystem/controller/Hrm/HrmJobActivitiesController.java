@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Hrm;
 import com.victory.ehrsystem.domain.hrm.HrmJobActivities;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobActivitiesService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class HrmJobActivitiesController {
     @Autowired
     private HrmJobActivitiesService jobActivitiesService;
 
-    @RequiresPermissions(value = "jobGroup:view")
+    @RequiresPermissions(value = "jobactivities:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
         List<HrmJobActivities> temp = jobActivitiesService.findAll(HrmJobActivities.class);
@@ -42,42 +43,68 @@ public class HrmJobActivitiesController {
         }
         model.addAttribute("topic","职务管理");
         model.addAttribute("simplename","职务");
-        model.addAttribute("url","jobactivities");
+        model.addAttribute("url", "/jobactivities");
         model.addAttribute("map",map);
-        model.addAttribute("editlist", CollectionUtil.getObjectFields(HrmJobActivities.class));
         return "topic";
     }
 
-    @RequiresPermissions(value = "jobGroup:create")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(HrmJobActivities jobactivity,Model model) {
-        jobActivitiesService.save(jobactivity);
-        model.addAttribute("list",jobActivitiesService.findAll(HrmJobActivities.class));
-        return "topic";
+    /**
+     * 返回创建模态框
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "jobactivities:create")
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String modal_create(Model model) {
+        model.addAttribute("topic","职务信息创建");
+        model.addAttribute("action","/jobactivities/create");
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobActivities.class));
+        return "common/modal";
     }
 
-    @RequiresPermissions(value = "jobGroup:update")
-    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public @ResponseBody HrmJobActivities showupdate(@PathVariable("id") int id) {
-        HrmJobActivities jobactivity = jobActivitiesService.findOne(HrmJobActivities.class, id);
-        return jobactivity;
+    @RequiresPermissions(value = "jobactivities:create")
+    @RequestMapping(value = "/create")
+    public @ResponseBody JsonVo create(HrmJobActivities activities) {
+        jobActivitiesService.save(activities);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("添加成功");
+        return jsonVo;
     }
 
-    @RequiresPermissions(value = "jobGroup:update")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(HrmJobActivities jobactivity,Model model) {
-        jobActivitiesService.update(HrmJobActivities.class, jobactivity);
-        model.addAttribute("list",jobActivitiesService.findAll(HrmJobActivities.class));
-        return "topic";
+    @RequiresPermissions(value = "jobactivities:update")
+    @RequestMapping(value = "/{id}")
+    public String modal_update(@PathVariable int id, Model model) {
+        model.addAttribute("topic", "职务修改");
+        model.addAttribute("action","/jobactivities/update");
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobActivitiesService.findOne(HrmJobActivities.class, id)));
+        return "common/modal";
     }
 
-    @RequiresPermissions(value = "jobGroup:delete")
+    /**
+     * 执行修改操作
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "jobactivities:update")
+    @RequestMapping(value = "/update")
+    public @ResponseBody JsonVo update(HrmJobActivities activities, Model model) {
+        jobActivitiesService.update(HrmJobActivities.class, activities);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("修改成功");
+        return jsonVo;
+    }
+
+    /**
+     * 执行删除操作
+     * @param id
+     * @return
+     */
+    @RequiresPermissions(value = "jobactivities:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String,String> delete(@PathVariable("id") int id) {
-        jobActivitiesService.delete(HrmJobActivities.class,id);
-        Map<String, String> map = new HashMap<>();
-        map.put("msg","success");
-        return map;
+    public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
+        jobActivitiesService.delete(HrmJobActivities.class, id);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
     }
 }

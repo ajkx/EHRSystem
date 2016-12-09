@@ -1,0 +1,31 @@
+.templatemo-login-form-1 {
+    max-width: 500px;
+}
+.margin-bottom-30 {
+    margin-bottom: 30px;
+}
+.templatemo-container {
+    background-color: rgba(255,255,255,0.8);
+    border: 1px solid #dedede;
+    border-radius: 8px;
+    margin: 0 auto;
+    padding: 30px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.control-wrapper {
+    position: relative;
+    padding-left: 30px;
+}
+.control-wrapper label.fa-label {
+    position: absolute;
+    left: 4px;
+    top: 6px;
+}
+.form-horizontal .control-label {
+    margin-bottom: 10px;
+}
+.form-horizontal .control-label {
+    padding-top: 0;
+}

@@ -1,0 +1,119 @@
+.navbar {
+	margin: 0;
+	border-radius: 0;
+	border: 0;
+	height: 60px;
+	background-color: white;
+}
+
+.logo-panel {
+	display: inline-block;
+	width: 220px;
+	height: 100%;
+}
+
+.logo {
+	float: left;
+	display: inline-block;
+}
+
+.usual-panel {
+	list-style: none;
+	display: inline-block;
+}
+
+.usual-panel li {
+	float: left;
+}
+
+.usual-panel li a {
+	width: 105px;
+	height: 60px;
+	line-height: 60px;
+	display: block;
+	text-align: center;
+	color: black;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.right-panel {
+	float: right;
+	height: 60px;
+}
+
+.right-panel .middle-panel {
+	float: left;
+	margin: 15px 0;
+	margin-right: 15px;
+}
+
+.right-panel .searchinput {
+	width: 200px;
+	height: 26px;
+}
+
+.right-panel .searchinput:focus {
+	border-color: #ccc;
+	outline: 0;
+	-webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, .075), 0 0 0px rgba(102, 175, 233, .6);
+	box-shadow: inset 0 0px 0px rgba(0, 0, 0, .075), 0 0 0px rgba(102, 175, 233, .6);
+}
+
+.right-panel .userinfo {
+	float: right;
+	padding: 10px 15px;
+}
+
+.right-panel .userinfo:hover {
+	background-color: #FAFAFA;
+}
+
+.dropdown-menu {
+	margin: 0;
+	width: 120px;
+	min-width: 100px;
+	margin-right: 2px;
+	box-shadow: 0 1px 1px 2px rgba(0, 0, 0, .1);
+	border-radius: .325em;
+	border: 0;
+	opacity: 0;
+	transition: opacity 2s ease-out;
+}
+
+.right-panel .userinfo:hover .dropdown-menu {
+	display: block;
+	opacity: 1;
+}
+
+.portrait {
+	margin-right: 8px;
+}
+
+/*.icon {*/
+	/*font-size: 24px;*/
+/*}*/
+
+.dropdown-menu:before {
+	right: 55px;
+	left: auto;
+	top: -.25em;
+	left: 70%;
+	margin: 0 0 0 -.25em;
+	display: block;
+	position: absolute;
+	pointer-events: none;
+	content: " ";
+	visibility: visible;
+	width: 0.6em;
+	height:0.6em;
+	-webkit-box-shadow: -1px -1px 0 1px rgba(0, 0, 0, .05);
+	box-shadow: -1px -1px 0 1px rgba(0, 0, 0, .05);
+	background-image: none;
+	background-color: #FFF;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	z-index: 12;
+}

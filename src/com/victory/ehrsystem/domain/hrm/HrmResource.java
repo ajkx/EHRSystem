@@ -56,16 +56,16 @@ public class HrmResource {
     private Integer status;
 
     @Column(name = "sex")
-    private Character sex;
+    private String sex;
 
     @Column(name = "birthday")
-    private Character[] birthday;
+    private String birthday;
 
     @Column(name = "nationality")
     private Integer nationality;
 
     @Column(name = "maritalstatus")
-    private Character maritalstatus;
+    private String maritalstatus;
 
     @Column(name = "telephone")
     private String telephone;
@@ -105,10 +105,10 @@ public class HrmResource {
     private Integer weight;
 
     @Column(name = "healthinfo")
-    private Character healthinfo;
+    private String healthinfo;
 
     @Column(name = "createdate")
-    private Character[] createdate;
+    private String createdate;
 
     @ManyToOne(targetEntity = HrmResource.class)
     @JoinColumn(name = "createrid")
@@ -120,7 +120,7 @@ public class HrmResource {
     public HrmResource() {
     }
 
-    public HrmResource(String name, String workcode, HrmSubCompany subCompanyid, HrmDepartment departmentid, HrmJobTitles jobtitle, HrmJobCall jobcall, HrmUsekind usekind, HrmResource managerid, String managerstr, HrmResource assistantid, Integer status, Character sex, Character[] birthday, Integer nationality, Character maritalstatus, String telephone, String mobile, String email, HrmLocation locationid, String certificatenum, String nativeplace, String homeaddress, String residentphone, String folk, String regresidentplace, String height, Integer weight, Character healthinfo, Character[] createdate, HrmResource createrid, HrmContract contract) {
+    public HrmResource(String name, String workcode, HrmSubCompany subCompanyid, HrmDepartment departmentid, HrmJobTitles jobtitle, HrmJobCall jobcall, HrmUsekind usekind, HrmResource managerid, String managerstr, HrmResource assistantid, Integer status, String sex, String birthday, Integer nationality, String maritalstatus, String telephone, String mobile, String email, HrmLocation locationid, String certificatenum, String nativeplace, String homeaddress, String residentphone, String folk, String regresidentplace, String height, Integer weight, String healthinfo, String createdate, HrmResource createrid, HrmContract contract) {
         this.name = name;
         this.workcode = workcode;
         this.subCompanyid = subCompanyid;
@@ -250,19 +250,19 @@ public class HrmResource {
         this.status = status;
     }
 
-    public Character getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Character sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public Character[] getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Character[] birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -274,11 +274,11 @@ public class HrmResource {
         this.nationality = nationality;
     }
 
-    public Character getMaritalstatus() {
+    public String getMaritalstatus() {
         return maritalstatus;
     }
 
-    public void setMaritalstatus(Character maritalstatus) {
+    public void setMaritalstatus(String maritalstatus) {
         this.maritalstatus = maritalstatus;
     }
 
@@ -378,19 +378,19 @@ public class HrmResource {
         this.weight = weight;
     }
 
-    public Character getHealthinfo() {
+    public String getHealthinfo() {
         return healthinfo;
     }
 
-    public void setHealthinfo(Character healthinfo) {
+    public void setHealthinfo(String healthinfo) {
         this.healthinfo = healthinfo;
     }
 
-    public Character[] getCreatedate() {
+    public String getCreatedate() {
         return createdate;
     }
 
-    public void setCreatedate(Character[] createdate) {
+    public void setCreatedate(String createdate) {
         this.createdate = createdate;
     }
 

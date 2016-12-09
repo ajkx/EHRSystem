@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Hrm;
 import com.victory.ehrsystem.domain.hrm.HrmSpeciality;
 import com.victory.ehrsystem.service.hrm.impl.HrmSpecialityService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class HrmSpecialityController {
     @Autowired
     private HrmSpecialityService specialityService;
 
-    @RequiresPermissions(value = "jobCall:view")
+    @RequiresPermissions(value = "speciality:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
         List<HrmSpeciality> temp = specialityService.findAll(HrmSpeciality.class);
@@ -41,42 +42,80 @@ public class HrmSpecialityController {
         }
         model.addAttribute("topic","专业管理");
         model.addAttribute("simplename","专业");
-        model.addAttribute("url","speciality");
+        model.addAttribute("url", "/speciality");
         model.addAttribute("map",map);
-        model.addAttribute("editlist", CollectionUtil.getObjectFields(HrmSpeciality.class));
         return "topic";
     }
 
-    @RequiresPermissions(value = "jobCall:create")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(HrmSpeciality speciality,Model model) {
-        specialityService.save(speciality);
-        model.addAttribute("list",specialityService.findAll(HrmSpeciality.class));
-        return "topic";
+    /**
+     * 返回创建模态框
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "speciality:create")
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String modal_create(Model model) {
+        model.addAttribute("topic","专业信息创建");
+        model.addAttribute("action","/speciality/create");
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmSpeciality.class));
+        return "common/modal";
     }
-
-    @RequiresPermissions(value = "jobCall:update")
-    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public @ResponseBody HrmSpeciality showupdate(@PathVariable("id") int id) {
-        HrmSpeciality speciality = specialityService.findOne(HrmSpeciality.class, id);
-        return speciality;
-    }
-
-    @RequiresPermissions(value = "jobCall:update")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(HrmSpeciality speciality,Model model) {
-        specialityService.update(HrmSpeciality.class, speciality);
-        model.addAttribute("list",specialityService.findAll(HrmSpeciality.class));
-        return "topic";
-    }
-
-    @RequiresPermissions(value = "jobCall:delete")
-    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    /**
+     * 执行创建的操作
+     * @param speciality
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "speciality:create")
+    @RequestMapping(value = "/create")
     public @ResponseBody
-    Map<String,String> delete(@PathVariable("id") int id) {
+    JsonVo create(HrmSpeciality speciality) {
+        specialityService.save(speciality);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("添加成功");
+        return jsonVo;
+    }
+
+    /**
+     * 返回修改模态框
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "speciality:update")
+    @RequestMapping(value = "/{id}")
+    public String modal_update(@PathVariable int id, Model model) {
+        model.addAttribute("topic", "专业信息修改");
+        model.addAttribute("action","/speciality/update");
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(specialityService.findOne(HrmSpeciality.class, id)));
+        return "common/modal";
+    }
+
+    /**
+     * 执行修改操作
+     * @param
+     * @return
+     */
+    @RequiresPermissions(value = "speciality:update")
+    @RequestMapping(value = "/update")
+    public @ResponseBody JsonVo update(HrmSpeciality speciality,Model model) {
+        specialityService.update(HrmSpeciality.class, speciality);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("修改成功");
+        return jsonVo;
+    }
+
+    /**
+     * 执行删除操作
+     * @param id
+     * @return
+     */
+    @RequiresPermissions(value = "speciality:delete")
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
         specialityService.delete(HrmSpeciality.class,id);
-        Map<String, String> map = new HashMap<>();
-        map.put("msg","success");
-        return map;
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
     }
 }
