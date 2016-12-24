@@ -1,46 +1,33 @@
-package com.victory.ehrsystem.domain.hrm;
+package com.victory.ehrsystem.entity.hrm;
 
 import javax.persistence.*;
 
 /**
- * 职务表
+ * 学历表
  *
  * @author ajkx_Du
  * @create 2016-10-19 14:22
  */
 @Entity
-public class HrmJobActivities {
+public class HrmEducationLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "jobactivityname", nullable = false)
+    @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "jobactivitymark", length = 200)
+    @Column(name = "description",length = 200)
     private String description;
 
-    @ManyToOne(targetEntity = HrmJobGroups.class)
-    @JoinColumn(name = "jobgroupid")
-    private HrmJobGroups groupid;
-
-    public HrmJobActivities() {
+    public HrmEducationLevel() {
     }
 
-    public HrmJobActivities(String name, String description, HrmJobGroups groupid) {
+    public HrmEducationLevel(String name, String description) {
+
         this.name = name;
         this.description = description;
-        this.groupid = groupid;
-    }
-
-    public HrmJobGroups getGroupid() {
-
-        return groupid;
-    }
-
-    public void setGroupid(HrmJobGroups groupid) {
-        this.groupid = groupid;
     }
 
     public Integer getId() {

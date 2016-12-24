@@ -1,4 +1,4 @@
-package com.victory.ehrsystem.domain.sys;
+package com.victory.ehrsystem.entity.sys;
 
 import javax.persistence.*;
 import java.util.HashSet;

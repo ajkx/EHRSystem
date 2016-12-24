@@ -1,4 +1,4 @@
-package com.victory.ehrsystem.domain.hrm;
+package com.victory.ehrsystem.entity.hrm;
 
 import javax.persistence.*;
 
@@ -9,22 +9,23 @@ import javax.persistence.*;
  * @create 2016-10-19 14:22
  */
 @Entity
-public class HrmJobCall {
+public class HrmContractTemplet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "templetname",nullable = false)
     private String name;
 
-    @Column(name = "description",length = 200)
-    private String description;
+    @Column(name = "templetdocid",length = 200)
+    private int description;
 
-    public HrmJobCall() {
+    public HrmContractTemplet() {
     }
 
-    public HrmJobCall(String name, String description) {
+    public HrmContractTemplet(String name, int description) {
+
         this.name = name;
         this.description = description;
     }
@@ -46,11 +47,11 @@ public class HrmJobCall {
         this.name = name;
     }
 
-    public String getDescription() {
+    public int getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(int description) {
         this.description = description;
     }
 }

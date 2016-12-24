@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.service.hrm.impl;
 
-import com.victory.ehrsystem.domain.hrm.HrmSubCompany;
+import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.BaseService;
 import org.springframework.stereotype.Service;
 

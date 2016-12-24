@@ -1,15 +1,15 @@
-package com.victory.ehrsystem.domain.hrm;
+package com.victory.ehrsystem.entity.hrm;
 
 import javax.persistence.*;
 
 /**
- * 用工性质表
+ * 专业表
  *
  * @author ajkx_Du
  * @create 2016-10-19 14:22
  */
 @Entity
-public class HrmUsekind {
+public class HrmSpeciality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class HrmUsekind {
     @Column(name = "description")
     private String description;
 
-    public HrmUsekind() {
+    public HrmSpeciality() {
     }
 
-    public HrmUsekind(String name, String description) {
+    public HrmSpeciality(String name, String description) {
 
         this.name = name;
         this.description = description;

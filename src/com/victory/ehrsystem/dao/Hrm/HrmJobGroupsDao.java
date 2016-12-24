@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.dao.Hrm;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
-import com.victory.ehrsystem.domain.hrm.HrmJobGroups;
+import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
 
 /**
  * 职务类别数据层接口

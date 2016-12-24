@@ -2,8 +2,8 @@ package com.victory.ehrsystem.service.hrm.impl;
 
 import com.victory.ehrsystem.dao.Hrm.HrmDepartmentDao;
 import com.victory.ehrsystem.dao.Hrm.HrmSubCompanyDao;
-import com.victory.ehrsystem.domain.hrm.HrmDepartment;
-import com.victory.ehrsystem.domain.hrm.HrmSubCompany;
+import com.victory.ehrsystem.entity.hrm.HrmDepartment;
+import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.hrm.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

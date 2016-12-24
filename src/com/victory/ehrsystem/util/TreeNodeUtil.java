@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.util;
 
-import com.victory.ehrsystem.domain.hrm.HrmDepartment;
-import com.victory.ehrsystem.domain.hrm.HrmSubCompany;
+import com.victory.ehrsystem.entity.hrm.HrmDepartment;
+import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.hrm.OrganizationService;
 import com.victory.ehrsystem.vo.JsonTreeData;
 

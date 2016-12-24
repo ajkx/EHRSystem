@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.service.sys;
 
-import com.victory.ehrsystem.domain.sys.SysRole;
+import com.victory.ehrsystem.entity.sys.SysRole;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.domain.hrm.HrmUsekind;
+import com.victory.ehrsystem.entity.hrm.HrmUsekind;
 import com.victory.ehrsystem.service.hrm.impl.HrmUseKindService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.JsonVo;

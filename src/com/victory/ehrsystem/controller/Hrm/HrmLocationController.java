@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.domain.hrm.HrmLocation;
+import com.victory.ehrsystem.entity.hrm.HrmLocation;
 import com.victory.ehrsystem.service.hrm.impl.HrmLocationService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.JsonVo;

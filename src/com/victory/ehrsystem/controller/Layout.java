@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.controller;
 
-import com.victory.ehrsystem.domain.sys.SysModule;
-import com.victory.ehrsystem.domain.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysModule;
+import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.service.sys.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

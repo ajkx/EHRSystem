@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.controller;
 
-import com.victory.ehrsystem.domain.sys.User;
+import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.service.sys.UserService;
 import org.apache.shiro.SecurityUtils;

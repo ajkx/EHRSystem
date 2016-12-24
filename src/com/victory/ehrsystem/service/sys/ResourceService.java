@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.service.sys;
 
-import com.victory.ehrsystem.domain.sys.SysModule;
-import com.victory.ehrsystem.domain.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysModule;
+import com.victory.ehrsystem.entity.sys.SysResource;
 
 import java.io.Serializable;
 import java.util.ArrayList;

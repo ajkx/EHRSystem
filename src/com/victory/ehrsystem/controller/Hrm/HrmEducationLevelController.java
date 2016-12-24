@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.domain.hrm.HrmEducationLevel;
+import com.victory.ehrsystem.entity.hrm.HrmEducationLevel;
 import com.victory.ehrsystem.service.hrm.impl.HrmEducationLevelService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.JsonVo;

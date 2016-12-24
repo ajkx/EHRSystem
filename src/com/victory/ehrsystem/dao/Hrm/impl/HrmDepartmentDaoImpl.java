@@ -2,8 +2,8 @@ package com.victory.ehrsystem.dao.Hrm.impl;
 
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.Hrm.HrmDepartmentDao;
-import com.victory.ehrsystem.domain.hrm.HrmDepartment;
-import com.victory.ehrsystem.domain.hrm.HrmSubCompany;
+import com.victory.ehrsystem.entity.hrm.HrmDepartment;
+import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 
 import java.util.List;
 

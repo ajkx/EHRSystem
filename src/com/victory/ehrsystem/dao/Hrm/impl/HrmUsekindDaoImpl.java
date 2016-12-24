@@ -2,7 +2,7 @@ package com.victory.ehrsystem.dao.Hrm.impl;
 
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.Hrm.HrmUsekindDao;
-import com.victory.ehrsystem.domain.hrm.HrmUsekind;
+import com.victory.ehrsystem.entity.hrm.HrmUsekind;
 
 /**
  * 用工性质数据操作类

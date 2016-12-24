@@ -1,12 +1,7 @@
-package com.victory.ehrsystem.domain.sys;
-
-import com.victory.ehrsystem.util.StringUtil;
-import org.springframework.util.CollectionUtils;
+package com.victory.ehrsystem.entity.sys;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

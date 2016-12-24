@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.service.sys;
 
-import com.victory.ehrsystem.domain.sys.User;
+import com.victory.ehrsystem.entity.sys.User;
 
 import java.io.Serializable;
 import java.util.List;

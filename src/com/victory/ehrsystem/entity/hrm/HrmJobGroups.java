@@ -1,30 +1,30 @@
-package com.victory.ehrsystem.domain.hrm;
+package com.victory.ehrsystem.entity.hrm;
 
 import javax.persistence.*;
 
 /**
- * 职称表
+ * 职务类别表
  *
  * @author ajkx_Du
  * @create 2016-10-19 14:22
  */
 @Entity
-public class HrmContractTemplet {
+public class HrmJobGroups {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "templetname",nullable = false)
+    @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "templetdocid",length = 200)
-    private int description;
+    @Column(name = "description",length = 200)
+    private String description;
 
-    public HrmContractTemplet() {
+    public HrmJobGroups() {
     }
 
-    public HrmContractTemplet(String name, int description) {
+    public HrmJobGroups(String name, String description) {
 
         this.name = name;
         this.description = description;
@@ -47,11 +47,11 @@ public class HrmContractTemplet {
         this.name = name;
     }
 
-    public int getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(int description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }

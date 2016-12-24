@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.service.hrm;
 
-import com.victory.ehrsystem.domain.hrm.HrmDepartment;
-import com.victory.ehrsystem.domain.hrm.HrmSubCompany;
+import com.victory.ehrsystem.entity.hrm.HrmDepartment;
+import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 
 import java.io.Serializable;
 import java.util.ArrayList;

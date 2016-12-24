@@ -2,7 +2,7 @@ package com.victory.ehrsystem.dao.Hrm.impl;
 
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.Hrm.HrmLocationDao;
-import com.victory.ehrsystem.domain.hrm.HrmLocation;
+import com.victory.ehrsystem.entity.hrm.HrmLocation;
 
 /**
  * 办公地点数据操作层
