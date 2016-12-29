@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.dao.sys;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
-import com.victory.ehrsystem.domain.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysResource;
 
 import java.io.Serializable;
 

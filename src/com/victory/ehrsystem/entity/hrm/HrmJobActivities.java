@@ -1,5 +1,8 @@
 package com.victory.ehrsystem.entity.hrm;
 
+import com.victory.ehrsystem.service.hrm.impl.HrmJobActivitiesService;
+import com.victory.ehrsystem.service.hrm.impl.HrmJobGroupsService;
+
 import javax.persistence.*;
 
 /**
@@ -42,7 +45,6 @@ public class HrmJobActivities {
     public void setGroupid(HrmJobGroups groupid) {
         this.groupid = groupid;
     }
-
     public Integer getId() {
 
         return id;

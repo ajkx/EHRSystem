@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.Realm;
 
-import com.victory.ehrsystem.domain.sys.User;
+import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.sys.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

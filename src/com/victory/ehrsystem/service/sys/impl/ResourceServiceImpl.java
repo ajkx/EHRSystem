@@ -2,8 +2,8 @@ package com.victory.ehrsystem.service.sys.impl;
 
 import com.victory.ehrsystem.dao.sys.SysModuleDao;
 import com.victory.ehrsystem.dao.sys.SysResourceDao;
-import com.victory.ehrsystem.domain.sys.SysModule;
-import com.victory.ehrsystem.domain.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysModule;
+import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.util.StringUtil;
 import org.apache.shiro.authz.permission.WildcardPermission;

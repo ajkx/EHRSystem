@@ -39,25 +39,25 @@
         <property name="annotatedClasses">
             <list>
                 <!--系统管理表-->
-                <value>com.victory.ehrsystem.domain.sys.User</value>
-                <value>com.victory.ehrsystem.domain.sys.SysResource</value>
-                <value>com.victory.ehrsystem.domain.sys.SysRole</value>
-                <value>com.victory.ehrsystem.domain.sys.SysModule</value>
+                <value>com.victory.ehrsystem.entity.sys.User</value>
+                <value>com.victory.ehrsystem.entity.sys.SysResource</value>
+                <value>com.victory.ehrsystem.entity.sys.SysRole</value>
+                <value>com.victory.ehrsystem.entity.sys.SysModule</value>
                 <!--人力资源表-->
-                <value>com.victory.ehrsystem.domain.hrm.HrmDepartment</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmSubCompany</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmContract</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmContractTemplet</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmContractType</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmEducationLevel</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmJobActivities</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmJobCall</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmJobGroups</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmJobTitles</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmUsekind</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmSpeciality</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmLocation</value>
-                <value>com.victory.ehrsystem.domain.hrm.HrmResource</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmDepartment</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmSubCompany</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmContract</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmContractTemplet</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmContractType</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmEducationLevel</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobActivities</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobCall</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobGroups</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobTitles</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmUsekind</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmSpeciality</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmLocation</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmResource</value>
 
             </list>
         </property>

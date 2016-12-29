@@ -1,8 +1,8 @@
 package com.victory.ehrsystem.service.sys.impl;
 
 import com.victory.ehrsystem.dao.sys.SysRoleDao;
-import com.victory.ehrsystem.domain.sys.SysResource;
-import com.victory.ehrsystem.domain.sys.SysRole;
+import com.victory.ehrsystem.entity.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.service.sys.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

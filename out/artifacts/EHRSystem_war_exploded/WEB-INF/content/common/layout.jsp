@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="${ctx}/static/css/font-awesome.min.css" />
     <link rel="stylesheet" href="${ctx}/static/css/base.css" />
     <link rel="stylesheet" href="${ctx}/static/css/menu.css" />
-    <link rel="stylesheet" href="${ctx}/static/css/topic.css" />
-    <link rel="stylesheet" href="${ctx}/static/css/templatemo_style.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/modal.css" />
     <link rel="stylesheet" href="${ctx}/static/css/container.css" />
     <link rel="stylesheet" href="${ctx}/static/css/tree.css" />
 
@@ -26,13 +25,14 @@
     <script type="text/javascript" src="${ctx}/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-treeview.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/common.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/ElementAction.js"></script>
 
 </head>
 <body>
 
 <%--Model--%>
 <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:500px">
         <div class="modal-content" id="edit-modal-content">
         </div>
     </div>
@@ -46,7 +46,7 @@
                 你确定要删除这条数据吗？删除不可恢复！
             </div>
             <div style="text-align:center">
-                <button type="button" class="btn-gray btn-confirm" id=" del-btn" data-del-url="" onclick="deleteData()">确认
+                <button type="button" class="btn-gray btn-confirm" id="del-btn" data-del-url="" onclick="deleteData()">确认
                 </button>
                 <button type="button" class="btn-gray btn-cancel" data-dismiss="modal">
                     取消

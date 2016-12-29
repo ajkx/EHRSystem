@@ -15,6 +15,12 @@ a:visited{
 	text-decoration: none;
 }
 
+.clear{
+	clear: both;
+}
+.btn-info{
+	width:80px;
+}
 .confirm-content{
 	color: #424242;
 	background-color: #fff;
@@ -51,6 +57,7 @@ a:visited{
 	height:36px;
 	line-height: 36px;
 	border:0;
+	border-radius: 4px;
 	font-family: 'Microsoft YaHei',Verdana,sans-serif,SimSun;
 }
 .btn-gray:hover{

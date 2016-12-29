@@ -57,8 +57,7 @@ public class HrmJobCallController {
     public String modal_create(Model model) {
         model.addAttribute("topic","职称信息创建");
         model.addAttribute("action","/jobcall/create");
-        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobCall.class));
-        return "common/modal";
+        return "modal/JobCall";
     }
     /**
      * 执行创建的操作
@@ -85,10 +84,15 @@ public class HrmJobCallController {
     @RequiresPermissions(value = "jobcall:update")
     @RequestMapping(value = "/{id}")
     public String modal_update(@PathVariable int id, Model model) {
+        HrmJobCall jobCall = jobCallService.findOne(HrmJobCall.class, id);
+        Map<String, String> map = new HashMap<>();
+        map.put("id",jobCall.getId()+"");
+        map.put("name",jobCall.getName());
+        map.put("description", jobCall.getDescription());
         model.addAttribute("topic", "职称信息修改");
         model.addAttribute("action","/jobcall/update");
-        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobCallService.findOne(HrmJobCall.class, id)));
-        return "common/modal";
+        model.addAttribute("map",map);
+        return "modal/JobCall";
     }
 
     /**

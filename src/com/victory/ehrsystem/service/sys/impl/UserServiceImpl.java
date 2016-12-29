@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.service.sys.impl;
 
 import com.victory.ehrsystem.dao.sys.UserDao;
-import com.victory.ehrsystem.domain.sys.User;
+import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.sys.RoleService;
 import com.victory.ehrsystem.service.sys.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

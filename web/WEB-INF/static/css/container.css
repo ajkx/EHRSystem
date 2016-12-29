@@ -3,6 +3,7 @@
 	padding: 30px 30px;
 }
 
+
 #topic-container{
 	/*background-color: white;*/
 	padding: 0 20px;
@@ -29,7 +30,8 @@
 }
 
 .topic-content table thead tr{
-	border-bottom: 1px solid rgba(0,0,0,.03);
+	/*border-bottom: 1px solid rgba(0,0,0,.03);*/
+	border-bottom: 1px solid #E1E1E1;
 }
 
 .topic-content table thead tr th{
@@ -38,16 +40,52 @@
 
 
 .topic-content table tbody tr td{
-	height: 30px;
-	line-height: 30px;
+	height: 32px;
+	line-height: 32px;
 }
 .topic-content table tbody tr{
 	transition: all 0.1s ease-out;
-    border-bottom: 1px solid rgba(0,0,0,.03);
+    border-bottom: 1px solid #E1E1E1;
 }
 .topic-content table tbody tr td{
     border:0;
 }
 .topic-content table tbody tr:hover{
 	background-color: white;
+}
+
+
+.table-row{
+	border-bottom: 1px solid #E1E1E1;
+
+}
+.table-row ul{
+	overflow: hidden;
+}
+
+.table-row ul li{
+	float: left;
+	width:20%;
+	padding: 8px;
+}
+.table-header{
+	height:37px;
+}
+
+.table-header ul li{
+	line-height: 20px;
+	font-weight: 600;
+
+}
+
+.table-body{
+	/*height: 50px;*/
+	transition: all 0.1s ease-out;
+}
+.table-body:hover{
+	background-color: white;
+}
+
+.table-body ul li{
+	line-height: 34px;
 }

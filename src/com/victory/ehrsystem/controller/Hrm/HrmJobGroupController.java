@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ajkx_Du
@@ -58,7 +55,7 @@ public class HrmJobGroupController {
         model.addAttribute("topic","职务类别信息创建");
         model.addAttribute("action","/jobgroup/create");
         model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobGroups.class));
-        return "common/modal";
+        return "modal/JobGroup";
     }
     /**
      * 执行创建的操作
@@ -88,7 +85,7 @@ public class HrmJobGroupController {
         model.addAttribute("topic", "职务类别信息修改");
         model.addAttribute("action","/jobgroup/update");
         model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobGroupsService.findOne(HrmJobGroups.class, id)));
-        return "common/modal";
+        return "modal/JobGroup";
     }
 
     /**
@@ -117,5 +114,11 @@ public class HrmJobGroupController {
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
         return jsonVo;
+    }
+
+    @RequestMapping(value = "/list")
+    public @ResponseBody List list(){
+        List<HrmJobGroups> groupses = jobGroupsService.findAll(HrmJobGroups.class);
+        return groupses;
     }
 }

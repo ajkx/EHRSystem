@@ -38,7 +38,7 @@ public class HrmJobActivitiesController {
             LinkedHashMap<String,String> tempmap = new LinkedHashMap<>();
             tempmap.put("名称", jobactivity.getName());
             tempmap.put("详述", jobactivity.getDescription());
-            tempmap.put("职务类型", jobactivity.getGroupid().toString());
+            tempmap.put("职务类型", jobactivity.getGroupid().getName());
             map.put(jobactivity.getId(),tempmap);
         }
         model.addAttribute("topic","职务管理");
@@ -58,8 +58,7 @@ public class HrmJobActivitiesController {
     public String modal_create(Model model) {
         model.addAttribute("topic","职务信息创建");
         model.addAttribute("action","/jobactivities/create");
-        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobActivities.class));
-        return "common/modal";
+        return "modal/JobActivities";
     }
 
     @RequiresPermissions(value = "jobactivities:create")
@@ -74,10 +73,17 @@ public class HrmJobActivitiesController {
     @RequiresPermissions(value = "jobactivities:update")
     @RequestMapping(value = "/{id}")
     public String modal_update(@PathVariable int id, Model model) {
+        HrmJobActivities jobActivities = jobActivitiesService.findOne(HrmJobActivities.class, id);
+        Map<String, String> map = new HashMap<>();
+        map.put("id",jobActivities.getId()+"");
+        map.put("name",jobActivities.getName());
+        map.put("description", jobActivities.getDescription());
+        map.put("groupid", jobActivities.getGroupid().getId()+"");
+        map.put("groupname", jobActivities.getGroupid().getName());
         model.addAttribute("topic", "职务修改");
         model.addAttribute("action","/jobactivities/update");
-        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobActivitiesService.findOne(HrmJobActivities.class, id)));
-        return "common/modal";
+        model.addAttribute("map", map);
+        return "modal/JobActivities";
     }
 
     /**

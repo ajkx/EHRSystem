@@ -1,5 +1,7 @@
 package com.victory.ehrsystem.entity.sys;
 
+import com.victory.ehrsystem.entity.hrm.HrmResource;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +27,9 @@ public class User {
 
     @Column
     private String salt;
+
+    @OneToOne
+    private HrmResource hrmResource;
 
 
     @ManyToMany(targetEntity = SysRole.class)
@@ -93,6 +98,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public HrmResource getHrmResource() {
+        return hrmResource;
+    }
+
+    public void setHrmResource(HrmResource hrmResource) {
+        this.hrmResource = hrmResource;
+    }
+
+    public boolean isLocked() {
+        return locked;
     }
 
     ////设置user的roles的字符串

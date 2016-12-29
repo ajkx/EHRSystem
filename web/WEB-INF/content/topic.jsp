@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="common/init.jsp" %>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         var changeId;
         $('.operation-icon').hide();
-        $('.info-row').hover(function() {
+        $('.table-body').hover(function () {
             $(this).find('.operation-icon').show();
-        }, function() {
+        }, function () {
             $(this).find('.operation-icon').hide();
         });
     });
@@ -28,43 +28,40 @@
             </div>
         </div>
         <div class="topic-bar">
-            <button type="button" class="create-btn btn btn-success btn-sm" onclick="showEditModal('${url}/edit')">新增${simplename}</button>
+            <button type="button" class="create-btn btn btn-success btn-sm" onclick="showEditModal('${url}/edit')">
+                新增${simplename}</button>
         </div>
         <div class="topic-content">
-            <table class="table table-hover">
-                <colgroup>
-                    <%--namelist存放对象显示哪些字段集合--%>
-                    <c:forEach items="${map.keySet()}">
-                        <col width="20%" />
-                    </c:forEach>
-                </colgroup>
-                <thead>
-                <tr>
-                    <c:forEach items="${map}" var="map" begin="0" end="0">
-                        <c:forEach items="${map.value}" var="submap">
-                            <th>${submap.key}</th>
+            <div>
+                <div class="table-row table-header">
+                    <ul>
+                        <c:forEach items="${map}" var="map" begin="0" end="0">
+                            <c:forEach items="${map.value}" var="submap">
+                                <li>${submap.key}</li>
+                            </c:forEach>
                         </c:forEach>
-                    </c:forEach>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <%--list存放传递的实体对象--%>
-                <c:forEach items="${map}" var="listmap">
-                    <tr class="info-row">
+                    </ul>
+                </div>
+            <c:forEach items="${map}" var="listmap">
+                <div class="table-row table-body">
+                    <ul>
                         <c:forEach items="${listmap.value}" var="submap">
-                            <td>${submap.value}</td>
+                            <li>${submap.value}</li>
                         </c:forEach>
-                        <td>
+                        <li style="float: right">
                             <div class="operation-icon">
-                                <button type="button" class="update-btn btn btn-warning btn-sm" onclick="showEditModal('${url}/${listmap.key}')">编辑</button>
-                                <button type="button" class="delete-btn btn btn-danger btn-sm"  onclick="showDelModal('${url}/delete/${listmap.key}')">删除</button>
+                            <button type="button" class="update-btn btn btn-warning btn-sm"
+                                    onclick="showEditModal('${url}/${listmap.key}')">编辑
+                            </button>
+                            <button type="button" class="delete-btn btn btn-danger btn-sm"
+                                    onclick="showDelModal('${url}/delete/${listmap.key}')">删除
+                            </button>
                             </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                        </li>
+                    </ul>
+                </div>
+            </c:forEach>
+            </div>
         </div>
     </div>
 </div>

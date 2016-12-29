@@ -2,7 +2,7 @@ package com.victory.ehrsystem.dao.sys.impl;
 
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.sys.SysModuleDao;
-import com.victory.ehrsystem.domain.sys.SysModule;
+import com.victory.ehrsystem.entity.sys.SysModule;
 
 import java.io.Serializable;
 import java.util.ArrayList;

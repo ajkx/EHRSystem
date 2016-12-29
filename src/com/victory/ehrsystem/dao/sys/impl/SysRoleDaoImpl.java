@@ -2,8 +2,8 @@ package com.victory.ehrsystem.dao.sys.impl;
 
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.sys.SysRoleDao;
-import com.victory.ehrsystem.domain.sys.SysRole;
-import com.victory.ehrsystem.domain.sys.User;
+import com.victory.ehrsystem.entity.sys.SysRole;
+import com.victory.ehrsystem.entity.sys.User;
 
 import java.io.Serializable;
 import java.util.List;

@@ -5,6 +5,7 @@ import com.victory.ehrsystem.dao.attendance.AttendanceScheduleInfoDao;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.attendance.AttendanceScheduleInfo;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Time:14:35
  */
 @Service
-public class AttendanceScheduleService {
+public class AttendanceScheduleService extends BaseService<AttendanceSchedule>{
 
     @Autowired
     private AttendanceScheduleDao attendanceScheduleDao;

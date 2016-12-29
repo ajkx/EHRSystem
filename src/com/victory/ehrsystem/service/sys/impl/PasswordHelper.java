@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.service.sys.impl;
 
-import com.victory.ehrsystem.domain.sys.User;
+import com.victory.ehrsystem.entity.sys.User;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -41,5 +41,13 @@ public class PasswordHelper {
                 hashIterations
         ).toHex();
         user.setPassword(newPassword);
+    }
+
+    public String encryptPassword(String password,String salt){
+        String newPassword = new SimpleHash(algorithmName,
+                password,
+                ByteSource.Util.bytes(salt),
+                hashIterations).toHex();
+        return newPassword;
     }
 }

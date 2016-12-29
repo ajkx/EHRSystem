@@ -50,10 +50,10 @@ function submitForm(){
        type:"GET",
        dataType:"json",
        data:form.serialize(),
-       success:function(data) {
+       success:function(result) {
            if(data.status) {
                $('#edit-modal').modal('hide');
-               console.log(data.msg);
+               console.log(result.msg);
                $.pjax({url:location.href,container:'#main-content'});
            }else{
                console.log("???");
@@ -65,4 +65,19 @@ function submitForm(){
     });
 
     return false;
+}
+
+function ajaxSubmit(node){
+    var form = $(node);
+    console.log("ajax");
+    $.ajax({
+        url:form.attr('action'),
+        type:"POST",
+        dataType:"json",
+        data:form.serialize(),
+        success:function (result) {
+            // window.location.href = "/login";
+            console.log(result.status);
+        }
+    })
 }

@@ -43,4 +43,8 @@ public class DateUtil {
         Date date = new Date(calendar.getTimeInMillis());
         return date;
     }
+
+    public static Long getOneDayTime(){
+        return Long.valueOf(86400000);
+    }
 }

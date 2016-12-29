@@ -27,8 +27,8 @@ public class HrmLocation {
     @Column(name = "locationcity")
     private String city;
 
-    @Column(name = "countryid")
-    private int countryid;
+    @Column(name = "country")
+    private String country;
 
     @Column(name = "telephone")
     private String phone;
@@ -76,12 +76,12 @@ public class HrmLocation {
         this.city = city;
     }
 
-    public int getCountryid() {
-        return countryid;
+    public String getCountryid() {
+        return country;
     }
 
-    public void setCountryid(int countryid) {
-        this.countryid = countryid;
+    public void setCountryid(String countryid) {
+        this.country = countryid;
     }
 
     public String getPhone() {
@@ -105,13 +105,13 @@ public class HrmLocation {
 
     }
 
-    public HrmLocation(String name, String address, String postcode, String city, int countryid, String phone, String fax) {
+    public HrmLocation(String name, String address, String postcode, String city, String countryid, String phone, String fax) {
 
         this.name = name;
         this.address = address;
         this.postcode = postcode;
         this.city = city;
-        this.countryid = countryid;
+        this.country = countryid;
         this.phone = phone;
         this.fax = fax;
     }
