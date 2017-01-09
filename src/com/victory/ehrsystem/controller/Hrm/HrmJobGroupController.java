@@ -55,7 +55,7 @@ public class HrmJobGroupController {
         model.addAttribute("topic","职务类别信息创建");
         model.addAttribute("action","/jobgroup/create");
         model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobGroups.class));
-        return "modal/JobGroup";
+        return "modal/hrm/JobGroup";
     }
     /**
      * 执行创建的操作
@@ -85,7 +85,7 @@ public class HrmJobGroupController {
         model.addAttribute("topic", "职务类别信息修改");
         model.addAttribute("action","/jobgroup/update");
         model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobGroupsService.findOne(HrmJobGroups.class, id)));
-        return "modal/JobGroup";
+        return "modal/hrm/JobGroup";
     }
 
     /**

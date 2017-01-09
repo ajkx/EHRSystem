@@ -2,7 +2,6 @@ package com.victory.ehrsystem.controller.Hrm;
 
 import com.victory.ehrsystem.entity.hrm.HrmJobCall;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobCallService;
-import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class HrmJobCallController {
     public String modal_create(Model model) {
         model.addAttribute("topic","职称信息创建");
         model.addAttribute("action","/jobcall/create");
-        return "modal/JobCall";
+        return "modal/hrm/JobCall";
     }
     /**
      * 执行创建的操作
@@ -92,7 +91,7 @@ public class HrmJobCallController {
         model.addAttribute("topic", "职称信息修改");
         model.addAttribute("action","/jobcall/update");
         model.addAttribute("map",map);
-        return "modal/JobCall";
+        return "modal/hrm/JobCall";
     }
 
     /**

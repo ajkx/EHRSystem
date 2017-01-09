@@ -20,7 +20,7 @@ $(function () {
 
 //弹出修改的模态框
 function showEditModal(url){
-    $('#edit-modal-content').load(url,function(resp){
+    $('#edit-modal').load(url,function(resp){
         $('#edit-modal').modal("show");
     });
 }
@@ -51,7 +51,7 @@ function submitForm(){
        dataType:"json",
        data:form.serialize(),
        success:function(result) {
-           if(data.status) {
+           if(result.status) {
                $('#edit-modal').modal('hide');
                console.log(result.msg);
                $.pjax({url:location.href,container:'#main-content'});

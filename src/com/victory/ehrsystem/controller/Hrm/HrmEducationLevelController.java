@@ -62,7 +62,7 @@ public class HrmEducationLevelController {
     public String modal_create(Model model) {
         model.addAttribute("topic","学历信息创建");
         model.addAttribute("action","/educationlevel/create");
-        return "modal/EducationLevel";
+        return "modal/hrm/EducationLevel";
     }
     /**
      * 执行创建的操作
@@ -91,7 +91,7 @@ public class HrmEducationLevelController {
         model.addAttribute("topic", "学历信息修改");
         model.addAttribute("action","/educationlevel/update");
         model.addAttribute("map", CollectionUtil.getObejctValueAndFields(educationLevelService.findOne(HrmEducationLevel.class, id)));
-        return "modal/EducationLevel";
+        return "modal/hrm/EducationLevel";
     }
 
     /**

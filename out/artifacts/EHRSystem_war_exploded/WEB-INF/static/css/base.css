@@ -14,7 +14,12 @@ a:focus,
 a:visited{
 	text-decoration: none;
 }
-
+button{
+	outline: none;
+}
+a{
+	outline:none !important;
+}
 .clear{
 	clear: both;
 }

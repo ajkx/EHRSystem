@@ -12,6 +12,11 @@
 	height: 100%;
 }
 
+.logo-panel .logo-text{
+	font-size: 18px;
+	text-align: center;
+	vertical-align: middle;
+}
 .logo {
 	float: left;
 	display: inline-block;
@@ -69,7 +74,7 @@
 	background-color: #FAFAFA;
 }
 
-.dropdown-menu {
+.my-dropdown-menu {
 	margin: 0;
 	width: 120px;
 	min-width: 100px;
@@ -81,7 +86,7 @@
 	transition: opacity 2s ease-out;
 }
 
-.right-panel .userinfo:hover .dropdown-menu {
+.right-panel .userinfo:hover .my-dropdown-menu {
 	display: block;
 	opacity: 1;
 }
@@ -94,7 +99,7 @@
 	/*font-size: 24px;*/
 /*}*/
 
-.dropdown-menu:before {
+.my-dropdown-menu:before {
 	right: 55px;
 	left: auto;
 	top: -.25em;

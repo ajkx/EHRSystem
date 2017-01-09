@@ -2,6 +2,7 @@ package com.victory.ehrsystem.dao.Hrm.impl;
 
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.Hrm.HrmResourceDao;
+import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.hrm.HrmDepartment;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
@@ -28,5 +29,15 @@ public class HrmResourceDaoImpl extends BaseDaoImpl<HrmResource> implements HrmR
     @Override
     public List<HrmResource> findAllWorking() {
         return find("select r from HrmResource r where r.status in (0,1,2,3)");
+    }
+
+    @Override
+    public List<HrmResource> findNoSchedule() {
+        return find("select r from HrmResource r where r.schedule is null");
+    }
+
+    @Override
+    public List<HrmResource> findBySchedule(AttendanceSchedule schedule) {
+        return find("select r from HrmResource r where r.schedule =?0",schedule);
     }
 }

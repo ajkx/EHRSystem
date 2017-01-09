@@ -15,7 +15,7 @@ import java.util.List;
  * @author ajkx_Du
  * @create 2016-12-09 21:16
  */
-@Repository
+
 public class AttendanceScheduleInfoDaoImpl extends BaseDaoImpl<AttendanceScheduleInfo> implements AttendanceScheduleInfoDao {
     @Override
     public List<AttendanceScheduleInfo> findOneByNameAndDate(HrmResource resource, Date date) {

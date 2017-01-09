@@ -1,5 +1,7 @@
 package com.victory.ehrsystem.entity.hrm;
 
+import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+
 import javax.persistence.*;
 
 /**
@@ -116,6 +118,10 @@ public class HrmResource {
 
     @OneToOne(targetEntity = HrmContract.class,mappedBy = "man")
     private HrmContract contract;
+
+    //恒定的排班
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    private AttendanceSchedule schedule;
 
     public HrmResource() {
     }
@@ -408,6 +414,14 @@ public class HrmResource {
 
     public void setContract(HrmContract contract) {
         this.contract = contract;
+    }
+
+    public AttendanceSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(AttendanceSchedule schedule) {
+        this.schedule = schedule;
     }
 }
 

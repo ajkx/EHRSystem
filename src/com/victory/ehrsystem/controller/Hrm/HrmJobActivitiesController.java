@@ -2,7 +2,6 @@ package com.victory.ehrsystem.controller.Hrm;
 
 import com.victory.ehrsystem.entity.hrm.HrmJobActivities;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobActivitiesService;
-import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class HrmJobActivitiesController {
     public String modal_create(Model model) {
         model.addAttribute("topic","职务信息创建");
         model.addAttribute("action","/jobactivities/create");
-        return "modal/JobActivities";
+        return "modal/hrm/JobActivities";
     }
 
     @RequiresPermissions(value = "jobactivities:create")
@@ -83,7 +82,7 @@ public class HrmJobActivitiesController {
         model.addAttribute("topic", "职务修改");
         model.addAttribute("action","/jobactivities/update");
         model.addAttribute("map", map);
-        return "modal/JobActivities";
+        return "modal/hrm/JobActivities";
     }
 
     /**

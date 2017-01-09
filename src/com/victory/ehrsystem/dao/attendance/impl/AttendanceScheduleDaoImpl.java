@@ -11,7 +11,7 @@ import java.util.List;
  * @author ajkx_Du
  * @create 2016-12-09 21:16
  */
-@Repository
+
 public class AttendanceScheduleDaoImpl extends BaseDaoImpl<AttendanceSchedule> implements AttendanceScheduleDao {
     @Override
     public List<AttendanceSchedule> findByAcrossDay(boolean acrossday) {

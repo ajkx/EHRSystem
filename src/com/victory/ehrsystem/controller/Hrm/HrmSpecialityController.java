@@ -57,7 +57,7 @@ public class HrmSpecialityController {
     public String modal_create(Model model) {
         model.addAttribute("topic","专业信息创建");
         model.addAttribute("action","/speciality/create");
-        return "modal/Speciality";
+        return "modal/hrm/Speciality";
     }
     /**
      * 执行创建的操作
@@ -87,7 +87,7 @@ public class HrmSpecialityController {
         model.addAttribute("topic", "专业信息修改");
         model.addAttribute("action","/speciality/update");
         model.addAttribute("map", CollectionUtil.getObejctValueAndFields(specialityService.findOne(HrmSpeciality.class, id)));
-        return "modal/Speciality";
+        return "modal/hrm/Speciality";
     }
 
     /**

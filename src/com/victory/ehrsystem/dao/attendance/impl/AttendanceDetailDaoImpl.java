@@ -13,7 +13,7 @@ import java.util.List;
  * @author ajkx_Du
  * @create 2016-12-09 21:16
  */
-@Repository
+
 public class AttendanceDetailDaoImpl extends BaseDaoImpl<AttendanceDetail> implements AttendanceDetailDao{
     @Override
     public List<AttendanceDetail> findByHrmResource(HrmResource resource) {

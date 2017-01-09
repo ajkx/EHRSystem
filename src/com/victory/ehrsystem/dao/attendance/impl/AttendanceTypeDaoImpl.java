@@ -15,6 +15,6 @@ import java.util.List;
  * @author ajkx_Du
  * @create 2016-12-09 21:16
  */
-@Repository
+
 public class AttendanceTypeDaoImpl extends BaseDaoImpl<AttendanceType> implements AttendanceTypeDao {
 }

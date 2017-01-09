@@ -1,6 +1,7 @@
 package com.victory.ehrsystem.dao.Hrm;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.hrm.HrmDepartment;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
@@ -29,6 +30,22 @@ public interface HrmResourceDao extends BaseDao<HrmResource>{
      */
     List<HrmResource> findByDepartment(HrmDepartment department);
 
-
+    /**
+     * 找出在职员工
+     * @return
+     */
     List<HrmResource> findAllWorking();
+
+    /**
+     * 找出没有排班的员工
+     * @return
+     */
+    List<HrmResource> findNoSchedule();
+
+    /**
+     * 根据排班找出相应的员工
+     * @param schedule
+     * @return
+     */
+    List<HrmResource> findBySchedule(AttendanceSchedule schedule);
 }

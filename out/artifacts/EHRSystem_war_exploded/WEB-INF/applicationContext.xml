@@ -58,7 +58,12 @@
                 <value>com.victory.ehrsystem.entity.hrm.HrmSpeciality</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmLocation</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmResource</value>
-
+                <!--考勤信息表-->
+                <value>com.victory.ehrsystem.entity.attendance.AttendanceSchedule</value>
+                <value>com.victory.ehrsystem.entity.attendance.AttendanceRecord</value>
+                <value>com.victory.ehrsystem.entity.attendance.AttendanceDetail</value>
+                <value>com.victory.ehrsystem.entity.attendance.AttendanceScheduleInfo</value>
+                <value>com.victory.ehrsystem.entity.attendance.AttendanceType</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -91,7 +96,12 @@
     <bean id="location" class="com.victory.ehrsystem.dao.Hrm.impl.HrmLocationDaoImpl" parent="daoTemplate"/>
     <bean id="Speciality" class="com.victory.ehrsystem.dao.Hrm.impl.HrmSpecialityDaoImpl" parent="daoTemplate"/>
     <bean id="resource" class="com.victory.ehrsystem.dao.Hrm.impl.HrmResourceDaoImpl" parent="daoTemplate"/>
-
+    <!--考勤模块-->
+    <bean id="attendanceScheduleDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceScheduleDaoImpl" parent="daoTemplate"/>
+    <bean id="attendanceDetailDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceDetailDaoImpl" parent="daoTemplate"/>
+    <bean id="attendanceRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceRecordDaoImpl" parent="daoTemplate"/>
+    <bean id="attendanceScheduleInfoDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceScheduleInfoDaoImpl" parent="daoTemplate"/>
+    <bean id="attendanceTypeDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceTypeDaoImpl" parent="daoTemplate"/>
     <!--配置hibernate结束-->
 
     <!--配置hibernate事务-->

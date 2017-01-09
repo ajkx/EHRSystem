@@ -59,7 +59,7 @@ public class HrmLocationController {
     public String modal_create(Model model) {
         model.addAttribute("topic","办公地点信息创建");
         model.addAttribute("action","/location/create");
-        return "modal/Location";
+        return "modal/hrm/Location";
     }
     /**
      * 执行创建的操作
@@ -89,7 +89,7 @@ public class HrmLocationController {
         model.addAttribute("topic", "办公地点信息修改");
         model.addAttribute("action","/location/update");
         model.addAttribute("map", CollectionUtil.getObejctValueAndFields(locationService.findOne(HrmLocation.class, id)));
-        return "modal/Location";
+        return "modal/hrm/Location";
     }
 
     /**

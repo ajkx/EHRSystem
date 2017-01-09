@@ -60,29 +60,30 @@
 
 <nav class="navbar">
     <div class="logo-panel">
-        <a class="logo"><img src="${ctx}/static/image/logo.png" height="60px" /></a>
+        <%--<a class="logo"><img src="${ctx}/static/image/logo.png" height="60px" /></a>--%>
+        <span class="logo-text">考勤管理系统</span>
     </div>
 
-    <ul class="usual-panel">
-        <li>
-            <a class="quickicon" href="#">
-                <i class="fa fa-paper-plane-o"></i>
-                <span>项目</span>
-            </a>
-        </li>
-        <li>
-            <a class="quickicon" href="#">
-                <i class="fa fa-paper-plane-o"></i>
-                <span>项目</span>
-            </a>
-        </li>
-        <li>
-            <a class="quickicon" href="#">
-                <i class="fa fa-paper-plane-o"></i>
-                <span>项目</span>
-            </a>
-        </li>
-    </ul>
+    <%--<ul class="usual-panel">--%>
+        <%--<li>--%>
+            <%--<a class="quickicon" href="#">--%>
+                <%--<i class="fa fa-paper-plane-o"></i>--%>
+                <%--<span>项目</span>--%>
+            <%--</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+            <%--<a class="quickicon" href="#">--%>
+                <%--<i class="fa fa-paper-plane-o"></i>--%>
+                <%--<span>项目</span>--%>
+            <%--</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+            <%--<a class="quickicon" href="#">--%>
+                <%--<i class="fa fa-paper-plane-o"></i>--%>
+                <%--<span>项目</span>--%>
+            <%--</a>--%>
+        <%--</li>--%>
+    <%--</ul>--%>
 
     <div class="right-panel">
         <div class="middle-panel">
@@ -91,7 +92,7 @@
         <div class="userinfo dropdown">
             <a class="portrait" href="#"><img src="${ctx}/static/image/touxiang.png" width="40px" height="40px" /></a>
             <i class="fa fa-angle-down" style="font-size: 20px;font-weight: bold;color:#6F6F6F"></i>
-            <ul class="dropdown-menu dropdown-menu-right">
+            <ul class="dropdown-menu dropdown-menu-right my-dropdown-menu">
                 <li><a href="#menu7" data-target="#changepassword-modal" data-toggle="modal" >修改密码</a></li>
                 <li><a href="#menu8">修改头像</a></li>
             </ul>

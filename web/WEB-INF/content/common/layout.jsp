@@ -16,9 +16,14 @@
     <link rel="stylesheet" href="${ctx}/static/css/font-awesome.min.css" />
     <link rel="stylesheet" href="${ctx}/static/css/base.css" />
     <link rel="stylesheet" href="${ctx}/static/css/menu.css" />
-    <link rel="stylesheet" href="${ctx}/static/css/modal.css" />
     <link rel="stylesheet" href="${ctx}/static/css/container.css" />
     <link rel="stylesheet" href="${ctx}/static/css/tree.css" />
+    <%--时间选择控件--%>
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrap-clockpicker.min.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrap-datetimepicker.min.css" />
+    <%--checkbox控件--%>
+    <link rel="stylesheet" href="${ctx}/static/css/checkbox.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/modal.css" />
 
     <script type="text/javascript" src="${ctx}/static/js/jquery.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/jquery.pjax.js"></script>
@@ -26,16 +31,18 @@
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-treeview.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/common.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/ElementAction.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrap-clockpicker.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/icheck.min.js"></script>
+
 
 </head>
 <body>
 
 <%--Model--%>
 <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width:500px">
-        <div class="modal-content" id="edit-modal-content">
-        </div>
-    </div>
+
 </div>
 
 <%--确认删除模态框--%>
