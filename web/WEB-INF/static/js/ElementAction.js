@@ -3,13 +3,49 @@
  */
 
 //显示职务类别的方法
-function showJobGroups(){
-    var ul = $('#jobgroup-list ul');
-    var span = $('#jobgroup-name').find('span');
+// function showJobGroups(){
+//     var ul = $('#jobgroup-list ul');
+//     var span = $('#jobgroup-name').find('span');
+//     if(ul.find('li').length > 0){
+//         $('#jobgroup-list').css('display','block');
+//     }else{
+//         $.get("/jobgroup/list",function(result){
+//             if(result.length > 0){
+//                 $(result).each(function(index,element){
+//                     $('<li><?li>').text(element.name).appendTo(ul)
+//                         .click(function(event){
+//                             //选择框赋值
+//                             span.text(element.name);
+//                             //input标签赋值
+//                             $('#groupid').val(element.id);
+//                             //显示remove图标
+//                             $('.fa-times').css('display','inline');
+//                             //隐藏显示列表
+//                             $('#jobgroup-list').css('display','none');
+//                         });
+//                 });
+//                 $('#jobgroup-list').css('display','block');
+//             }else{
+//                 console.log("无数据");
+//             }
+//         });
+//     }
+//
+// }
+
+
+function showSelectList(no,url,event){
+    var node = $(no);
+    var mainid = node.siblings('.mainid');
+    var selectlist = node.siblings('.selectlist');
+    var ul = selectlist.find('ul');
+    var span = node.find('span');
+    var deleteicon = node.find('.fa-times');
     if(ul.find('li').length > 0){
-        $('#jobgroup-list').css('display','block');
+        selectlist.css('display','block');
+
     }else{
-        $.get("/jobgroup/list",function(result){
+        $.get("/"+url+"/list",function(result){
             if(result.length > 0){
                 $(result).each(function(index,element){
                     $('<li><?li>').text(element.name).appendTo(ul)
@@ -17,35 +53,140 @@ function showJobGroups(){
                             //选择框赋值
                             span.text(element.name);
                             //input标签赋值
-                            $('#groupid').val(element.id);
+                            mainid.val(element.id);
                             //显示remove图标
-                            $('.fa-times').css('display','inline');
+                            deleteicon.css('display','inline');
                             //隐藏显示列表
-                            $('#jobgroup-list').css('display','none');
+                            selectlist.css('display','none');
+                            event.stopPropagation();
                         });
                 });
-                $('#jobgroup-list').css('display','block');
+                selectlist.css('display','block');
+
             }else{
                 console.log("无数据");
             }
         });
     }
+    $(document).bind('click',function(event){
+        selectlist.css('display','none');
+        $(document).unbind('click');
+    });
+    event.stopPropagation();
 
 }
 
-function clearJobGroups(event){
-    $('#jobgroup-name').find('span').text("");
-    $('#groupid').val("");
-    $('.fa-times').css('display','none');
+function clearSelectList(no,event){
+    var node = $(no);
+    var span = node.siblings('span');
+    var parent = node.parent();
+    var mainid = parent.siblings('.mainid');
+    var ul = parent.siblings('.selectlist');
+    ul.find('li').css('display', 'list-item');
+    span.remove();
+    mainid.val("");
+    node.css('display','none');
     event.stopPropagation();
 }
 
+function mulitReset(node,id){
 
+    $(node).remove();
+    var parent = $(node).parent();
+    var mainid = parent.siblings('.mainid');
+    var array = mainid.val().split(",")
+}
 
+function showMulitSelectList(no,url,event){
+    var node = $(no);
+    var mainid = node.siblings('.mainid');
+    var selectlist = node.siblings('.selectlist');
+    var ul = selectlist.find('ul');
+    var deleteicon = node.find('.fa-times');
+    if(ul.find('li').length > 0){
+        selectlist.css('display','block');
+    }else{
+        $.get("/"+url+"/list",function(result){
+            if(result.length > 0){
+                var spans = node.find('span');
+                $(result).each(function(index,element){
+                        var li = $('<li></li>');
+                        for(var i = 0; i < spans.length; i++){
+                            if(element.id == $(spans[i]).attr("label-id")){
+                                li.css('display','none');
+                                $(spans[i]).click(function(){
+                                    $(this).remove();
+                                    var array = mainid.val().split(",");
+                                    var array1 = new Array();
+                                    for(var i = 0; i < array.length; i++){
+                                        if(array[i] != element.id){
+                                            array1.push(array[i])
+                                        }else{
+                                            ul.find("li[label-id='"+element.id+"']").css("display","list-item");
+                                        }
+                                    }
+                                    mainid.val(array1.join());
+                                    event.stopPropagation();
+                                });
+                            }
+                        }
+
+                        li.text(element.name)
+                        .attr('label-id',element.id)
+                        .click(function(event){
+                            $('<span></span>').text(element.name)
+                                .addClass('smallSpan')
+                                .click(function(event){
+                                    $(this).remove();
+                                    var array = mainid.val().split(",");
+                                    var array1 = new Array();
+                                    for(var i = 0; i < array.length; i++){
+                                        if(array[i] != element.id){
+                                            array1.push(array[i])
+                                        }else{
+                                            ul.find("li[label-id='"+element.id+"']").css("display","list-item");
+                                        }
+                                    }
+                                    mainid.val(array1.join());
+                                    event.stopPropagation();
+                                }).appendTo(node);
+                            //input标签赋值
+                            mainid.val(mainid.val()+","+element.id);
+                            $(this).css('display','none');
+                            //显示remove图标
+                            deleteicon.css('display','inline');
+                            //隐藏显示列表
+                            selectlist.css('display','none');
+                            event.stopPropagation();
+                        }).appendTo(ul);
+                });
+                selectlist.css('display','block');
+
+            }else{
+                console.log("无数据");
+            }
+        });
+    }
+    $(document).bind('click',function(event){
+        selectlist.css('display','none');
+        $(document).unbind('click');
+    });
+    event.stopPropagation();
+}
+
+function checkStr(main,value){
+    var array = main.split(",");
+    for(var i = 0; i < array.length;i++){
+        if(array[i] == value){
+            return false;
+        }
+    }
+    return true;
+}
 function setScheduleType(value,node){
     $('#sheduletype').val(value);
-    $(node).siblings().removeClass("scheduletype");
-    var nodes = $(node).parent().children();
+    node.siblings().removeClass("scheduletype");
+    var nodes = node.parent().children();
     switch(value){
         case 1:
             nodes.last().css("border-left","1px solid #ccc");
@@ -64,5 +205,5 @@ function setScheduleType(value,node){
             $('#threeSchedule').css("display","block");
             break;
     }
-    $(node).addClass("scheduletype");
+    node.addClass("scheduletype");
 }

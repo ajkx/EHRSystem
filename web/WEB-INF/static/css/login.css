@@ -108,8 +108,7 @@ html.no-touchevents .index-tab-navs a:hover {
 .group-inputs .input-wrapper{
 	position: relative;
 	margin: 0;
-	overflow: hidden;
-	
+	height:48px;
 	
 }
 .group-inputs .input-wrapper+.input-wrapper{
@@ -146,6 +145,13 @@ html.no-touchevents .index-tab-navs a:hover {
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 
+}
+
+.sign-button[disabled]{
+	cursor: not-allowed;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	background-color: #D2F5FD;
 }
 
 .button-wrapper .sign-button{

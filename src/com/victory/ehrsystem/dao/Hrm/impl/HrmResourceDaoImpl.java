@@ -40,4 +40,11 @@ public class HrmResourceDaoImpl extends BaseDaoImpl<HrmResource> implements HrmR
     public List<HrmResource> findBySchedule(AttendanceSchedule schedule) {
         return find("select r from HrmResource r where r.schedule =?0",schedule);
     }
+
+    @Override
+    public List<HrmResource> findNoManager() {
+        return find("select r from HrmResource r where r.user is null");
+    }
+
+
 }

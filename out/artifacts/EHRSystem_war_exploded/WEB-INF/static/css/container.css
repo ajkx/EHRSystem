@@ -1,13 +1,10 @@
 
 #container{
-	padding: 30px 30px;
+	padding: 10px 25px;
+	/*padding: 30px 30px;*/
 }
 
 
-#topic-container{
-	/*background-color: white;*/
-	padding: 0 20px;
-}
 .topic-header{
 	font-size: 18px;
 	font-weight: 400;

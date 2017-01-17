@@ -1,38 +1,42 @@
 #menu {
 	width: 220px;
-	background-color: #273240;
-	color: #cdcdcd;
+	background-color: #fff;
 	height: 100%;
 	position: absolute;
 	left: 0;
-	top:-1px;
-	font-size: 14px;
+	top: 0;
+	border: 1px solid #e9e9e9;
+	line-height: 48px;
+	color:#666;
 }
 
-.module-name {
-	padding: 15px 22px 15px 56px;
+.module-icon{
+	margin-right: 8px;
+	font-size: 12px;
+}
+
+.module-item{
+
+}
+.menu-item {
+	position: relative;
+	padding: 0 16px 0 28px;
+	font-size: 12px;
+	line-height: 42px;
+	height: 42px;
 	cursor: pointer;
-	font-size:16px;
+	-webkit-transition: all .3s ease;
+	transition: all .3s ease;
+}
+.menu-item:hover{
+	background-color: #eaf8fe;
 }
 
 .sub-module {
-	background-color: #1e2631;
+	background-color: #fff;
 	/*background-color:#31393C;*/
 }
 
-.sub-module-name {
-	padding: 15px 22px 15px 56px;
-	cursor: pointer;
-}
-.sub-module-name:hover{
-    color: #b8babd;
-    background: rgba(0,0,0,0.1);
-}
-
-.item-icon {
-	position: absolute;
-	margin: 2px 0 0 -35px;
-}
 .on .icon-angle-down{
 	-webkit-transform: rotate(-90deg);
 	-ms-transform: rotate(-90deg);
@@ -40,59 +44,32 @@
 	transform: rotate(-90deg);
 }
 .icon-angle-down {
-	float: right!important;
+	position: absolute;
+	top:15px;
+	right: 16px;
 	transition: all .15s ease;
 }
 
 .link-item {
 	display: block;
-	padding: 10px 22px 10px 56px;
-	line-height: 20px;
-	color: #cdcdcd;
+	padding: 0px 16px 0px 56px;
+	line-height: 42px;
 	text-decoration: none;
+	color: #666;
 	position: relative;
+	border-right: 1px solid #e9e9e9;
+	left: 1px;
 }
 .link-item:hover{
-    color: #b8babd;
-    background: rgba(0,0,0,0.1);
+	color: #666;
+    background: #eaf8fe;
 }
 .sub-module .active .link-item {
-	/*border-left: 3px solid #2dc3e8;
-	padding-left: 53px;*/
-    color: #b8babd;
-    background: rgba(0,0,0,0.1);
+    color: #2db7f5;
+	border-right: 2px solid #2db7f5;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
 }
 
-.active .link-item:before {
-	background-color: #0b5668;
-}
 
-.active .link-item:after {
-	border-color: #0b5668;
-	background-color: #0b5668;
-}
 
-.link-item:before {
-	top: 0;
-	bottom: 0;
-	left: 26px;
-	width: 1px;
-	background-color: #3c434b;
-	z-index: 1;
-	content: "";
-	position: absolute;
-}
-
-.link-item:after {
-	height: 9px;
-	width: 9px;
-	border-radius: 50%;
-	border: 1px solid #3c434b;
-	background-color: #1e2631;
-	z-index: 2;
-	top: 50%;
-	left: 22px;
-	margin-top: -4px;
-	content: "";
-	position: absolute;
-}

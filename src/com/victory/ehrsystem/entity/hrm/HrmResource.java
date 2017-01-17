@@ -1,6 +1,7 @@
 package com.victory.ehrsystem.entity.hrm;
 
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+import com.victory.ehrsystem.entity.sys.User;
 
 import javax.persistence.*;
 
@@ -122,6 +123,9 @@ public class HrmResource {
     //恒定的排班
     @ManyToOne(targetEntity = AttendanceSchedule.class)
     private AttendanceSchedule schedule;
+
+    @OneToOne(targetEntity = User.class)
+    private User user;
 
     public HrmResource() {
     }
@@ -422,6 +426,14 @@ public class HrmResource {
 
     public void setSchedule(AttendanceSchedule schedule) {
         this.schedule = schedule;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

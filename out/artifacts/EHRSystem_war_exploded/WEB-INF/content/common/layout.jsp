@@ -24,17 +24,21 @@
     <%--checkbox控件--%>
     <link rel="stylesheet" href="${ctx}/static/css/checkbox.css" />
     <link rel="stylesheet" href="${ctx}/static/css/modal.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/toastr.css">
 
     <script type="text/javascript" src="${ctx}/static/js/jquery.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/jquery.pjax.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-treeview.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/common.js"></script>
+
     <script type="text/javascript" src="${ctx}/static/js/ElementAction.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-clockpicker.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/icheck.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/toastr.js"></script>
+
+    <script type="text/javascript" src="${ctx}/static/js/common.js"></script>
 
 
 </head>
@@ -62,6 +66,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<%--margin-left: 219px;border-left: 1px solid #e9e9e9;padding: 10px 0px 5px 25px;--%>
 
 <jsp:include page="../nav.jsp"/>
 <div style="position: absolute;left:0;right: 0;bottom: 0;top: 61px">

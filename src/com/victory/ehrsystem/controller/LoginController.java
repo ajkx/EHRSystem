@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller;
 import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.service.sys.UserService;
+import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,35 +35,31 @@ public class LoginController {
     private ResourceService resourceService;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public @ResponseBody Map<String,Object> login(User user, HttpServletRequest request) {
-        Map<String,Object> map = new HashMap<String,Object>();
+    public @ResponseBody JsonVo login(User user, HttpServletRequest request) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
+        JsonVo jsonVo = new JsonVo();
         try {
             subject.login(token);
             request.getSession().setAttribute("username",user.getName());
-            map.put("msg", "success");
-            map.put("url","home.html");
-            return map;
+            jsonVo.setStatus(true).addValue("url","home.html");
+            return jsonVo;
         } catch (UnknownAccountException | IncorrectCredentialsException e) {
             e.printStackTrace();
-            map.put("msg", "fail");
-            map.put("detail", "unknow");
-            return map;
+            jsonVo.setStatus(false).setMsg("用户名或密码错误");
+            return jsonVo;
         } catch (LockedAccountException e) {
             e.printStackTrace();
-            map.put("msg", "fail");
-            map.put("detail", "locked");
-            return map;
+            jsonVo.setStatus(false).setMsg("账号锁定，请联系系统管理员！");
+            return jsonVo;
         } catch (Exception e) {
             e.printStackTrace();
-            map.put("msg", "fail");
-            return map;
+            jsonVo.setStatus(false).setMsg("fail");
+            return jsonVo;
         }
     }
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String test() {
-        System.out.println("test");
         return "login";
     }
 
@@ -70,10 +68,34 @@ public class LoginController {
     //    return ""
     //}
 
+    @RequestMapping(value = "/logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "login";
+    }
     @RequestMapping(value = "/regist")
-    public String regist(User user) {
-        userService.createUser(user);
-        return "bb";
+    public @ResponseBody JsonVo regist(HttpServletRequest request,@RequestParam(required = true)String regist_account, @RequestParam(required = true)String regist_password, @RequestParam(required = true)String password_confirm) {
+        JsonVo jsonVo = new JsonVo();
+        if(!regist_password.equals(password_confirm)){
+            jsonVo.setStatus(false).setMsg("两次密码输入不一致");
+        }else{
+            if(userService.findByUsername(regist_account) != null){
+                jsonVo.setStatus(false).setMsg("账号名已被注册！");
+            }else{
+                User user = new User();
+                user.setName(regist_account);
+                user.setPassword(regist_password);
+                user = userService.createUser(user);
+                jsonVo.setStatus(true).setMsg("注册成功！请登录使用").put("regist",true);
+//                Subject subject = SecurityUtils.getSubject();
+//                UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
+//                subject.login(token);
+//                request.getSession().setAttribute("username",user.getName());
+//                jsonVo.setStatus(true).addValue("url","home.html");
+            }
+        }
+        return jsonVo;
     }
 
 }

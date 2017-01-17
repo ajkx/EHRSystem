@@ -29,7 +29,6 @@ public class PjaxInterceptor implements HandlerInterceptor{
 
         String header = request.getHeader("X-PJAX");
         String desc = request.getHeader(DESC);
-
         //如果不为pjax请求，模态框请求，不为公用菜单请求，则进行layout的转发
         if (header == null && !path.contains(Layout.LAYOUT_PATH) && desc == null) {
             //因为没有servletpath 所以url直接等于layoutpath

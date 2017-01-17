@@ -22,7 +22,7 @@
                   onsubmit="return submitForm()">
                 <div class="div-group">
                     <span>班次名称</span>
-                    <input type="text" class="form-control modal-input"
+                    <input type="text" class="form-control u-input"
                            style="width: 140px; margin-right: 20px; margin-left: 10px" name="name" value="${schedule.name}"/>
                 </div>
                 <div style="color: rgb(196, 196, 196); margin-top: 10px; margin-bottom: 30px; margin-left: 60px;">
@@ -50,7 +50,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                             <span style="width: 200px; margin-right: 20px;">第1次上下班</span>
                             上班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;">
-                                <input class="form-control modal-input timepick" value="" name="first_up"
+                                <input class="form-control u-input timepick" value="" name="first_up"
                                        style="width:100px" readonly>
                                 <span class="timepick-icon fa fa-clock-o"></span>
                             </span>
@@ -58,7 +58,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                         <div style="width: 275px; display: inline-block;">
                             下班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;"><input
-                                    class="form-control modal-input timepick" value="" name="first_down"
+                                    class="form-control u-input timepick" value="" name="first_down"
                                     style="width:100px" readonly><span
                                     class="timepick-icon fa fa-clock-o"></span></span>
                         </div>
@@ -68,7 +68,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                             <span style="width: 200px; margin-right: 20px;">第2次上下班</span>
                             上班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;">
-                                <input class="form-control modal-input timepick" value="" name="second_up"
+                                <input class="form-control u-input timepick" value="" name="second_up"
                                        style="width:100px" readonly>
                                 <span class="timepick-icon fa fa-clock-o"></span>
                             </span>
@@ -76,7 +76,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                         <div style="width: 275px; display: inline-block;">
                             下班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;"><input
-                                    class="form-control modal-input timepick" value="" name="second_down"
+                                    class="form-control u-input timepick" value="" name="second_down"
                                     style="width:100px" readonly><span
                                     class="timepick-icon fa fa-clock-o"></span></span>
                         </div>
@@ -86,7 +86,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                             <span style="width: 200px; margin-right: 20px;">第3次上下班</span>
                             上班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;">
-                                <input class="form-control modal-input timepick" value="" name="third_up"
+                                <input class="form-control u-input timepick" value="" name="third_up"
                                        style="width:100px" readonly>
                                 <span class="timepick-icon fa fa-clock-o"></span>
                             </span>
@@ -94,7 +94,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                         <div style="width: 275px; display: inline-block;">
                             下班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;"><input
-                                    class="form-control modal-input timepick" value="" name="third_down"
+                                    class="form-control u-input timepick" value="" name="third_down"
                                     style="width:100px" readonly><span
                                     class="timepick-icon fa fa-clock-o"></span></span>
                         </div>
@@ -115,21 +115,21 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                 <div class="div-group" style="color: rgb(148, 148, 148);">弹性时间设置</div>
                 <div class="div-group">
                     <span>上班打卡时长</span>
-                    <input type="number" class="form-control modal-input input-number" name="scope_up" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
+                    <input type="number" class="form-control u-input input-number" name="scope_up" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
                 </div>
                 <div class="div-group">
                     <span>下班打卡时长</span>
-                    <input type="number" class="form-control modal-input input-number" name="scope_down" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
+                    <input type="number" class="form-control u-input input-number" name="scope_down" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
                 </div>
                 <div class="div-group">
                     <span>迟到/早退限定时长（超过则记作旷工）</span>
-                    <input type="number" class="form-control modal-input input-number" name="offsetTime" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
+                    <input type="number" class="form-control u-input input-number" name="offsetTime" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-simple btn-lg" type="button">取 消</button>
-            <button class="btn btn-primary btn-lg" type="submit">确 定</button>
+            <button class="u-btn u-btn-lg" type="button">取 消</button>
+            <button class="u-btn u-btn-primary u-btn-lg" type="submit" style="margin-left: 8px">确 定</button>
         </div>
     </div>
 </div>

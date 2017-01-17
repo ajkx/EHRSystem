@@ -11,7 +11,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="${ctx}/static/css/nav.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/nav.css"/>
 </head>
 
 <body>
@@ -28,7 +28,8 @@
                 </h4>
             </div>
             <div class="modal-body ">
-                <form class="form-horizontal" role="form" action="/changepassword" method="post" onsubmit="return ajaxSubmit(this)">
+                <form class="form-horizontal" role="form" action="/changepassword" method="post"
+                      onsubmit="return ajaxSubmit(this)">
                     <%--eidtlist存放创建或者修改的编辑字段集合--%>
                     <input type="hidden" class="form-control" id="topicid" name="id" value=""/>
                     <div class="form-group">
@@ -59,45 +60,49 @@
 
 
 <nav class="navbar">
-    <div class="logo-panel">
-        <%--<a class="logo"><img src="${ctx}/static/image/logo.png" height="60px" /></a>--%>
-        <span class="logo-text">考勤管理系统</span>
+    <div class="left-panel">
+        <a class="quickicon logo-text"><span>考勤管理系统</span></a>
     </div>
-
-    <%--<ul class="usual-panel">--%>
-        <%--<li>--%>
-            <%--<a class="quickicon" href="#">--%>
-                <%--<i class="fa fa-paper-plane-o"></i>--%>
-                <%--<span>项目</span>--%>
-            <%--</a>--%>
-        <%--</li>--%>
-        <%--<li>--%>
-            <%--<a class="quickicon" href="#">--%>
-                <%--<i class="fa fa-paper-plane-o"></i>--%>
-                <%--<span>项目</span>--%>
-            <%--</a>--%>
-        <%--</li>--%>
-        <%--<li>--%>
-            <%--<a class="quickicon" href="#">--%>
-                <%--<i class="fa fa-paper-plane-o"></i>--%>
-                <%--<span>项目</span>--%>
-            <%--</a>--%>
-        <%--</li>--%>
-    <%--</ul>--%>
-
-    <div class="right-panel">
-        <div class="middle-panel">
-            <input type="text" class="form-control input-sm searchinput" name="searchinput" placeholder="Search..." />
-        </div>
-        <div class="userinfo dropdown">
-            <a class="portrait" href="#"><img src="${ctx}/static/image/touxiang.png" width="40px" height="40px" /></a>
-            <i class="fa fa-angle-down" style="font-size: 20px;font-weight: bold;color:#6F6F6F"></i>
+    <div class="center-panel">
+        <a class="quickicon" href="#">
+            <span>排班管理</span>
+        </a>
+        <a class="quickicon" href="#">
+            <span>人员调整</span>
+        </a>
+        <a class="quickicon" href="#">
+            <span>考勤报表</span>
+        </a>
+    </div>
+    <ul class="right-panel" style="display: block;">
+        <li class="nav-btn nav-attendance">
+            <div class="btn" id="attendance_sign">考勤签到</div>
+        </li>
+        <li class="nav-btn nav-split">
+            <div class="split-line"></div>
+        </li>
+        <li class="nav-btn nav-help">
+            <i class="iconfont icon-question_b icon-help-slim"></i>
+        </li>
+        <li class="nav-btn nav-message" id="nv-message">
+            <i class="iconfont icon-alarm icon-help-slim"></i>
+        </li>
+        <li class="nav-btn nav-menu">
+            <a href="#" data-toggle="dropdown" style="color: #fff"><i class="iconfont icon-menu icon-help-slim"></i></a>
             <ul class="dropdown-menu dropdown-menu-right my-dropdown-menu">
-                <li><a href="#menu7" data-target="#changepassword-modal" data-toggle="modal" >修改密码</a></li>
-                <li><a href="#menu8">修改头像</a></li>
+                <li><a href="#menu7" data-target="#changepassword-modal" data-toggle="modal">修改密码</a></li>
+                <li><a href="/logout">退出</a></li>
             </ul>
-        </div>
-    </div>
+        </li>
+    </ul>
+    <%--<ul class="right-panel" style="display: block">--%>
+        <%--<li class="nav-btn nav-split"></li>--%>
+        <%--<div class="userinfo dropdown">--%>
+            <%--<a class="portrait" href="#"><img src="${ctx}/static/image/touxiang.png" width="40px" height="40px"/></a>--%>
+            <%--<i class="fa fa-angle-down" style="font-size: 20px;font-weight: bold;color:#6F6F6F"></i>--%>
+
+        <%--</div>--%>
+    <%--</ul>--%>
 </nav>
 <hr style="border-top:1px solid #DFDEDA"/>
 </body>

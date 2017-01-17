@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     private String name;
 
     @Column
@@ -28,11 +28,11 @@ public class User {
     @Column
     private String salt;
 
-    @OneToOne
+    @OneToOne(targetEntity = HrmResource.class)
     private HrmResource hrmResource;
 
 
-    @ManyToMany(targetEntity = SysRole.class)
+    @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

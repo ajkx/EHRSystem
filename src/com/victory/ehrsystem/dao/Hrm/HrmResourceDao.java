@@ -48,4 +48,10 @@ public interface HrmResourceDao extends BaseDao<HrmResource>{
      * @return
      */
     List<HrmResource> findBySchedule(AttendanceSchedule schedule);
+
+    /**
+     * 找出所有非管理员的员工
+     * @return
+     */
+    List<HrmResource> findNoManager();
 }

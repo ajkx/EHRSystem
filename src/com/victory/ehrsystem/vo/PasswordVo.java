@@ -6,7 +6,7 @@ package com.victory.ehrsystem.vo;
  * Time:20:44
  */
 public class PasswordVo {
-
+    
     private String currentPassword;
     private String password;
     private String confirmPassword;

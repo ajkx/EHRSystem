@@ -24,14 +24,14 @@ public class SysRole {
     @Column
     private String description;
 
-    @ManyToMany(targetEntity = SysResource.class)
+    @ManyToMany(targetEntity = SysResource.class,fetch = FetchType.EAGER)
     @JoinTable(name = "role_resource",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"))
     private Set<SysResource> resources = new HashSet<SysResource>();
 
 
-    @ManyToMany(targetEntity = User.class)
+    @ManyToMany(targetEntity = User.class,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))

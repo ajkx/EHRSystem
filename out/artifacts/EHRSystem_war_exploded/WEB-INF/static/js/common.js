@@ -17,6 +17,21 @@ $(function () {
     });
 });
 
+toastr.options = {
+    closeButton: false,
+    debug: false,
+    progressBar: false,
+    positionClass: "toast-top-right",
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut"
+};
 
 //弹出修改的模态框
 function showEditModal(url){
@@ -53,10 +68,10 @@ function submitForm(){
        success:function(result) {
            if(result.status) {
                $('#edit-modal').modal('hide');
-               console.log(result.msg);
+               toastr.success(result.msg);
                $.pjax({url:location.href,container:'#main-content'});
            }else{
-               console.log("???");
+               toastr.error(result.msg);
            }
        },
        error:function(xhr,status) {

@@ -29,18 +29,15 @@
                     </div>
                     <div class="control-wrapper">
                         <label for="name">职务类别<span class="not_empty_tips">*</span></label>
-                        <input type="hidden" class="form-control" id="groupid" name="groupid.id" value="${map.groupid}">
-                        <div id="jobgroup-name" class="create_input_div" onclick="showJobGroups()">
+                        <input type="hidden" class="form-control mainid" id="groupid" name="groupid.id" value="${map.groupid}">
+                        <div id="jobgroup-name" class="create_input_div" onclick="showSelectList(this,'jobgroup',event)">
                             <span style="margin-left: 7px">${map.groupname}</span>
                             <i class="fa fa-times" style="float: right;margin-top: 4px;display:none" title="取消"
-                               onclick="clearJobGroups(event)"></i>
+                               onclick="clearSelectList(this,event)"></i>
                         </div>
                         <div id="jobgroup-list" class="selectlist" style="display : none">
                             <ul>
                             </ul>
-                        </div>
-                        <div id="cancel-choose-icon">
-
                         </div>
                     </div>
                     <div class="control-wrapper">
