@@ -172,6 +172,7 @@ public class ManagerController {
             user.setHrmResource(userVo.getResourceid());
             Set<SysRole> roles = new HashSet<>();
             for(String roleid : userVo.getRoleids().split(",")){
+                if(roleid.equals("")) continue;
                 roles.add(roleService.findOne(Integer.parseInt(roleid)));
             }
             user.setRoleids(roles);

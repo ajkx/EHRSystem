@@ -4,7 +4,10 @@ import com.victory.ehrsystem.entity.hrm.HrmLocation;
 import com.victory.ehrsystem.service.hrm.impl.HrmLocationService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.JsonVo;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -117,6 +120,7 @@ public class HrmLocationController {
         locationService.delete(HrmLocation.class,id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
+        Subject subject = SecurityUtils.getSubject();
         return jsonVo;
     }
 }

@@ -67,9 +67,11 @@ public class OrganizationController {
     @RequestMapping(value = "/subcompany/{id}")
     public String viewSubcompany(@PathVariable(value = "id") int id,Model model) {
         HrmSubCompany subCompany = organizationService.findOne_SubCompany(id);
+        List<HrmSubCompany> list_sub = organizationService.findAllSubcompanyBySubcompany(subCompany);
         List<HrmDepartment> list_dep = organizationService.findAllDepartmentBySubcompany(subCompany);
         model.addAttribute("entity", subCompany);
-        model.addAttribute("list", list_dep);
+        model.addAttribute("list_dep", list_dep);
+        model.addAttribute("list_sub", list_sub);
         return "/organization/sub_detail";
     }
 

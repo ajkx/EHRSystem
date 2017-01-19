@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="${ctx}/static/css/base.css" />
     <link rel="stylesheet" href="${ctx}/static/css/menu.css" />
     <link rel="stylesheet" href="${ctx}/static/css/container.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/detailcontainer.css" />
     <link rel="stylesheet" href="${ctx}/static/css/tree.css" />
     <%--时间选择控件--%>
     <link rel="stylesheet" href="${ctx}/static/css/bootstrap-clockpicker.min.css" />
