@@ -28,7 +28,7 @@ public class HrmJobActivitiesController {
     @Autowired
     private HrmJobActivitiesService jobActivitiesService;
 
-    @RequiresPermissions(value = "jobactivities:view")
+    @RequiresPermissions(value = "jobActivities:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
         List<HrmJobActivities> temp = jobActivitiesService.findAll(HrmJobActivities.class);
@@ -44,6 +44,7 @@ public class HrmJobActivitiesController {
         model.addAttribute("simplename","职务");
         model.addAttribute("url", "/jobactivities");
         model.addAttribute("map",map);
+        model.addAttribute("width","25%");
         return "topic";
     }
 
@@ -52,7 +53,7 @@ public class HrmJobActivitiesController {
      * @param model
      * @return
      */
-    @RequiresPermissions(value = "jobactivities:create")
+    @RequiresPermissions(value = "jobActivities:create")
     @RequestMapping(value = "/edit",method = RequestMethod.GET)
     public String modal_create(Model model) {
         model.addAttribute("topic","职务信息创建");
@@ -60,7 +61,7 @@ public class HrmJobActivitiesController {
         return "modal/hrm/JobActivities";
     }
 
-    @RequiresPermissions(value = "jobactivities:create")
+    @RequiresPermissions(value = "jobActivities:create")
     @RequestMapping(value = "/create")
     public @ResponseBody JsonVo create(HrmJobActivities activities) {
         jobActivitiesService.save(activities);
@@ -69,7 +70,7 @@ public class HrmJobActivitiesController {
         return jsonVo;
     }
 
-    @RequiresPermissions(value = "jobactivities:update")
+    @RequiresPermissions(value = "jobActivities:update")
     @RequestMapping(value = "/{id}")
     public String modal_update(@PathVariable int id, Model model) {
         HrmJobActivities jobActivities = jobActivitiesService.findOne(HrmJobActivities.class, id);
@@ -90,7 +91,7 @@ public class HrmJobActivitiesController {
      * @param
      * @return
      */
-    @RequiresPermissions(value = "jobactivities:update")
+    @RequiresPermissions(value = "jobActivities:update")
     @RequestMapping(value = "/update")
     public @ResponseBody JsonVo update(HrmJobActivities activities, Model model) {
         jobActivitiesService.update(HrmJobActivities.class, activities);
@@ -104,7 +105,7 @@ public class HrmJobActivitiesController {
      * @param id
      * @return
      */
-    @RequiresPermissions(value = "jobactivities:delete")
+    @RequiresPermissions(value = "jobActivities:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
         jobActivitiesService.delete(HrmJobActivities.class, id);

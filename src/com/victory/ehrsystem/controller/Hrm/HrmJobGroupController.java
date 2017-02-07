@@ -41,6 +41,7 @@ public class HrmJobGroupController {
         model.addAttribute("simplename","类别");
         model.addAttribute("url", "/jobgroup");
         model.addAttribute("map",map);
+        model.addAttribute("width","33%");
         return "topic";
     }
 

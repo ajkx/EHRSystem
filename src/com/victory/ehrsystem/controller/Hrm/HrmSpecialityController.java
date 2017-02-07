@@ -44,6 +44,7 @@ public class HrmSpecialityController {
         model.addAttribute("simplename","专业");
         model.addAttribute("url", "/speciality");
         model.addAttribute("map",map);
+        model.addAttribute("width","33%");
         return "topic";
     }
 

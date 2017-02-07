@@ -7,63 +7,46 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/init.jsp" %>
-<script>
-    $(document).ready(function () {
-        var changeId;
-        $('.operation-icon').hide();
-        $('.table-body').hover(function () {
-            $(this).find('.operation-icon').show();
-        }, function () {
-            $(this).find('.operation-icon').hide();
-        });
-    });
-</script>
-<div id="container">
-    <div id="topic-container">
-        <div class="topic-header">
-            <span>${topic}</span>
-            <div class="sort-div">
-                排序
-                <i class="dropdown-icon fa fa-caret-down"></i>
-            </div>
-        </div>
-        <div class="topic-bar">
-            <button type="button" class="create-btn btn btn-success btn-sm" onclick="showEditModal('${url}/edit')">
-                新增${simplename}</button>
-        </div>
-        <div class="topic-content">
-            <div>
-                <div class="table-row table-header">
-                    <ul>
-                        <li>账号</li>
-                        <li>所属员工</li>
-                        <li>所有角色</li>
-                    </ul>
-                </div>
-                <c:forEach items="${list}" var="user">
-                    <div class="table-row table-body">
-                        <ul>
-                            <li>${user.name}</li>
-                            <li>${user.hrmResource.name}</li>
-                            <li>
-                            <c:forEach items="${user.roleids}" var="set">
-                                <a>${set.name}</a>
-                            </c:forEach>
-                            </li>
-                            <li style="float: right">
-                                <div class="operation-icon">
-                                    <button type="button" class="update-btn btn btn-warning btn-sm"
-                                            onclick="showEditModal('${url}/${user.id}')">编辑
-                                    </button>
-                                    <button type="button" class="delete-btn btn btn-danger btn-sm"
-                                            onclick="showDelModal('${url}/delete/${user.id}')">删除
-                                    </button>
-                                </div>
-                            </li>
-                        </ul>
+
+<div class="topic-toolbar">
+    <a style="font-size: 14px;color:#2db7f5" href="javascript:void(0)"
+       onclick="showEditModal('${url}/edit')">新增${simplename}</a>
+</div>
+<div style="" class="topic-content ant-table">
+    <table>
+        <colgroup>
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+        </colgroup>
+        <thead class="ant-table-thead">
+        <tr>
+            <th>账号</th>
+            <th>所属员工</th>
+            <th>所有角色</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody class="ant-table-tbody">
+        <c:forEach items="${list}" var="user">
+            <tr>
+                <td>${user.name}</td>
+                <td>${user.hrmResource.name}</td>
+                <td>
+                    <c:forEach items="${user.roleids}" var="set">
+                        <a>${set.name}</a>
+                    </c:forEach>
+                </td>
+                <td>
+                    <div>
+                        <a href="javascript:void(0)" onclick="showEditModal('${url}/${user.id}')">编辑</a>
+                        <span class="ant-divider"></span>
+                        <a href="javascript:void(0)" onclick="showDelModal('${url}/delete/${user.id}')">删除</a>
                     </div>
-                </c:forEach>
-            </div>
-        </div>
-    </div>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>

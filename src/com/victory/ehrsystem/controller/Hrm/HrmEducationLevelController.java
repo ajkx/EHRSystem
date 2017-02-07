@@ -49,6 +49,7 @@ public class HrmEducationLevelController {
         model.addAttribute("simplename","学历");
         model.addAttribute("url","/educationlevel");
         model.addAttribute("map",map);
+        model.addAttribute("width","33%");
         return "topic";
     }
 

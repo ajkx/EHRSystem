@@ -49,6 +49,7 @@ public class HrmLocationController {
         model.addAttribute("simplename","地点");
         model.addAttribute("url", "/location");
         model.addAttribute("map",map);
+        model.addAttribute("width","25%");
         return "topic";
     }
 

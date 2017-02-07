@@ -15,7 +15,7 @@ ul {
 	list-style: none
 }
 a {
-	color: #03A8F2;
+	color: #2db7f5;
 	background: transparent;
 	text-decoration: none;
 	cursor: pointer;
@@ -241,4 +241,8 @@ span.error:before{
 .btn-gray:hover{
 	color:white;
 	background-color: #13BB92;
+}
+
+.topic-toolbar{
+	margin-bottom: 5px;
 }

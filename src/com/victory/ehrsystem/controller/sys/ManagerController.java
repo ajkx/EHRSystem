@@ -47,15 +47,6 @@ public class ManagerController {
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
         List<User> temp = userService.findAll();
-        List<Map<String, Object>> list = new ArrayList<>();
-//        for (User user : temp) {
-//            HashMap<String,Object> tempmap = new HashMap<>();
-//            tempmap.put("account", user.getName());
-//            tempmap.put("hrm", user.getHrmResource());
-//            tempmap.put("roleid",new HashMap<>().put("aaa","aaa"));
-//            tempmap.put("id",user.getId());
-//            list.add(tempmap);
-//        }
         model.addAttribute("topic","操作员管理");
         model.addAttribute("simplename","操作员");
         model.addAttribute("url","/user");

@@ -44,6 +44,7 @@ public class HrmUseKindController {
         model.addAttribute("simplename","性质");
         model.addAttribute("url", "/usekind");
         model.addAttribute("map",map);
+        model.addAttribute("width","33%");
         return "topic";
     }
 

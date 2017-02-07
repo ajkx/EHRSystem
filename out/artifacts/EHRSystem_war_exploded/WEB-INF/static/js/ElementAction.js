@@ -207,3 +207,20 @@ function setScheduleType(value,node){
     }
     node.addClass("scheduletype");
 }
+
+function searchData(url){
+    var input = $('#searchinput');
+    var value = input.val();
+    $.ajax({
+        url:url,
+        data:{"value" : value},
+        dataType:"json",
+        success:function(result){
+            if(result.count > 1){
+                console.log("无数据");
+            }else{
+                console.log
+            }
+        }
+    });
+}

@@ -43,6 +43,7 @@ public class HrmJobCallController {
         model.addAttribute("simplename","职称");
         model.addAttribute("url","/jobcall");
         model.addAttribute("map",map);
+        model.addAttribute("width","33%");
         return "topic";
     }
 
