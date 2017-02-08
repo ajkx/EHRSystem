@@ -62,7 +62,7 @@ function submitForm(){
     var form = $('#modal-form');
     $.ajax({
        url:form.attr('action'),
-       type:"GET",
+       type:"POST",
        dataType:"json",
        data:form.serialize(),
        success:function(result) {

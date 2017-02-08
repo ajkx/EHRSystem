@@ -50,6 +50,12 @@ public interface BaseDao<T> {
     List<T> findAll(Class<T> entityClazz);
 
     /**
+     * 找出所有实体并分页
+     * @param entityClazz
+     * @return
+     */
+    List<T> findAllByPage(Class<T> entityClazz,int pageNo,int pageSize);
+    /**
      * 总数
      * @param entityClazz
      * @return

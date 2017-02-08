@@ -82,13 +82,13 @@
             <div class="split-line"></div>
         </li>
         <li class="nav-btn nav-help">
-            <i class="iconfont icon-question_b icon-help-slim"></i>
+            <i class="iconf icon-question_b icon-help-slim"></i>
         </li>
         <li class="nav-btn nav-message" id="nv-message">
-            <i class="iconfont icon-alarm icon-help-slim"></i>
+            <i class="iconf icon-alarm icon-help-slim"></i>
         </li>
         <li class="nav-btn nav-menu">
-            <a href="#" data-toggle="dropdown" style="color: #fff"><i class="iconfont icon-menu icon-help-slim"></i></a>
+            <a href="#" data-toggle="dropdown" style="color: #fff"><i class="iconf icon-menu icon-help-slim"></i></a>
             <ul class="dropdown-menu dropdown-menu-right my-dropdown-menu">
                 <li><a href="#menu7" data-target="#changepassword-modal" data-toggle="modal">修改密码</a></li>
                 <li><a href="/logout">退出</a></li>

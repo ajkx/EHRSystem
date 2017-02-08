@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/static/css/font-awesome.min.css" />
     <link rel="stylesheet" href="${ctx}/static/css/antd.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/GridManager.css" />
     <link rel="stylesheet" href="${ctx}/static/css/base.css" />
     <link rel="stylesheet" href="${ctx}/static/css/menu.css" />
 
@@ -32,6 +33,7 @@
     <script type="text/javascript" src="${ctx}/static/js/jquery.pjax.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-treeview.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/GridManager.js"></script>
 
     <script type="text/javascript" src="${ctx}/static/js/ElementAction.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/bootstrap-clockpicker.min.js"></script>

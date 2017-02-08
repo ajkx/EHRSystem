@@ -520,7 +520,7 @@ a[disabled] {
   pointer-events: none;
 }
 .ant-divider {
-  margin: 0 6px;
+  margin: 0 6px !important;
   display: inline-block;
   height: 8px;
   width: 1px;

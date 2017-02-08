@@ -21,7 +21,7 @@
         <li class="menu-item" style="padding: 0">
             <a class="link-item" style="padding: 0 16px 0 28px;" href="/home.html" data-pjax="#main-content">
 				<span class="module-name">
-				<i class="iconfont icon-fire module-icon"></i>
+				<i class="iconf icon-fire module-icon"></i>
 			    </span>
                 首页
             </a>

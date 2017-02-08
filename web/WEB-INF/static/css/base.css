@@ -15,7 +15,7 @@ ul {
 	list-style: none
 }
 a {
-	color: #2db7f5;
+	color: #2db7f5 !important;
 	background: transparent;
 	text-decoration: none;
 	cursor: pointer;
@@ -32,7 +32,7 @@ a[disable]{
 	pointer-events: none
 }
 
-@font-face {font-family: "iconfont";
+@font-face {font-family: "iconf";
 	src: url('../fonts/iconfont.eot?t=1484290578668'); /* IE9*/
 	src: url('../fonts/iconfont.eot?t=1484290578668#iefix') format('embedded-opentype'), /* IE6-IE8 */
 	url('../fonts/iconfont.woff?t=1484290578668') format('woff'), /* chrome, firefox */
@@ -40,8 +40,8 @@ a[disable]{
 	url('../fonts/iconfont.svg?t=1484290578668#iconfont') format('svg'); /* iOS 4.1- */
 }
 
-.iconfont {
-	font-family:"iconfont" !important;
+.iconf {
+	font-family:"iconf" !important;
 	font-size:16px;
 	font-style:normal;
 	-webkit-font-smoothing: antialiased;

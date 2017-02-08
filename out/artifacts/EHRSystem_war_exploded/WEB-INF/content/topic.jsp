@@ -17,8 +17,108 @@
         });
     });
     function searchData(){
-        $.ajax()
+//        $.ajax()
     }
+
+    $('table[grid-manager="main"]').GM({
+        gridManagerName: 'test',
+        useDefaultStyle: false,
+        supportAjaxPage: true,
+        supportDrag: false,
+        supportAutoOrder: false,
+        supportCheckbox:false,
+        disableCache: true,
+        supportAdjust: false,
+        supportSorting: true,
+        isCombSorting: true,
+        ajax_url: '${url}/list',
+        ajax_type: 'GET',
+        pageSize: 10,
+        height:"auto",
+        columnData: [<c:forEach items="${col}" var="col">
+            {key: '${col.key}',
+             text: '${col.text}',
+             remind: '${col.remind}', <c:if test="${not empty col.sorting}">sorting: '${col.sorting}',</c:if><c:if test="${not empty col.template}">
+                template:function(${col.key},rowObject){${col.template}}</c:if>
+            }, </c:forEach>
+            {
+                key: 'id',
+                text: '操作',
+                template:function(id,rowObject){
+                    return '<div><a href="javascript:void(0)" onclick="showEditModal(\'${url}/'+id+'\')">编辑</a><span class="ant-divider"></span> <a href="javascript:void(0)" onclick="showDelModal(\'${url}/delete/'+id+'\')">删除</a> </div>';
+                }
+            }
+        ]
+        // 分页前事件
+        ,
+        pagingBefore: function(query) {
+            console.log('pagingBefore', query);
+        }
+        // 分页后事件
+        ,
+        pagingAfter: function(data) {
+            console.log('pagingAfter', data);
+        }
+        // 排序前事件
+        ,
+        sortingBefore: function(data) {
+            console.log('sortBefore', data);
+        }
+        // 排序后事件
+        ,
+        sortingAfter: function(data) {
+            console.log('sortAfter', data);
+        }
+        // 宽度调整前事件
+        ,
+        adjustBefore: function(event) {
+            console.log('adjustBefore', event);
+        }
+        // 宽度调整后事件
+        ,
+        adjustAfter: function(event) {
+            console.log('adjustAfter', event);
+        }
+        // 拖拽前事件
+        ,
+        dragBefore: function(event) {
+            console.log('dragBefore', event);
+        }
+        // 拖拽后事件
+        ,
+        dragAfter: function(event) {
+            console.log('dragAfter', event);
+        }
+    });
+    // 日期格式化,不是插件的代码,只用于处理时间格式化
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "D+": this.getDate(), //日
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/([Y,y]+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+    $(function() {
+        $(".table-div").addClass("ant-table");
+        $("thead").addClass("ant-table-thead");
+        $('tbody').addClass("ant-table-tbody");
+    });
+
 </script>
 <div class="topic-toolbar">
     <a style="font-size: 14px;color:#2db7f5" href="javascript:void(0)"
@@ -53,42 +153,6 @@
     </div>
     <div class="clearfix" style="clear: both"></div>
 </div>
-
-    <div style="" class="topic-content ant-table">
-        <table>
-            <colgroup>
-                <c:forEach items="${map}" var="map" begin="0" end="0">
-                    <c:forEach items="${map.value}" var="submap">
-                        <col width="${width}">
-                    </c:forEach>
-                    <col width="${width}">
-                </c:forEach>
-            </colgroup>
-            <thead class="ant-table-thead">
-            <tr>
-                <c:forEach items="${map}" var="map" begin="0" end="0">
-                    <c:forEach items="${map.value}" var="submap">
-                        <th>${submap.key}</th>
-                    </c:forEach>
-                    <th>操作</th>
-                </c:forEach>
-            </tr>
-            </thead>
-            <tbody class="ant-table-tbody">
-            <c:forEach items="${map}" var="listmap">
-                <tr>
-                    <c:forEach items="${listmap.value}" var="submap">
-                        <td>${submap.value}</td>
-                    </c:forEach>
-                    <td>
-                        <div>
-                            <a href="javascript:void(0)" onclick="showEditModal('${url}/${listmap.key}')">编辑</a>
-                            <span class="ant-divider"></span>
-                            <a href="javascript:void(0)" onclick="showDelModal('${url}/delete/${listmap.key}')">删除</a>
-                        </div>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
+<div>
+    <table grid-manager="main"></table>
+</div>

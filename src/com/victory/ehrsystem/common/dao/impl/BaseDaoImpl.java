@@ -62,6 +62,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
+    public List<T> findAllByPage(Class<T> entityClazz, int pageNo, int pageSize) {
+        return getSessionFactory().getCurrentSession()
+                .createQuery("from "+entityClazz.getSimpleName())
+                .setFirstResult((pageNo - 1) * pageSize)
+                .setMaxResults(pageNo * pageSize)
+                .list();
+    }
+
+    @Override
     public long findCount(Class entityClazz) {
         List<?> l = find("select count(*) from " + entityClazz.getSimpleName());
         if (l != null && l.size() == 1) {

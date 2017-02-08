@@ -102,6 +102,9 @@ public abstract class BaseService<T> {
         return baseDao.findAll(entityClazz);
     }
 
+    public List<T> findAllByPage(Class<T> entityClazz,int pageNo,int pageSize){
+        return baseDao.findAllByPage(entityClazz, pageNo, pageSize);
+    }
     /**
      * 统计实体总数
      * @param entityClazz

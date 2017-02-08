@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Hrm;
 import com.victory.ehrsystem.entity.hrm.HrmLocation;
 import com.victory.ehrsystem.service.hrm.impl.HrmLocationService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ajkx_Du
@@ -37,22 +35,32 @@ public class HrmLocationController {
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request){
         List<HrmLocation> temp = locationService.findAll(HrmLocation.class);
-        Map<Integer,LinkedHashMap<String, String>> map = new HashMap<Integer,LinkedHashMap<String,String>>();
-        for (HrmLocation location : temp) {
-            LinkedHashMap<String,String> tempmap = new LinkedHashMap<>();
-            tempmap.put("名称", location.getName());
-            tempmap.put("地点", location.getAddress());
-            tempmap.put("所在城市", location.getCity());
-            map.put(location.getId(),tempmap);
-        }
+
+        //列名集合
+        List<ColInfo> colInfos = new ArrayList<>();
+        colInfos.add(new ColInfo("name","名称"));
+        colInfos.add(new ColInfo("address", "地点"));
+        colInfos.add(new ColInfo("city", "所在城市"));
+
         model.addAttribute("topic","办公地点");
         model.addAttribute("simplename","地点");
         model.addAttribute("url", "/location");
-        model.addAttribute("map",map);
-        model.addAttribute("width","25%");
+        model.addAttribute("col", colInfos);
         return "topic";
     }
 
+    @RequiresPermissions(value = "location:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody JsonVo list(String cPage,String pSize,HttpServletRequest request) {
+        int pageNo = Integer.parseInt(cPage);
+        int pageSize = Integer.parseInt(pSize);
+        List<HrmLocation> locations = locationService.findAllByPage(HrmLocation.class,pageNo,pageSize);
+        Long count = locationService.count(HrmLocation.class);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).put("data",locations);
+        jsonVo.put("totals", count);
+        return jsonVo;
+    }
     /**
      * 返回创建模态框
      * @param model
