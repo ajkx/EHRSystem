@@ -1,5 +1,7 @@
 package com.victory.ehrsystem.entity.sys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +41,7 @@ public class SysRole {
     private Set<User> users = new HashSet<User>();
 
     @Column
-    private boolean available;
+    private Boolean available;
 
     public SysRole() {
 
@@ -76,18 +78,19 @@ public class SysRole {
         this.description = description;
     }
 
+    @JsonBackReference
     public Set<SysResource> getResources() {
         return resources;
     }
-
+    @JsonBackReference
     public void setResources(Set<SysResource> resources) {
         this.resources = resources;
     }
-
+    @JsonBackReference
     public Set<User> getUsers() {
         return users;
     }
-
+    @JsonBackReference
     public void setUsers(Set<User> users) {
         this.users = users;
     }

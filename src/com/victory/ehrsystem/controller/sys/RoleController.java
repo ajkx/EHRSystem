@@ -1,15 +1,15 @@
 package com.victory.ehrsystem.controller.sys;
 
-import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.sys.ResourceService;
 import com.victory.ehrsystem.service.sys.RoleService;
 import com.victory.ehrsystem.service.sys.UserService;
+import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
+import com.victory.ehrsystem.vo.PageInfo;
 import com.victory.ehrsystem.vo.RoleVo;
-import org.apache.log4j.lf5.util.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -41,13 +42,35 @@ public class RoleController {
     @RequiresPermissions(value = "role:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
-        List<SysRole> temp = roleService.findAll();
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<ColInfo> colInfos = new ArrayList<>();
+        colInfos.add(new ColInfo("name","角色命"));
+        colInfos.add(new ColInfo("description", "描述"));
+        colInfos.add(new ColInfo("users", "相关管理员"));
+        colInfos.add(new ColInfo("resources", "相关权限"));
+
         model.addAttribute("topic","角色管理");
         model.addAttribute("simplename","角色");
         model.addAttribute("url","/role");
-        model.addAttribute("list",temp);
-        return "sys/role";
+        model.addAttribute("col", colInfos);
+        model.addAttribute("per", "role");
+        return "topic";
+    }
+
+    @RequiresPermissions(value = "user:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody
+    PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = roleService.findByPage(SysRole.class,request);
+        return pageInfo;
+    }
+
+    @RequiresPermissions(value = "user:view")
+    @RequestMapping(value = "/view/{id}")
+    public String modal_view(@PathVariable int id, Model model) {
+        SysRole role = roleService.findOne(id);
+        model.addAttribute("topic", "角色信息");
+        model.addAttribute("obj", role);
+        return "modal/sys/role_view";
     }
 
     /**
@@ -61,7 +84,7 @@ public class RoleController {
         model.addAttribute("topic","角色创建");
         model.addAttribute("action","/role/create");
         model.addAttribute("isCreate", true);
-        return "sys/modal/role";
+        return "modal/sys/role";
     }
 
     /**
@@ -81,7 +104,7 @@ public class RoleController {
         Set<User> users = new HashSet<>();
         for (String userid : roleVo.getResources().split(",")) {
             if(userid.equals("")) continue;
-            users.add(userService.findOne(Integer.parseInt(userid)));
+            users.add(userService.findOne(User.class,Integer.parseInt(userid)));
         }
         role.setUsers(users);
 
@@ -147,7 +170,7 @@ public class RoleController {
         model.addAttribute("relist", reList);
         model.addAttribute("userlist", userList);
         model.addAttribute("isCreate", false);
-        return "sys/modal/role";
+        return "modal/sys/role";
     }
 
     @RequiresPermissions(value = "role:update")
@@ -162,7 +185,7 @@ public class RoleController {
         Set<User> users = new HashSet<>();
         for (String userid : roleVo.getResources().split(",")) {
             if(userid.equals("")) continue;
-            users.add(userService.findOne(Integer.parseInt(userid)));
+            users.add(userService.findOne(User.class,Integer.parseInt(userid)));
         }
         role.setUsers(users);
 
@@ -195,8 +218,8 @@ public class RoleController {
     
     
     @RequiresPermissions(value = "role:view")
-    @RequestMapping(value = "/list")
-    public @ResponseBody List list(){
+    @RequestMapping(value = "/jsonlist")
+    public @ResponseBody List jsonList(){
         List<SysRole> temp = roleService.findAll();
         List<Map<String, String>> list = new ArrayList<>();
         for (SysRole role : temp) {

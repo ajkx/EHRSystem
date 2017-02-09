@@ -4,6 +4,7 @@ import com.victory.ehrsystem.dao.sys.SysModuleDao;
 import com.victory.ehrsystem.dao.sys.SysResourceDao;
 import com.victory.ehrsystem.entity.sys.SysModule;
 import com.victory.ehrsystem.entity.sys.SysResource;
+import com.victory.ehrsystem.service.BaseService;
 import com.victory.ehrsystem.util.StringUtil;
 import org.apache.shiro.authz.permission.WildcardPermission;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.*;
  * @create 2016-11-01 9:09
  */
 @Service
-public class ResourceService {
+public class ResourceService extends BaseService<SysResource>{
     @Autowired
     private SysResourceDao sysResourceDao;
 

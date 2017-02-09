@@ -1,13 +1,12 @@
 package com.victory.ehrsystem.controller.sys;
 
 import com.victory.ehrsystem.entity.sys.User;
+import com.victory.ehrsystem.service.sys.PasswordHelper;
 import com.victory.ehrsystem.service.sys.UserService;
-import com.victory.ehrsystem.service.sys.impl.PasswordHelper;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.PasswordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 

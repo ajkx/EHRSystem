@@ -1,16 +1,15 @@
 package com.victory.ehrsystem.controller.sys;
 
-import com.victory.ehrsystem.entity.hrm.HrmEducationLevel;
-import com.victory.ehrsystem.entity.hrm.HrmJobCall;
-import com.victory.ehrsystem.entity.hrm.HrmLocation;
-import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
+import com.victory.ehrsystem.service.sys.PasswordHelper;
 import com.victory.ehrsystem.service.sys.RoleService;
 import com.victory.ehrsystem.service.sys.UserService;
-import com.victory.ehrsystem.service.sys.impl.PasswordHelper;
+import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
+import com.victory.ehrsystem.vo.PageInfo;
 import com.victory.ehrsystem.vo.UserVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -46,14 +46,35 @@ public class ManagerController {
     @RequiresPermissions(value = "user:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
-        List<User> temp = userService.findAll();
+        List<ColInfo> colInfos = new ArrayList<>();
+        colInfos.add(new ColInfo("name","账号"));
+        colInfos.add(new ColInfo("hrmResource", "所属员工"));
+        colInfos.add(new ColInfo("roleids", "所有角色"));
+
         model.addAttribute("topic","操作员管理");
         model.addAttribute("simplename","操作员");
         model.addAttribute("url","/user");
-        model.addAttribute("list",temp);
-        return "sys/manager";
+        model.addAttribute("col", colInfos);
+        model.addAttribute("per", "user");
+        return "topic";
     }
 
+    @RequiresPermissions(value = "user:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody
+    PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = userService.findByPage(User.class,request);
+        return pageInfo;
+    }
+
+    @RequiresPermissions(value = "user:view")
+    @RequestMapping(value = "/view/{id}")
+    public String modal_view(@PathVariable int id, Model model) {
+        User user = userService.findOne(id);
+        model.addAttribute("topic", "管理员信息");
+        model.addAttribute("obj", user);
+        return "modal/sys/manager_view";
+    }
     /**
      * 返回创建的模态框
      * @param model
@@ -65,7 +86,7 @@ public class ManagerController {
         model.addAttribute("topic","操作员创建");
         model.addAttribute("action","/user/create");
         model.addAttribute("isCreate", true);
-        return "sys/modal/manager";
+        return "modal/sys/manager";
     }
 
     /**
@@ -113,7 +134,7 @@ public class ManagerController {
     @RequiresPermissions(value = "user:update")
     @RequestMapping(value = "/{id}")
     public String modal_update(@PathVariable int id, Model model) {
-        User user = userService.findOne(id);
+        User user = userService.findOne(User.class,id);
         UserVo userVo = new UserVo();
         userVo.setName(user.getName());
         userVo.setId(user.getId());
@@ -141,7 +162,7 @@ public class ManagerController {
         model.addAttribute("map",userVo);
         model.addAttribute("list", list);
         model.addAttribute("isCreate", false);
-        return "sys/modal/manager";
+        return "modal/sys/manager";
     }
 
     @RequiresPermissions(value = "user:update")
@@ -158,7 +179,7 @@ public class ManagerController {
         if(!userVo.getPassword().equals(userVo.getPassword_confirm())){
             jsonVo.setStatus(false).setMsg("两次输入密码不一致!");
         }else{
-            User user = userService.findOne(userVo.getId());
+            User user = userService.findOne(User.class,userVo.getId());
 
             user.setHrmResource(userVo.getResourceid());
             Set<SysRole> roles = new HashSet<>();
@@ -193,9 +214,9 @@ public class ManagerController {
     }
 
     @RequiresPermissions(value = "user:view")
-    @RequestMapping(value = "/list")
-    public @ResponseBody List list(){
-        List<User> temp = userService.findAll();
+    @RequestMapping(value = "/jsonlist")
+    public @ResponseBody List jsonList(){
+        List<User> temp = userService.findAll(User.class);
         List<Map<String, String>> list = new ArrayList<>();
         for (User user : temp) {
             Map<String, String> map = new HashMap<>();

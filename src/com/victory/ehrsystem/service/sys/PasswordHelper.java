@@ -1,4 +1,4 @@
-package com.victory.ehrsystem.service.sys.impl;
+package com.victory.ehrsystem.service.sys;
 
 import com.victory.ehrsystem.entity.sys.User;
 import org.apache.shiro.crypto.RandomNumberGenerator;

@@ -40,7 +40,7 @@ public class User {
 
     //默认为false 0
     @Column
-    private boolean locked;
+    private Boolean locked;
 
     public User() {
     }
@@ -108,9 +108,9 @@ public class User {
         this.hrmResource = hrmResource;
     }
 
-    public boolean isLocked() {
-        return locked;
-    }
+//    public boolean isLocked() {
+//        return locked;
+//    }
 
     ////设置user的roles的字符串
     //public List<Long> getRoleIdsStr() {

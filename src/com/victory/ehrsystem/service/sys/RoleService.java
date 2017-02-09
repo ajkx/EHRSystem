@@ -3,6 +3,7 @@ package com.victory.ehrsystem.service.sys;
 import com.victory.ehrsystem.dao.sys.SysRoleDao;
 import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.entity.sys.SysRole;
+import com.victory.ehrsystem.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.Set;
  * @create 2016-11-01 17:18
  */
 @Service
-public class RoleService{
+public class RoleService extends BaseService<SysRole>{
     @Autowired
     private SysRoleDao sysRoleDao;
     @Autowired

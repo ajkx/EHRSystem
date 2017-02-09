@@ -45,6 +45,7 @@ public class HrmLocationController {
         model.addAttribute("simplename","地点");
         model.addAttribute("url", "/location");
         model.addAttribute("col", colInfos);
+        model.addAttribute("per", "location");
         return "topic";
     }
 

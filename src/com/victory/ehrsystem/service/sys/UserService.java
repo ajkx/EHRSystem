@@ -38,6 +38,9 @@ public class UserService extends BaseService<User>{
         return user;
     }
 
+    public User findOne(Serializable id) {
+        return userDao.findOne(id);
+    }
 
     public void delete(Serializable id) {
         userDao.delete(User.class,id);

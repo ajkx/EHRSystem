@@ -1,9 +1,12 @@
 package com.victory.ehrsystem.controller.Hrm;
 
+import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
 import com.victory.ehrsystem.entity.hrm.HrmSpeciality;
 import com.victory.ehrsystem.service.hrm.impl.HrmSpecialityService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * @author ajkx_Du
@@ -32,20 +33,26 @@ public class HrmSpecialityController {
     @RequiresPermissions(value = "speciality:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
-        List<HrmSpeciality> temp = specialityService.findAll(HrmSpeciality.class);
-        Map<Integer,LinkedHashMap<String, String>> map = new HashMap<Integer,LinkedHashMap<String,String>>();
-        for (HrmSpeciality speciality : temp) {
-            LinkedHashMap<String,String> tempmap = new LinkedHashMap<>();
-            tempmap.put("名称", speciality.getName());
-            tempmap.put("详述", speciality.getDescription());
-            map.put(speciality.getId(),tempmap);
-        }
+        //列名集合
+        List<ColInfo> colInfos = new ArrayList<>();
+        colInfos.add(new ColInfo("name","专业名"));
+        colInfos.add(new ColInfo("description", "描述"));
+
         model.addAttribute("topic","专业管理");
         model.addAttribute("simplename","专业");
         model.addAttribute("url", "/speciality");
-        model.addAttribute("map",map);
-        model.addAttribute("width","33%");
+        model.addAttribute("col", colInfos);
+        model.addAttribute("per", "speciality");
         return "topic";
+    }
+
+
+    @RequiresPermissions(value = "jobGroup:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody
+    PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = specialityService.findByPage(HrmSpeciality.class,request);
+        return pageInfo;
     }
 
     /**

@@ -1,9 +1,12 @@
 package com.victory.ehrsystem.controller.Hrm;
 
+import com.victory.ehrsystem.entity.hrm.HrmJobActivities;
 import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobGroupsService;
 import com.victory.ehrsystem.util.CollectionUtil;
+import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -29,20 +33,25 @@ public class HrmJobGroupController {
     @RequiresPermissions(value = "jobGroup:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
-        List<HrmJobGroups> temp = jobGroupsService.findAll(HrmJobGroups.class);
-        Map<Integer,LinkedHashMap<String, String>> map = new HashMap<Integer,LinkedHashMap<String,String>>();
-        for (HrmJobGroups jobgroup : temp) {
-            LinkedHashMap<String,String> tempmap = new LinkedHashMap<>();
-            tempmap.put("名称", jobgroup.getName());
-            tempmap.put("详述", jobgroup.getDescription());
-            map.put(jobgroup.getId(),tempmap);
-        }
+        //列名集合
+        List<ColInfo> colInfos = new ArrayList<>();
+        colInfos.add(new ColInfo("name","类别名"));
+        colInfos.add(new ColInfo("description", "描述"));
+
         model.addAttribute("topic","职务类别");
         model.addAttribute("simplename","类别");
         model.addAttribute("url", "/jobgroup");
-        model.addAttribute("map",map);
-        model.addAttribute("width","33%");
+        model.addAttribute("col", colInfos);
+        model.addAttribute("per", "jobGroup");
         return "topic";
+    }
+
+
+    @RequiresPermissions(value = "jobGroup:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = jobGroupsService.findByPage(HrmJobGroups.class,request);
+        return pageInfo;
     }
 
     /**
@@ -79,7 +88,6 @@ public class HrmJobGroupController {
     public String modal_view(@PathVariable int id, Model model) {
         HrmJobGroups jobGroups = jobGroupsService.findOne(HrmJobGroups.class, id);
         model.addAttribute("topic", "职务类别信息");
-        model.addAttribute("action","/jobgroup/update");
         model.addAttribute("obj", jobGroups);
         return "modal/hrm/JobGroup_view";
     }
@@ -126,8 +134,8 @@ public class HrmJobGroupController {
         return jsonVo;
     }
 
-    @RequestMapping(value = "/list")
-    public @ResponseBody List list(){
+    @RequestMapping(value = "/jsonlist")
+    public @ResponseBody List jsonList(){
         List<HrmJobGroups> groupses = jobGroupsService.findAll(HrmJobGroups.class);
         return groupses;
     }

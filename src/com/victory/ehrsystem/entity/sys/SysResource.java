@@ -1,5 +1,7 @@
 package com.victory.ehrsystem.entity.sys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,7 +60,7 @@ public class SysResource {
     private SysModule module;
 
     @Column
-    private boolean available;
+    private Boolean available;
 
     @Column
     private String url;
@@ -83,11 +85,11 @@ public class SysResource {
         this.available = available;
         this.url = url;
     }
-
+    @JsonBackReference
     public Set<SysRole> getRoles() {
         return roles;
     }
-
+    @JsonBackReference
     public void setRoles(Set<SysRole> roles) {
         this.roles = roles;
     }
@@ -164,9 +166,9 @@ public class SysResource {
         this.available = available;
     }
 
-    public boolean isRootNode() {
-        return parent_id == 0;
-    }
+//    public boolean isRootNode() {
+//        return parent_id == 0;
+//    }
 
     public SysModule getModule() {
         return module;
