@@ -1,52 +1,72 @@
 package com.victory.ehrsystem.service.sys;
 
+import com.victory.ehrsystem.dao.sys.UserDao;
 import com.victory.ehrsystem.entity.sys.User;
+import com.victory.ehrsystem.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 /**
+ * 用户基本操作数据处理层
+ *
  * @author ajkx_Du
- * @create 2016-11-03 20:31
+ * @create 2016-10-29 9:05
  */
-public interface UserService {
+@Service
+public class UserService extends BaseService<User>{
 
-    public User createUser(User user);
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private PasswordHelper passwordHelper;
+    @Autowired
+    private RoleService roleService;
 
-    public User updateUser(User user);
+    public User createUser(User user) {
+        passwordHelper.encryptPassword(user);
+        userDao.save(user);
+        return user;
+    }
 
-    public void delete(Serializable id);
+    public User updateUser(User user) {
+        userDao.update(user);
+        return user;
+    }
 
-    /**
-     * 修改密码
-     * @param id
-     * @param newPassword
-     */
-    public void changePassword(Serializable id, String newPassword);
 
-    User findOne(Serializable id);
+    public void delete(Serializable id) {
+        userDao.delete(User.class,id);
+    }
 
-    List<User> findAll();
+    public void changePassword(Serializable id, String newPassword) {
+        User user = userDao.findOne(id);
+        user.setPassword(newPassword);
+        passwordHelper.encryptPassword(user);
+        userDao.update(user);
+    }
 
-    /**
-     * 根据用户名寻找用户
-     * @param username
-     * @return
-     */
-    public User findByUsername(String username);
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
+    }
 
-    /**
-     * 根据用户名寻找其角色
-     * @param username
-     * @return
-     */
-    public Set<String> findRoles(String username);
+    public Set<String> findRoles(String username) {
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return Collections.EMPTY_SET;
+        }
+        return roleService.findRoles(user.getRoleids());
+    }
 
-    /**
-     * 根据用户名寻找其权限
-     * @param username
-     * @return
-     */
-    public Set<String> findPermissions(String username);
+    public Set<String> findPermissions(String username) {
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return Collections.EMPTY_SET;
+        }
+        return roleService.findPermissions(user.getRoleids());
+    }
 }
