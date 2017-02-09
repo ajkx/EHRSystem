@@ -124,6 +124,8 @@ table[grid-manager].GridManager-ready{
 	margin:0px !important;
 }
 .table-wrap table[grid-manager] tr td{
+	/*新增*/
+	padding-left: 12px;
 	/*删除*/
 	/*white-space:nowrap;*/
 	/*overflow:hidden;

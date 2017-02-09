@@ -74,6 +74,15 @@ public class HrmJobGroupController {
         return jsonVo;
     }
 
+    @RequiresPermissions(value = "jobGroup:view")
+    @RequestMapping(value = "/view/{id}")
+    public String modal_view(@PathVariable int id, Model model) {
+        HrmJobGroups jobGroups = jobGroupsService.findOne(HrmJobGroups.class, id);
+        model.addAttribute("topic", "职务类别信息");
+        model.addAttribute("action","/jobgroup/update");
+        model.addAttribute("obj", jobGroups);
+        return "modal/hrm/JobGroup_view";
+    }
     /**
      * 返回修改模态框
      * @param id

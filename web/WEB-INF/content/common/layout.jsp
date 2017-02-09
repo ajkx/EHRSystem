@@ -73,9 +73,9 @@
 <%--margin-left: 219px;border-left: 1px solid #e9e9e9;padding: 10px 0px 5px 25px;--%>
 
 <jsp:include page="../nav.jsp"/>
-<div>
+<div style="position: absolute;left:0;right: 0;bottom: 0;top: 61px">
 <jsp:include page="../menu.jsp"/>
-<div id="content" style="position:absolute;left:220px;right: 0;bottom: 0;top:60px;
+<div id="content" style="position:absolute;left:220px;right: 0;bottom: 0;top:0;
 padding: 10px 25px 5px 25px;">
     <div style="margin: 15px 0px 30px;" id="main-content"></div>
 </div>

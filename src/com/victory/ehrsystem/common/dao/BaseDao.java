@@ -1,7 +1,10 @@
 package com.victory.ehrsystem.common.dao;
 
+import com.victory.ehrsystem.vo.PageInfo;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ajkx_Du on 2016/10/19.
@@ -61,6 +64,16 @@ public interface BaseDao<T> {
      * @return
      */
     long findCount(Class<T> entityClazz);
+
+    /**
+     * 动态条件查询并分页
+     * @param entityClazz
+     * @param map
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageInfo findByPage(Class<T> entityClazz, Map<String, String> map, int pageNo, int pageSize);
 
 
 }

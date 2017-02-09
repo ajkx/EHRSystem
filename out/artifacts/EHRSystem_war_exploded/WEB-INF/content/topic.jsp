@@ -15,9 +15,18 @@
                searchData();
            }
         });
+        var searchBtn = $('#searchbtn');
+        searchBtn.click(function(){
+            searchData();
+        });
     });
     function searchData(){
-//        $.ajax()
+        var query = {
+            name: document.querySelector('[name="name"]').value
+        }
+        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', function () {
+            console.log('搜索成功...');
+        });
     }
 
     $('table[grid-manager="main"]').GM({
@@ -45,50 +54,10 @@
                 key: 'id',
                 text: '操作',
                 template:function(id,rowObject){
-                    return '<div><a href="javascript:void(0)" onclick="showEditModal(\'${url}/'+id+'\')">编辑</a><span class="ant-divider"></span> <a href="javascript:void(0)" onclick="showDelModal(\'${url}/delete/'+id+'\')">删除</a> </div>';
+                    return '<div><a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showEditModal(\'${url}/'+id+'\')">编辑</a><span class="ant-divider"></span> <a <shiro:lacksPermission name="${per}:delete">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showDelModal(\'${url}/delete/'+id+'\')">删除</a> </div>';
                 }
             }
         ]
-        // 分页前事件
-        ,
-        pagingBefore: function(query) {
-            console.log('pagingBefore', query);
-        }
-        // 分页后事件
-        ,
-        pagingAfter: function(data) {
-            console.log('pagingAfter', data);
-        }
-        // 排序前事件
-        ,
-        sortingBefore: function(data) {
-            console.log('sortBefore', data);
-        }
-        // 排序后事件
-        ,
-        sortingAfter: function(data) {
-            console.log('sortAfter', data);
-        }
-        // 宽度调整前事件
-        ,
-        adjustBefore: function(event) {
-            console.log('adjustBefore', event);
-        }
-        // 宽度调整后事件
-        ,
-        adjustAfter: function(event) {
-            console.log('adjustAfter', event);
-        }
-        // 拖拽前事件
-        ,
-        dragBefore: function(event) {
-            console.log('dragBefore', event);
-        }
-        // 拖拽后事件
-        ,
-        dragAfter: function(event) {
-            console.log('dragAfter', event);
-        }
     });
     // 日期格式化,不是插件的代码,只用于处理时间格式化
     Date.prototype.format = function(fmt) {
@@ -133,7 +102,7 @@
                             <li class="ant-select-search ant-select-search--inline">
                                 <div class="ant-select-search__field__wrap">
                                     <input placeholder="请输入名称" class="ant-select-search__field"
-                                           id="searchinput">
+                                           id="searchinput" name="name" autocomplete="off">
                                     <span class="ant-select-search__field__mirror">
                                     </span>
                                 </div>
@@ -143,8 +112,7 @@
                 </div>
             </div>
             <div class="ant-input-group-wrap">
-                <button type="button" class="ant-btn ant-search-btn" style="margin-top: 0px;"
-                        onclick="searchData()">
+                <button type="button" id="searchbtn" class="ant-btn ant-search-btn" style="margin-top: 0px;">
                     <i class="fa fa-search" style="margin-top: 0px;">
                     </i>
                 </button>

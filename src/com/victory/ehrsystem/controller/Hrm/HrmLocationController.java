@@ -5,6 +5,7 @@ import com.victory.ehrsystem.service.hrm.impl.HrmLocationService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -34,8 +35,6 @@ public class HrmLocationController {
     @RequiresPermissions(value = "location:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request){
-        List<HrmLocation> temp = locationService.findAll(HrmLocation.class);
-
         //列名集合
         List<ColInfo> colInfos = new ArrayList<>();
         colInfos.add(new ColInfo("name","名称"));
@@ -51,15 +50,9 @@ public class HrmLocationController {
 
     @RequiresPermissions(value = "location:view")
     @RequestMapping(value = "/list")
-    public @ResponseBody JsonVo list(String cPage,String pSize,HttpServletRequest request) {
-        int pageNo = Integer.parseInt(cPage);
-        int pageSize = Integer.parseInt(pSize);
-        List<HrmLocation> locations = locationService.findAllByPage(HrmLocation.class,pageNo,pageSize);
-        Long count = locationService.count(HrmLocation.class);
-        JsonVo jsonVo = new JsonVo();
-        jsonVo.setStatus(true).put("data",locations);
-        jsonVo.put("totals", count);
-        return jsonVo;
+    public @ResponseBody PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = locationService.findByPage(HrmLocation.class,request);
+        return pageInfo;
     }
     /**
      * 返回创建模态框

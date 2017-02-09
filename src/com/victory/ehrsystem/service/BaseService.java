@@ -2,10 +2,15 @@ package com.victory.ehrsystem.service;
 
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 抽象service基类，提供通用方法
@@ -102,6 +107,20 @@ public abstract class BaseService<T> {
         return baseDao.findAll(entityClazz);
     }
 
+    public PageInfo findByPage(Class<T> entityClazz, HttpServletRequest request){
+        Map<String, String> map = new HashMap<>();
+        int pageNo = Integer.parseInt(request.getParameter("cPage"));
+        int pageSize = Integer.parseInt(request.getParameter("pSize"));
+        Enumeration enu = request.getParameterNames();
+        while (enu.hasMoreElements()) {
+            String name = (String) enu.nextElement();
+            if(name.equals("cPage") || name.equals("pSize") || name.equals("tPage") || name.equals("tSize")){
+                continue;
+            }
+            map.put(name, request.getParameter(name));
+        }
+        return baseDao.findByPage(entityClazz, map, pageNo, pageSize);
+    }
     public List<T> findAllByPage(Class<T> entityClazz,int pageNo,int pageSize){
         return baseDao.findAllByPage(entityClazz, pageNo, pageSize);
     }

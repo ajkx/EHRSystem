@@ -14,8 +14,11 @@ ol,
 ul {
 	list-style: none
 }
+.font-color{
+	color: #2db7f5;
+}
 a {
-	color: #2db7f5 !important;
+	color: #2db7f5;
 	background: transparent;
 	text-decoration: none;
 	cursor: pointer;

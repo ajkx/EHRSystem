@@ -12,13 +12,19 @@ public class ColInfo {
     private String width;
     private String sorting;
     private String template;
-
+    private String permission;
     public ColInfo() {
     }
 
     public ColInfo(String key, String text) {
         this.key = key;
         this.text = text;
+    }
+
+    public ColInfo(String key, String text, String template) {
+        this.text = text;
+        this.key = key;
+        this.template = template;
     }
 
     public ColInfo(String key, String text, String remind, String width, String sorting, String template) {
@@ -76,5 +82,13 @@ public class ColInfo {
 
     public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }

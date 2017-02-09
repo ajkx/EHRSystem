@@ -1,10 +1,18 @@
 package com.victory.ehrsystem.common.dao.impl;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import com.victory.ehrsystem.vo.PageInfo;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -179,5 +187,39 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
             queryHql.append(" and ");
         }
         return true;
+    }
+
+
+    @Override
+    public PageInfo findByPage(Class<T> entityClazz, Map<String,String> map, int pageNo, int pageSize){
+        return getCriteria(entityClazz, map,pageNo,pageSize);
+    }
+    public PageInfo getCriteria(Class entityClazz,Map<String,String> map,int pageNo,int pageSize){
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(entityClazz);
+        Criteria criteria1 = session.createCriteria(entityClazz);
+
+        for (String key : map.keySet()) {
+
+            String prop = "";
+            try {
+                prop = entityClazz.getDeclaredField(key).getGenericType().getTypeName();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            if(prop.equals("java.lang.String")){
+                criteria.add(Restrictions.ilike(key,map.get(key), MatchMode.ANYWHERE));
+                criteria1.add(Restrictions.ilike(key,map.get(key), MatchMode.ANYWHERE));
+            }
+            else if(prop.equals("java.lang.Integer")){
+                criteria.add(Restrictions.eq(key,Integer.parseInt(map.get(key))));
+                criteria1.add(Restrictions.eq(key,Integer.parseInt(map.get(key))));
+            }
+        }
+        criteria.setFirstResult((pageNo - 1) * pageSize);
+        criteria.setMaxResults(pageNo * pageSize);
+        //获取分页前查询的总数
+        Long totals = (Long) criteria1.setProjection(Projections.rowCount()).uniqueResult();
+        return new PageInfo(totals,criteria.list());
     }
 }
