@@ -54,7 +54,7 @@ public class HrmResourceController {
         return "";
     }
     @RequiresPermissions(value = "resource:view")
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = "/jsonlist")
     public @ResponseBody List listByNomanager(){
         List<HrmResource> list = hrmResourceService.findNoManager();
         return list;

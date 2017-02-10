@@ -1,18 +1,16 @@
 package com.victory.ehrsystem.common.dao.impl;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.vo.PageInfo;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.aspectj.weaver.ast.Or;
+import org.hibernate.*;
+import org.hibernate.criterion.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -192,8 +190,10 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public PageInfo findByPage(Class<T> entityClazz, Map<String,String> map, int pageNo, int pageSize){
+
         return getCriteria(entityClazz, map,pageNo,pageSize);
     }
+
     public PageInfo getCriteria(Class entityClazz,Map<String,String> map,int pageNo,int pageSize){
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(entityClazz);
@@ -217,9 +217,13 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
             }
         }
         criteria.setFirstResult((pageNo - 1) * pageSize);
-        criteria.setMaxResults(pageNo * pageSize);
+        criteria.setMaxResults(pageSize);
+//        criteria.addOrder(Order.asc("id"));
+//        HashSet h = new HashSet(criteria.list());
+//        List list = new ArrayList(h);
         //获取分页前查询的总数
         Long totals = (Long) criteria1.setProjection(Projections.rowCount()).uniqueResult();
-        return new PageInfo(totals,criteria.list());
+        PageInfo pageInfo = new PageInfo(totals, criteria.list());
+        return pageInfo;
     }
 }

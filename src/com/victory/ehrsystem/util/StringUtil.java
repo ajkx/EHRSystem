@@ -20,4 +20,33 @@ public class StringUtil {
     public static boolean isEmpty(Object str) {
         return str == null || "".equals(str);
     }
+
+    public static String nullString(String str) {
+        if (str == null) {
+            return "";
+        }else{
+            return str;
+        }
+    }
+
+    public static String getScript(String topic, String prop, boolean hasPermission) {
+        if (hasPermission) {
+            return "return \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+"+prop+".id+\"')\\\" class='font-color'>\"+"+prop+".name+\"</a>\";";
+        }else{
+            return "return \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+"+prop+".id+\"')\\\" class='font-color'>\"+"+prop+".name+\"</a>\";";
+        }
+    }
+
+    public static String getMultiScript(String topic, String prop, boolean hasPermission) {
+        if (hasPermission) {
+            return "var el = '';" +
+                    "$("+prop+").each(function(index,element){" +
+                    "el += \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>\";});return el;";
+        }else{
+            return "var el = '';" +
+                    "$("+prop+").each(function(index,element){" +
+                    "el += \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>\";});return el;";
+
+        }
+    }
 }

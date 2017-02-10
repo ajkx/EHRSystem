@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.entity.sys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 
 import javax.persistence.*;
@@ -32,7 +33,7 @@ public class User {
     private HrmResource hrmResource;
 
 
-    @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -59,11 +60,11 @@ public class User {
     public void setSalt(String salt) {
         this.salt = salt;
     }
-
+    @JsonBackReference
     public Set<SysRole> getRoleids() {
         return roleids;
     }
-
+    @JsonBackReference
     public void setRoleids(Set<SysRole> roleids) {
         this.roleids = roleids;
     }

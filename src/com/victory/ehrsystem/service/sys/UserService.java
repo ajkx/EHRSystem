@@ -1,15 +1,18 @@
 package com.victory.ehrsystem.service.sys;
 
 import com.victory.ehrsystem.dao.sys.UserDao;
+import com.victory.ehrsystem.entity.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.BaseService;
+import com.victory.ehrsystem.util.StringUtil;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 用户基本操作数据处理层
@@ -36,6 +39,30 @@ public class UserService extends BaseService<User>{
     public User updateUser(User user) {
         userDao.update(user);
         return user;
+    }
+
+    @Override
+    public PageInfo findByPage(Class<User> entityClazz, HttpServletRequest request) {
+        PageInfo info = super.findByPage(entityClazz, request);
+        List<User> list = info.getData();
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        for (User user : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", user.getId());
+            map.put("name", user.getName());
+            map.put("hrmResource", user.getHrmResource());
+            List<Map<String, Object>> roles = new ArrayList<>();
+            for (SysRole role : user.getRoleids()) {
+                Map<String, Object> temp = new HashMap<>();
+                temp.put("id", role.getId());
+                temp.put("name", role.getName());
+                roles.add(temp);
+            }
+            map.put("roles", roles);
+            mapList.add(map);
+        }
+        info.setData(mapList);
+        return info;
     }
 
     public User findOne(Serializable id) {

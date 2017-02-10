@@ -50,13 +50,24 @@
              remind: '${col.remind}', <c:if test="${not empty col.sorting}">sorting: '${col.sorting}',</c:if><c:if test="${not empty col.template}">
                 template:function(${col.key},rowObject){${col.template}}</c:if>
             }, </c:forEach>
-            {
-                key: 'id',
-                text: '操作',
-                template:function(id,rowObject){
-                    return '<div><a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showEditModal(\'${url}/'+id+'\')">编辑</a><span class="ant-divider"></span> <a <shiro:lacksPermission name="${per}:delete">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showDelModal(\'${url}/delete/'+id+'\')">删除</a> </div>';
-                }
-            }
+            <c:choose>
+                <c:when test="${canedit == false}">
+                </c:when>
+                <c:otherwise>
+                    {
+                        key: 'id',
+                        text: '操作',
+                        template:function(id,rowObject){
+                            if(id == 1){
+                                return '<div><a disable="" class="font-color" href="javascript:void(0)">编辑</a><span class="ant-divider"></span> <a disable="" class="font-color" href="javascript:void(0)">删除</a></div>';
+                            }else{
+                                return '<div><a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showEditModal(\'${url}/'+id+'\')">编辑</a><span class="ant-divider"></span> <a <shiro:lacksPermission name="${per}:delete">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showDelModal(\'${url}/delete/'+id+'\')">删除</a> </div>';
+                            }
+
+                        }
+                    }
+                </c:otherwise>
+            </c:choose>
         ]
     });
 

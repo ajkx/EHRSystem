@@ -4,12 +4,16 @@ import com.victory.ehrsystem.dao.sys.SysModuleDao;
 import com.victory.ehrsystem.dao.sys.SysResourceDao;
 import com.victory.ehrsystem.entity.sys.SysModule;
 import com.victory.ehrsystem.entity.sys.SysResource;
+import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.service.BaseService;
 import com.victory.ehrsystem.util.StringUtil;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.permission.WildcardPermission;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.*;
 
@@ -38,6 +42,30 @@ public class ResourceService extends BaseService<SysResource>{
     public SysResource updateResource(SysResource resource) {
         sysResourceDao.update(resource);
         return resource;
+    }
+
+    @Override
+    public PageInfo findByPage(Class<SysResource> entityClazz, HttpServletRequest request) {
+        PageInfo info = super.findByPage(entityClazz, request);
+        List<SysResource> list = info.getData();
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        for (SysResource resource : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", resource.getId());
+            map.put("name", resource.getName());
+            map.put("description", StringUtil.nullString(resource.getDescription()));
+            List<Map<String, Object>> roles = new ArrayList<>();
+            for (SysRole role : resource.getRoles()) {
+                Map<String, Object> temp = new HashMap<>();
+                temp.put("id", role.getId());
+                temp.put("name", role.getName());
+                roles.add(temp);
+            }
+            map.put("roles", roles);
+            mapList.add(map);
+        }
+        info.setData(mapList);
+        return info;
     }
 
     public void deleteResource(Serializable resourceId) {

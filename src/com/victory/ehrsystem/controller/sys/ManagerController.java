@@ -7,11 +7,14 @@ import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
 import com.victory.ehrsystem.service.sys.PasswordHelper;
 import com.victory.ehrsystem.service.sys.RoleService;
 import com.victory.ehrsystem.service.sys.UserService;
+import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.PageInfo;
 import com.victory.ehrsystem.vo.UserVo;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +49,28 @@ public class ManagerController {
     @RequiresPermissions(value = "user:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
+
+        Subject subject = SecurityUtils.getSubject();
+
         List<ColInfo> colInfos = new ArrayList<>();
         colInfos.add(new ColInfo("name","账号"));
-        colInfos.add(new ColInfo("hrmResource", "所属员工"));
-        colInfos.add(new ColInfo("roleids", "所有角色"));
+        String template1 = "";
+        String template2 = "";
+//      //单个链接
+        if (subject.isPermitted("resource:view")) {
+            template1 = StringUtil.getScript("resource","hrmResource",true);
+        }else{
+            template1 = StringUtil.getScript("resource","hrmResource",false);
+        }
+
+        //集合链接
+        if (subject.isPermitted("role:view")) {
+            template2 = StringUtil.getMultiScript("role","roles",true);
+        }else{
+            template2 = StringUtil.getMultiScript("role","roles",false);
+        }
+        colInfos.add(new ColInfo("hrmResource", "所属员工",template1));
+        colInfos.add(new ColInfo("roles", "所有角色",template2));
 
         model.addAttribute("topic","操作员管理");
         model.addAttribute("simplename","操作员");

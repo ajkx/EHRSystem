@@ -65,7 +65,7 @@ public class SysResource {
     @Column
     private String url;
 
-    @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.LAZY)
     @JoinTable(name = "role_resource",
             joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

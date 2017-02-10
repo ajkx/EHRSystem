@@ -4,9 +4,12 @@ import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.sys.ResourceService;
+import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,16 +38,27 @@ public class PermissionController {
     @RequiresPermissions(value = "permission:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
+
+        Subject subject = SecurityUtils.getSubject();
+
         List<ColInfo> colInfos = new ArrayList<>();
         colInfos.add(new ColInfo("name","账号"));
         colInfos.add(new ColInfo("description", "描述"));
-        colInfos.add(new ColInfo("roles", "相关角色"));
+
+        String template = "";
+        if (subject.isPermitted("role:view")) {
+            template = StringUtil.getMultiScript("role", "roles", true);
+        }else{
+            template = StringUtil.getMultiScript("role", "roles", false);
+        }
+        colInfos.add(new ColInfo("roles", "相关角色",template));
 
         model.addAttribute("topic","权限管理");
         model.addAttribute("simplename","权限");
         model.addAttribute("url","/permission");
         model.addAttribute("col", colInfos);
         model.addAttribute("per", "permission");
+        model.addAttribute("canedit", false);
         return "topic";
     }
 
