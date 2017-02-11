@@ -77,6 +77,7 @@ public class ManagerController {
         model.addAttribute("url","/user");
         model.addAttribute("col", colInfos);
         model.addAttribute("per", "user");
+        model.addAttribute("id", 1);
         return "topic";
     }
 

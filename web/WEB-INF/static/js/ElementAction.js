@@ -68,11 +68,13 @@ function showSelectList(no,url,event){
             }
         });
     }
-    $(document).bind('click',function(event){
+    //绑定windows对象 pjax不会重新加载，绑定document会重新加载
+    $(window).bind('click',function(event){
         selectlist.css('display','none');
-        $(document).unbind('click');
+        $(window).unbind('click');
     });
     event.stopPropagation();
+    console.log("click....");
 
 }
 
@@ -167,9 +169,9 @@ function showMulitSelectList(no,url,event){
             }
         });
     }
-    $(document).bind('click',function(event){
+    $(window).bind('click',function(event){
         selectlist.css('display','none');
-        $(document).unbind('click');
+        $(window).unbind('click');
     });
     event.stopPropagation();
 }

@@ -4,13 +4,15 @@
 $(function () {
 
     //初始化a标记的pjax事件
-    $(document).pjax('a[data-pjax]','#main-content');
+    $(document).pjax('a[data-pjax]','#main-content',{timeout:5000});
     //每次载入页面完成时进行一次pjax请求
     $.pjax({url:'', container: '#main-content'});
+    // $.pjax.defaults.timeout = 1200;
 
     //绑定模态框的隐藏事件
     $('edit-modal').on("hidden.bs.modal", function (e) {
         //重新载入当前页面
+        console.log("test");
         $.pjax({url: location.href, container: '#main-content'});
         //移除模态框元素
         $('#edit-modal').find("#edit-modal-content").children().detach();

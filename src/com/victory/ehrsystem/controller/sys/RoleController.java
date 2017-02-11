@@ -50,7 +50,7 @@ public class RoleController {
         List<ColInfo> colInfos = new ArrayList<>();
         String template1 ="";
         String template2 ="";
-        colInfos.add(new ColInfo("name","角色命"));
+        colInfos.add(new ColInfo("name","角色名"));
         colInfos.add(new ColInfo("description", "描述"));
 
         if (subject.isPermitted("user:view")) {
@@ -73,6 +73,7 @@ public class RoleController {
         model.addAttribute("url","/role");
         model.addAttribute("col", colInfos);
         model.addAttribute("per", "role");
+        model.addAttribute("id", 1);
         return "topic";
     }
 

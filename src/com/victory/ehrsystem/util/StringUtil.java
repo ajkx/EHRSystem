@@ -41,11 +41,11 @@ public class StringUtil {
         if (hasPermission) {
             return "var el = '';" +
                     "$("+prop+").each(function(index,element){" +
-                    "el += \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>\";});return el;";
+                    "el += \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>&nbsp;&nbsp;\";});return el;";
         }else{
             return "var el = '';" +
                     "$("+prop+").each(function(index,element){" +
-                    "el += \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>\";});return el;";
+                    "el += \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>&nbsp;&nbsp;\";});return el;";
 
         }
     }

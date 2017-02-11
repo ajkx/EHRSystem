@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * pjax请求拦截器
@@ -24,6 +25,10 @@ public class PjaxInterceptor implements HandlerInterceptor{
             return true;}
         String path = request.getServletPath();
         if (path.lastIndexOf(".html") == -1){
+            System.out.println("====进入非HTML====");
+            System.out.println("path : " + path);
+            System.out.println("header : "+request.getHeaderNames());
+            System.out.println("====退出非HTML====");
             return true;
         }
 
@@ -33,9 +38,20 @@ public class PjaxInterceptor implements HandlerInterceptor{
         if (header == null && !path.contains(Layout.LAYOUT_PATH) && desc == null) {
             //因为没有servletpath 所以url直接等于layoutpath
             String url = request.getContextPath()+Layout.LAYOUT_PATH;
+            System.out.println("====进入跳转pjax====");
+            System.out.println("path : " + path);
+            Enumeration a = request.getHeaderNames();
+            while (a.hasMoreElements()) {
+                System.out.println("header : " + a.nextElement());
+            }
+            System.out.println("====退出跳转pjax====");
             request.getRequestDispatcher(url).forward(request,response);
             return false;
         }
+        System.out.println("====进入正常pjax====");
+        System.out.println("path : " + path);
+        System.out.println("header : "+request.getHeaderNames());
+        System.out.println("====退出正常pjax====");
         return true;
     }
 

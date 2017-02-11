@@ -58,7 +58,7 @@
                         key: 'id',
                         text: '操作',
                         template:function(id,rowObject){
-                            if(id == 1){
+                            if(id == <c:choose><c:when test="${id == 1}">${id}</c:when><c:otherwise>-1</c:otherwise></c:choose>){
                                 return '<div><a disable="" class="font-color" href="javascript:void(0)">编辑</a><span class="ant-divider"></span> <a disable="" class="font-color" href="javascript:void(0)">删除</a></div>';
                             }else{
                                 return '<div><a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showEditModal(\'${url}/'+id+'\')">编辑</a><span class="ant-divider"></span> <a <shiro:lacksPermission name="${per}:delete">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showDelModal(\'${url}/delete/'+id+'\')">删除</a> </div>';
