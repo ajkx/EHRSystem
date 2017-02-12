@@ -1,12 +1,13 @@
 package com.victory.ehrsystem.entity.hrm;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * 合同表
  *
  * @author ajkx_Du
- * @create 2016-10-19 14:53
+ * @createDate 2016-10-19 14:53
  */
 @Entity
 public class HrmContract {
@@ -15,25 +16,32 @@ public class HrmContract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "contractname")
-    private String name;
+    @Column(name = "contractName")
+    private String contractName;
 
-    @OneToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "contractman", unique = true)
-    private HrmResource man;
+    @ManyToOne(targetEntity = HrmResource.class)
+    @JoinColumn(name = "resourceId", referencedColumnName = "id",nullable = false)
+    private HrmResource resource;
 
-    @Column(name = "contractstartdate")
-    private Character[] startdate;
+    @Column(name = "beginDate")
+    private Date beginDate;
 
-    @Column(name = "contractenddate")
-    private Character[] enddate;
+    @Column(name = "enddate")
+    private Date endDate;
 
-    @Column(name = "proenddate")
-    private Character[] proenddate;
+    @Column(name = "yearPeriod")
+    private Integer yearPeriod;
 
-    @ManyToOne(targetEntity = HrmContractType.class)
-    @JoinColumn(name = "contracttypeid")
-    private HrmContractType typeid;
+    //保密等级
+    @Column(name = "secureGrade")
+    private String secureGrade;
+
+    //签订日期
+    @Column(name = "signDate")
+    private Date signDate;
+
+    @Column(name = "remark")
+    private String remark;
 
     public Integer getId() {
         return id;
@@ -43,62 +51,80 @@ public class HrmContract {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getContractName() {
+        return contractName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
     }
 
-    public HrmResource getMan() {
-        return man;
+    public HrmResource getResource() {
+        return resource;
     }
 
-    public void setMan(HrmResource man) {
-        this.man = man;
+    public void setResource(HrmResource resource) {
+        this.resource = resource;
     }
 
-    public Character[] getStartdate() {
-        return startdate;
+    public Date getBeginDate() {
+        return beginDate;
     }
 
-    public void setStartdate(Character[] startdate) {
-        this.startdate = startdate;
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
     }
 
-    public Character[] getEnddate() {
-        return enddate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnddate(Character[] enddate) {
-        this.enddate = enddate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public Character[] getProenddate() {
-        return proenddate;
+    public Integer getYearPeriod() {
+        return yearPeriod;
     }
 
-    public void setProenddate(Character[] proenddate) {
-        this.proenddate = proenddate;
+    public void setYearPeriod(Integer yearPeriod) {
+        this.yearPeriod = yearPeriod;
     }
 
-    public HrmContractType getTypeid() {
-        return typeid;
+    public String getSecureGrade() {
+        return secureGrade;
     }
 
-    public void setTypeid(HrmContractType typeid) {
-        this.typeid = typeid;
+    public void setSecureGrade(String secureGrade) {
+        this.secureGrade = secureGrade;
     }
 
-    public HrmContract(String name, HrmResource man, Character[] startdate, Character[] enddate, Character[] proenddate, HrmContractType typeid) {
+    public Date getSignDate() {
+        return signDate;
+    }
 
-        this.name = name;
-        this.man = man;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.proenddate = proenddate;
-        this.typeid = typeid;
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public HrmContract(String contractName, HrmResource resource, Date beginDate, Date endDate, Integer yearPeriod, String secureGrade, Date signDate, String remark) {
+
+        this.contractName = contractName;
+        this.resource = resource;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.yearPeriod = yearPeriod;
+        this.secureGrade = secureGrade;
+        this.signDate = signDate;
+        this.remark = remark;
     }
 
     public HrmContract() {

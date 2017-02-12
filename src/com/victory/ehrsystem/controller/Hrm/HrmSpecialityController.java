@@ -1,6 +1,5 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
 import com.victory.ehrsystem.entity.hrm.HrmSpeciality;
 import com.victory.ehrsystem.service.hrm.impl.HrmSpecialityService;
 import com.victory.ehrsystem.util.CollectionUtil;

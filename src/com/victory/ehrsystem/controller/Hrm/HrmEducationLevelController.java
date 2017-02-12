@@ -1,7 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.entity.hrm.HrmEducationLevel;
-import com.victory.ehrsystem.entity.hrm.HrmLocation;
+import com.victory.ehrsystem.entity.hrm.EducationInfo;
 import com.victory.ehrsystem.service.hrm.impl.HrmEducationLevelService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.ColInfo;
@@ -55,7 +54,7 @@ public class HrmEducationLevelController {
     @RequestMapping(value = "/list")
     public @ResponseBody
     PageInfo list(HttpServletRequest request) {
-        PageInfo pageInfo = educationLevelService.findByPage(HrmEducationLevel.class,request);
+        PageInfo pageInfo = educationLevelService.findByPage(EducationInfo.class,request);
         return pageInfo;
     }
 
@@ -79,7 +78,7 @@ public class HrmEducationLevelController {
      */
     @RequiresPermissions(value = "educationLevel:create")
     @RequestMapping(value = "/create")
-    public @ResponseBody JsonVo create(HrmEducationLevel educationlevel) {
+    public @ResponseBody JsonVo create(EducationInfo educationlevel) {
         educationLevelService.save(educationlevel);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("添加成功");
@@ -97,7 +96,7 @@ public class HrmEducationLevelController {
     public String modal_update(@PathVariable int id, Model model) {
         model.addAttribute("topic", "学历信息修改");
         model.addAttribute("action","/educationlevel/update");
-        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(educationLevelService.findOne(HrmEducationLevel.class, id)));
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(educationLevelService.findOne(EducationInfo.class, id)));
         return "modal/hrm/EducationLevel";
     }
 
@@ -108,8 +107,8 @@ public class HrmEducationLevelController {
      */
     @RequiresPermissions(value = "educationLevel:update")
     @RequestMapping(value = "/update")
-    public @ResponseBody JsonVo update(HrmEducationLevel educationlevel,Model model) {
-        educationLevelService.update(HrmEducationLevel.class, educationlevel);
+    public @ResponseBody JsonVo update(EducationInfo educationlevel, Model model) {
+        educationLevelService.update(EducationInfo.class, educationlevel);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("修改成功");
         return jsonVo;
@@ -123,7 +122,7 @@ public class HrmEducationLevelController {
     @RequiresPermissions(value = "educationLevel:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
-        educationLevelService.delete(HrmEducationLevel.class,id);
+        educationLevelService.delete(EducationInfo.class,id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
         return jsonVo;

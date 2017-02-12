@@ -3,13 +3,13 @@ package com.victory.ehrsystem.entity.hrm;
 import javax.persistence.*;
 
 /**
- * 用工性质表
+ * 社会职称表
  *
  * @author ajkx_Du
  * @createDate 2016-10-19 14:22
  */
 @Entity
-public class HrmUsekind {
+public class JobCall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,16 +18,20 @@ public class HrmUsekind {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    //评定日期
+    @Column(name = "date")
+    private String date;
 
-    public HrmUsekind() {
+    @ManyToOne(targetEntity = HrmResource.class)
+    @JoinColumn(name = "resourceId", referencedColumnName = "id", nullable = false)
+    private HrmResource resource;
+
+    public JobCall() {
     }
 
-    public HrmUsekind(String name, String description) {
-
+    public JobCall(String name, String date) {
         this.name = name;
-        this.description = description;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -47,11 +51,11 @@ public class HrmUsekind {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDate() {
+        return date;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDate(String description) {
+        this.date = description;
     }
 }

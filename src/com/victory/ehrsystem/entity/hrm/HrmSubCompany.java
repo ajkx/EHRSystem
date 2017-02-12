@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 分部表
  *
  * @author ajkx_Du
- * @create 2016-10-19 9:49
+ * @createDate 2016-10-19 9:49
  */
 @Entity
 public class HrmSubCompany{
@@ -15,15 +15,15 @@ public class HrmSubCompany{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "subcompanyname",nullable = false,length = 200)
+    @Column(name = "name",nullable = false,length = 200)
     private String name;
 
-    @Column(name = "subcompanydesc",length = 200)
-    private String desc;
+    @Column(name = "description",length = 200)
+    private String description;
 
     @ManyToOne(targetEntity = HrmSubCompany.class)
-    @JoinColumn(name = "supsubcomid")
-    private HrmSubCompany supid;
+    @JoinColumn(name = "parentSub")
+    private HrmSubCompany parent;
 
     @Column(name = "cancel")
     private boolean cancel;
@@ -31,10 +31,10 @@ public class HrmSubCompany{
     public HrmSubCompany() {
     }
 
-    public HrmSubCompany(String name, String desc, HrmSubCompany supid, boolean cancel) {
+    public HrmSubCompany(String name, String description, HrmSubCompany parent, boolean cancel) {
         this.name = name;
-        this.desc = desc;
-        this.supid = supid;
+        this.description = description;
+        this.parent = parent;
         this.cancel = cancel;
     }
 
@@ -46,12 +46,12 @@ public class HrmSubCompany{
         this.name = name;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setSupid(HrmSubCompany supid) {
-        this.supid = supid;
+    public void setParent(HrmSubCompany parent) {
+        this.parent = parent;
     }
 
     public void setCancel(boolean cancel) {
@@ -66,12 +66,12 @@ public class HrmSubCompany{
         return name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public HrmSubCompany getSupid() {
-        return supid;
+    public HrmSubCompany getParent() {
+        return parent;
     }
 
     public boolean getCancel() {

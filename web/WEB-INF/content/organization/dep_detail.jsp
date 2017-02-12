@@ -11,11 +11,11 @@
     <div class="main-info" style="margin-bottom: 15px">
         <h5 class="" style="margin-bottom: 15px">${entity.name}</h5>
         <p style="color: rgb(153, 153, 153);"></p>
-        <c:if test="${entity.subcomid != ''}">
-            <p style="margin-bottom: 15px">上级分部:  &nbsp;&nbsp;<a href="${entity.subcomid}">${entity.subcomid.name}</a></p>
+        <c:if test="${entity.subCompany != ''}">
+            <p style="margin-bottom: 15px">上级分部:  &nbsp;&nbsp;<a href="${entity.subCompany}">${entity.subCompany.name}</a></p>
         </c:if>
-        <c:if test="${entity.supid != ''}">
-            <p style="margin-bottom: 15px">上级部门:  &nbsp;&nbsp;<a href="${entity.supid}">${entity.supid.name}</a></p>
+        <c:if test="${entity.parent != ''}">
+            <p style="margin-bottom: 15px">上级部门:  &nbsp;&nbsp;<a href="${entity.parent}">${entity.parent.name}</a></p>
         </c:if>
     </div>
     <div>

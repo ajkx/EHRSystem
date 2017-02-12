@@ -7,7 +7,7 @@ import java.sql.Time;
  * 班次表
  *
  * @author ajkx_Du
- * @create 2016-10-19 14:35
+ * @createDate 2016-10-19 14:35
  */
 @Entity
 public class AttendanceSchedule {

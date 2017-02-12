@@ -1,8 +1,7 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.entity.hrm.HrmJobActivities;
-import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
-import com.victory.ehrsystem.service.hrm.impl.HrmJobGroupsService;
+import com.victory.ehrsystem.entity.hrm.HrmJobGroup;
+import com.victory.ehrsystem.service.hrm.impl.HrmJobGroupService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
@@ -28,7 +27,7 @@ import java.util.*;
 public class HrmJobGroupController {
 
     @Autowired
-    private HrmJobGroupsService jobGroupsService;
+    private HrmJobGroupService jobGroupsService;
 
     @RequiresPermissions(value = "jobGroup:view")
     @RequestMapping(method = RequestMethod.GET)
@@ -50,7 +49,7 @@ public class HrmJobGroupController {
     @RequiresPermissions(value = "jobGroup:view")
     @RequestMapping(value = "/list")
     public @ResponseBody PageInfo list(HttpServletRequest request) {
-        PageInfo pageInfo = jobGroupsService.findByPage(HrmJobGroups.class,request);
+        PageInfo pageInfo = jobGroupsService.findByPage(HrmJobGroup.class,request);
         return pageInfo;
     }
 
@@ -64,7 +63,7 @@ public class HrmJobGroupController {
     public String modal_create(Model model) {
         model.addAttribute("topic","职务类别信息创建");
         model.addAttribute("action","/jobgroup/create");
-        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobGroups.class));
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmJobGroup.class));
         return "modal/hrm/JobGroup";
     }
     /**
@@ -76,7 +75,7 @@ public class HrmJobGroupController {
     @RequiresPermissions(value = "jobGroup:create")
     @RequestMapping(value = "/create")
     public @ResponseBody
-    JsonVo create(HrmJobGroups jobgroup) {
+    JsonVo create(HrmJobGroup jobgroup) {
         jobGroupsService.save(jobgroup);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("添加成功");
@@ -86,7 +85,7 @@ public class HrmJobGroupController {
     @RequiresPermissions(value = "jobGroup:view")
     @RequestMapping(value = "/view/{id}")
     public String modal_view(@PathVariable int id, Model model) {
-        HrmJobGroups jobGroups = jobGroupsService.findOne(HrmJobGroups.class, id);
+        HrmJobGroup jobGroups = jobGroupsService.findOne(HrmJobGroup.class, id);
         model.addAttribute("topic", "职务类别信息");
         model.addAttribute("obj", jobGroups);
         return "modal/hrm/JobGroup_view";
@@ -102,7 +101,7 @@ public class HrmJobGroupController {
     public String modal_update(@PathVariable int id, Model model) {
         model.addAttribute("topic", "职务类别信息修改");
         model.addAttribute("action","/jobgroup/update");
-        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobGroupsService.findOne(HrmJobGroups.class, id)));
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(jobGroupsService.findOne(HrmJobGroup.class, id)));
         return "modal/hrm/JobGroup";
     }
 
@@ -113,8 +112,8 @@ public class HrmJobGroupController {
      */
     @RequiresPermissions(value = "jobGroup:update")
     @RequestMapping(value = "/update")
-    public @ResponseBody JsonVo update(HrmJobGroups jobgroup,Model model) {
-        jobGroupsService.update(HrmJobGroups.class, jobgroup);
+    public @ResponseBody JsonVo update(HrmJobGroup jobgroup, Model model) {
+        jobGroupsService.update(HrmJobGroup.class, jobgroup);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("修改成功");
         return jsonVo;
@@ -128,7 +127,7 @@ public class HrmJobGroupController {
     @RequiresPermissions(value = "jobGroup:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
-        jobGroupsService.delete(HrmJobGroups.class,id);
+        jobGroupsService.delete(HrmJobGroup.class,id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
         return jsonVo;
@@ -136,7 +135,7 @@ public class HrmJobGroupController {
 
     @RequestMapping(value = "/jsonlist")
     public @ResponseBody List jsonList(){
-        List<HrmJobGroups> groupses = jobGroupsService.findAll(HrmJobGroups.class);
+        List<HrmJobGroup> groupses = jobGroupsService.findAll(HrmJobGroup.class);
         return groupses;
     }
 }

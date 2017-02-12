@@ -1,8 +1,6 @@
 package com.victory.ehrsystem.controller.Attendance;
 
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
-import com.victory.ehrsystem.entity.attendance.AttendanceType;
-import com.victory.ehrsystem.entity.hrm.HrmEducationLevel;
 import com.victory.ehrsystem.service.attendance.AttendanceScheduleService;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.ScheduleVo;

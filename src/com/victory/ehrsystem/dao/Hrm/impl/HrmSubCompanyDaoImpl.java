@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class HrmSubCompanyDaoImpl extends BaseDaoImpl<HrmSubCompany> implements HrmSubCompanyDao{
     @Override
-    public List<HrmSubCompany> findByHrmSubCompany(HrmSubCompany supcompany) {
-        return find("select s from HrmSubCompany s where s.supid = ?0",supcompany);
+    public List<HrmSubCompany> findByHrmSubCompany(HrmSubCompany subCompany) {
+        return find("select s from HrmSubCompany s where s.parent = ?0",subCompany);
     }
 
     @Override
     public List<HrmSubCompany> findAll_NoParent() {
-        return find("select s from HrmSubCompany s where s.supid is null");
+        return find("select s from HrmSubCompany s where s.parent is null");
     }
 }

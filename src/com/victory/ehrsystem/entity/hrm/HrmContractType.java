@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 合同类别表
  *
  * @author ajkx_Du
- * @create 2016-10-19 14:45
+ * @createDate 2016-10-19 14:45
  */
 @Entity
 public class HrmContractType {

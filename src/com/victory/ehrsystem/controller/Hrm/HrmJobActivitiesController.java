@@ -1,7 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.entity.hrm.HrmJobActivities;
-import com.victory.ehrsystem.entity.hrm.HrmLocation;
+import com.victory.ehrsystem.entity.hrm.HrmJobDuty;
 import com.victory.ehrsystem.service.hrm.impl.HrmJobActivitiesService;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
@@ -59,7 +58,7 @@ public class HrmJobActivitiesController {
     @RequestMapping(value = "/list")
     public @ResponseBody
     PageInfo list(HttpServletRequest request) {
-        PageInfo pageInfo = jobActivitiesService.findByPage(HrmJobActivities.class,request);
+        PageInfo pageInfo = jobActivitiesService.findByPage(HrmJobDuty.class,request);
         return pageInfo;
     }
 
@@ -78,7 +77,7 @@ public class HrmJobActivitiesController {
 
     @RequiresPermissions(value = "jobActivities:create")
     @RequestMapping(value = "/create")
-    public @ResponseBody JsonVo create(HrmJobActivities activities) {
+    public @ResponseBody JsonVo create(HrmJobDuty activities) {
         jobActivitiesService.save(activities);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("添加成功");
@@ -87,7 +86,7 @@ public class HrmJobActivitiesController {
     @RequiresPermissions(value = "jobActivities:update")
     @RequestMapping(value = "/{id}")
     public String modal_update(@PathVariable int id, Model model) {
-        HrmJobActivities jobActivities = jobActivitiesService.findOne(HrmJobActivities.class, id);
+        HrmJobDuty jobActivities = jobActivitiesService.findOne(HrmJobDuty.class, id);
         Map<String, String> map = new HashMap<>();
         map.put("id",jobActivities.getId()+"");
         map.put("name",jobActivities.getName());
@@ -107,8 +106,8 @@ public class HrmJobActivitiesController {
      */
     @RequiresPermissions(value = "jobActivities:update")
     @RequestMapping(value = "/update")
-    public @ResponseBody JsonVo update(HrmJobActivities activities, Model model) {
-        jobActivitiesService.update(HrmJobActivities.class, activities);
+    public @ResponseBody JsonVo update(HrmJobDuty activities, Model model) {
+        jobActivitiesService.update(HrmJobDuty.class, activities);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("修改成功");
         return jsonVo;
@@ -122,7 +121,7 @@ public class HrmJobActivitiesController {
     @RequiresPermissions(value = "jobActivities:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
-        jobActivitiesService.delete(HrmJobActivities.class, id);
+        jobActivitiesService.delete(HrmJobDuty.class, id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
         return jsonVo;

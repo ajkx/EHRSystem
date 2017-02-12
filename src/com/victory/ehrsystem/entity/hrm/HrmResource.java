@@ -4,12 +4,15 @@ import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.sys.User;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * 人员信息表
  *
  * @author ajkx_Du
- * @create 2016-10-19 15:12
+ * @createDate 2016-10-19 15:12
  */
 @Entity
 public class HrmResource {
@@ -18,423 +21,202 @@ public class HrmResource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="lastname")
+    //=======基本信息=======
+    //姓名
+    @Column(name = "name")
     private String name;
 
-    @Column(name="workcode")
+    //工号
+    @Column(name = "workCode")
     private String workcode;
 
-    @ManyToOne(targetEntity = HrmSubCompany.class)
-    @JoinColumn(name = "subcompanyid")
-    private HrmSubCompany subCompanyid;
-
-    @ManyToOne(targetEntity = HrmDepartment.class)
-    @JoinColumn(name = "departmentid")
-    private HrmDepartment departmentid;
-
-    @ManyToOne(targetEntity = HrmJobTitles.class)
-    @JoinColumn(name = "jobtitle")
-    private HrmJobTitles jobtitle;
-
-    @ManyToOne(targetEntity = HrmJobCall.class)
-    @JoinColumn(name = "jobcall")
-    private HrmJobCall jobcall;
-
-    @ManyToOne(targetEntity = HrmUsekind.class)
-    @JoinColumn(name = "usekind")
-    private HrmUsekind usekind;
-
-    @ManyToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "managerid")
-    private HrmResource managerid;
-
-    @Column(name = "managerstr")
-    private String managerstr;
-
-    @ManyToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "assistantid")
-    private HrmResource assistantid;
-
-    @Column(name = "status")
-    private Integer status;
-
+    //性别
     @Column(name = "sex")
     private String sex;
 
+    //生日
     @Column(name = "birthday")
     private String birthday;
 
-    @Column(name = "nationality")
-    private Integer nationality;
+    //婚姻状态
+    @Column(name = "maritalStatus")
+    private String maritalStatus;
 
-    @Column(name = "maritalstatus")
-    private String maritalstatus;
-
-    @Column(name = "telephone")
-    private String telephone;
-
+    //移动电话
     @Column(name = "mobile")
     private String mobile;
 
+    //电子邮件
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(targetEntity = HrmLocation.class)
-    @JoinColumn(name = "locationid")
-    private HrmLocation locationid;
+    //身份证号码
+    @Column(name = "certificateNum")
+    private String certificateNum;
 
-    @Column(name = "certificatenum")
-    private String certificatenum;
+    //户口所在地
+    @Column(name = "nativePlace")
+    private String nativePlace;
 
-    @Column(name = "nativeplace")
-    private String nativeplace;
+    //家庭住址
+    @Column(name = "homeAddress")
+    private String homeAddress;
 
-    @Column(name = "homeaddress")
-    private String homeaddress;
+    //家庭电话
+    @Column(name = "homePhone")
+    private String homePhone;
 
-    @Column(name = "residentphone")
-    private String residentphone;
-
+    //民族
     @Column(name = "folk")
     private String folk;
 
-    @Column(name = "regresidentplace")
-    private String regresidentplace;
+    //暂住地
+    @Column(name = "nowStayPlace")
+    private String nowStayPlace;
 
-    @Column(name = "height",length = 20)
+    //身高
+    @Column(name = "height", length = 20)
     private String height;
 
+    //体重
     @Column(name = "weight")
     private Integer weight;
 
-    @Column(name = "healthinfo")
-    private String healthinfo;
+    //健康情况
+    @Column(name = "healthInfo")
+    private String healthInfo;
 
-    @Column(name = "createdate")
-    private String createdate;
 
+    //=======工作信息========
+    //分部id
+    @ManyToOne(targetEntity = HrmSubCompany.class)
+    @JoinColumn(name = "subcompanyId")
+    private HrmSubCompany subCompany;
+
+    //部门id
+    @ManyToOne(targetEntity = HrmDepartment.class)
+    @JoinColumn(name = "departmentId")
+    private HrmDepartment department;
+
+    //职位id
+    @ManyToOne(targetEntity = HrmJobPosition.class)
+    @JoinColumn(name = "jobPosition")
+    private HrmJobPosition jobPosition;
+
+    //上级id
     @ManyToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "createrid")
-    private HrmResource createrid;
+    @JoinColumn(name = "managerId")
+    private HrmResource managerId;
 
-    @OneToOne(targetEntity = HrmContract.class,mappedBy = "man")
-    private HrmContract contract;
+    //上级的递归id
+    @Column(name = "managerStr")
+    private String managerStr;
 
+    //助手id
+    @ManyToOne(targetEntity = HrmResource.class)
+    @JoinColumn(name = "assistantId")
+    private HrmResource assistantId;
+
+    //用工性质
+    @ManyToOne(targetEntity = HrmUsekind.class)
+    @JoinColumn(name = "useKind")
+    private HrmUsekind useKind;
+
+    //办公地点
+    @ManyToOne(targetEntity = HrmLocation.class)
+    @JoinColumn(name = "locationId")
+    private HrmLocation locationId;
+
+    //办公电话
+    @Column(name = "officePhone")
+    private String officePhone;
+
+    //状态
+    @Column(name = "status")
+    private Integer status;
+
+    //招聘来源
+    @Column(name = "recruit")
+    private String recruit;
+
+    //入职日期
+    @Column(name = "entryDate")
+    private Date entryDate;
+
+    //试用期限，用数字表示，如果是1 则为一个月
+    @Column(name = "probationPeriod")
+    private Integer probationPeriod;
+
+    //转正日期
+    @Column(name = "officialDate")
+    private Date officialDate;
+
+    //离职日期
+    @Column(name = "dimissionDate")
+    private Date dimissionDate;
+
+
+    //========银行信息========
+    //开户银行
+    private String bankName;
+
+    //银行账号
+    private String bankAccount;
+
+    //========简历信息=========
+    //教育情况
+    @OneToMany(targetEntity = EducationInfo.class)
+    private Set<EducationInfo> educationInfos;
+
+    //工作经历
+    //双向1 - N 由N的一端控制关联属性
+    @OneToMany(targetEntity = WorkInfo.class, mappedBy = "resource")
+    private Set<WorkInfo> workInfos;
+
+    @OneToMany(targetEntity = SkillInfo.class, mappedBy = "resource")
+    private Set<SkillInfo> skillInfos;
+
+    //========职业资格=========
+    //社会职称
+    @OneToMany(targetEntity = JobCall.class, mappedBy = "resource")
+    private Set<JobCall> jobCalls;
+
+    //========合同信息=========
+    @OneToMany(targetEntity = HrmContract.class, mappedBy = "resource")
+    private Set<HrmContract> contracts;
+
+    //========人员变动信息=========
+    //岗位/部门调动纪录
+    @OneToMany(targetEntity = TransferRecord.class, mappedBy = "resource")
+    private Set<TransferRecord> transferRecords;
+
+    //离职纪录
+    @OneToMany(targetEntity = DismissRecord.class, mappedBy = "resource")
+    private Set<DismissRecord> dismissRecords;
+
+
+    //========系统信息=========
+    //创建日期
+    @Column(name = "createDate",nullable = false)
+    private Timestamp createDate;
+
+    //创建人
+    @Column(name = "creater",nullable = false)
+    private String creater;
+
+    //绑定的操作员
+    @OneToOne(targetEntity = User.class)
+    private User user;
+
+    //========考勤信息==========
     //恒定的排班
     @ManyToOne(targetEntity = AttendanceSchedule.class)
     private AttendanceSchedule schedule;
 
-    @OneToOne(targetEntity = User.class)
-    private User user;
+    @OneToOne(targetEntity = HrmContract.class, mappedBy = "man")
+    private HrmContract contract;
 
-    public HrmResource() {
-    }
 
-    public HrmResource(String name, String workcode, HrmSubCompany subCompanyid, HrmDepartment departmentid, HrmJobTitles jobtitle, HrmJobCall jobcall, HrmUsekind usekind, HrmResource managerid, String managerstr, HrmResource assistantid, Integer status, String sex, String birthday, Integer nationality, String maritalstatus, String telephone, String mobile, String email, HrmLocation locationid, String certificatenum, String nativeplace, String homeaddress, String residentphone, String folk, String regresidentplace, String height, Integer weight, String healthinfo, String createdate, HrmResource createrid, HrmContract contract) {
-        this.name = name;
-        this.workcode = workcode;
-        this.subCompanyid = subCompanyid;
-        this.departmentid = departmentid;
-        this.jobtitle = jobtitle;
-        this.jobcall = jobcall;
-        this.usekind = usekind;
-        this.managerid = managerid;
-        this.managerstr = managerstr;
-        this.assistantid = assistantid;
-        this.status = status;
-        this.sex = sex;
-        this.birthday = birthday;
-        this.nationality = nationality;
-        this.maritalstatus = maritalstatus;
-        this.telephone = telephone;
-        this.mobile = mobile;
-        this.email = email;
-        this.locationid = locationid;
-        this.certificatenum = certificatenum;
-        this.nativeplace = nativeplace;
-        this.homeaddress = homeaddress;
-        this.residentphone = residentphone;
-        this.folk = folk;
-        this.regresidentplace = regresidentplace;
-        this.height = height;
-        this.weight = weight;
-        this.healthinfo = healthinfo;
-        this.createdate = createdate;
-        this.createrid = createrid;
-        this.contract = contract;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getWorkcode() {
-        return workcode;
-    }
-
-    public void setWorkcode(String workcode) {
-        this.workcode = workcode;
-    }
-
-    public HrmSubCompany getSubCompanyid() {
-        return subCompanyid;
-    }
-
-    public void setSubCompanyid(HrmSubCompany subCompanyid) {
-        this.subCompanyid = subCompanyid;
-    }
-
-    public HrmDepartment getDepartmentid() {
-        return departmentid;
-    }
-
-    public void setDepartmentid(HrmDepartment departmentid) {
-        this.departmentid = departmentid;
-    }
-
-    public HrmJobTitles getJobtitle() {
-        return jobtitle;
-    }
-
-    public void setJobtitle(HrmJobTitles jobtitle) {
-        this.jobtitle = jobtitle;
-    }
-
-    public HrmJobCall getJobcall() {
-        return jobcall;
-    }
-
-    public void setJobcall(HrmJobCall jobcall) {
-        this.jobcall = jobcall;
-    }
-
-    public HrmUsekind getUsekind() {
-        return usekind;
-    }
-
-    public void setUsekind(HrmUsekind usekind) {
-        this.usekind = usekind;
-    }
-
-    public HrmResource getManagerid() {
-        return managerid;
-    }
-
-    public void setManagerid(HrmResource managerid) {
-        this.managerid = managerid;
-    }
-
-    public String getManagerstr() {
-        return managerstr;
-    }
-
-    public void setManagerstr(String managerstr) {
-        this.managerstr = managerstr;
-    }
-
-    public HrmResource getAssistantid() {
-        return assistantid;
-    }
-
-    public void setAssistantid(HrmResource assistantid) {
-        this.assistantid = assistantid;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public Integer getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(Integer nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getMaritalstatus() {
-        return maritalstatus;
-    }
-
-    public void setMaritalstatus(String maritalstatus) {
-        this.maritalstatus = maritalstatus;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public HrmLocation getLocationid() {
-        return locationid;
-    }
-
-    public void setLocationid(HrmLocation locationid) {
-        this.locationid = locationid;
-    }
-
-    public String getCertificatenum() {
-        return certificatenum;
-    }
-
-    public void setCertificatenum(String certificatenum) {
-        this.certificatenum = certificatenum;
-    }
-
-    public String getNativeplace() {
-        return nativeplace;
-    }
-
-    public void setNativeplace(String nativeplace) {
-        this.nativeplace = nativeplace;
-    }
-
-    public String getHomeaddress() {
-        return homeaddress;
-    }
-
-    public void setHomeaddress(String homeaddress) {
-        this.homeaddress = homeaddress;
-    }
-
-    public String getResidentphone() {
-        return residentphone;
-    }
-
-    public void setResidentphone(String residentphone) {
-        this.residentphone = residentphone;
-    }
-
-    public String getFolk() {
-        return folk;
-    }
-
-    public void setFolk(String folk) {
-        this.folk = folk;
-    }
-
-    public String getRegresidentplace() {
-        return regresidentplace;
-    }
-
-    public void setRegresidentplace(String regresidentplace) {
-        this.regresidentplace = regresidentplace;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-
-    public String getHealthinfo() {
-        return healthinfo;
-    }
-
-    public void setHealthinfo(String healthinfo) {
-        this.healthinfo = healthinfo;
-    }
-
-    public String getCreatedate() {
-        return createdate;
-    }
-
-    public void setCreatedate(String createdate) {
-        this.createdate = createdate;
-    }
-
-    public HrmResource getCreaterid() {
-        return createrid;
-    }
-
-    public void setCreaterid(HrmResource createrid) {
-        this.createrid = createrid;
-    }
-
-    public HrmContract getContract() {
-        return contract;
-    }
-
-    public void setContract(HrmContract contract) {
-        this.contract = contract;
-    }
-
-    public AttendanceSchedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(AttendanceSchedule schedule) {
-        this.schedule = schedule;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
 
 

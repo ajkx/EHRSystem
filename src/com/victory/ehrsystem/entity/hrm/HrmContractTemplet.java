@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 职称表
  *
  * @author ajkx_Du
- * @create 2016-10-19 14:22
+ * @createDate 2016-10-19 14:22
  */
 @Entity
 public class HrmContractTemplet {

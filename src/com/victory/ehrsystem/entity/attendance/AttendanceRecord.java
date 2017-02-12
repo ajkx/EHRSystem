@@ -10,7 +10,7 @@ import java.sql.Date;
  * 打卡原记录表
  *
  * @author ajkx_Du
- * @create 2016-10-19 14:35
+ * @createDate 2016-10-19 14:35
  */
 @Entity
 public class AttendanceRecord {

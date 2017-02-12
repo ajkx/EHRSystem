@@ -28,7 +28,7 @@ public class TreeNodeUtil {
                 //temp.setId(subCompany.getId().toString());
                 //temp.setType("sub");
                 temp.setText(subCompany.getName());
-                //temp.setPid(subCompany.getSupid().toString());
+                //temp.setPid(subCompany.getParent().toString());
                 List<JsonTreeData> sublist =  convertSubTreeList(organizationService.findAllSubcompanyBySubcompany(subCompany),organizationService);
                 List<JsonTreeData> deplist = convertDepTreeList(organizationService.findRootDepartmentBySubcompany(subCompany),organizationService);
                 deplist.addAll(sublist);
@@ -53,7 +53,7 @@ public class TreeNodeUtil {
             temp.setText(department.getName());
             temp.setIcon("fa fa-folder");
             temp.setHref("/organization/department/"+department.getId()+".html");
-            //temp.setPid(department.getSupid().toString());
+            //temp.setPid(department.getParent().toString());
             List<JsonTreeData> deplist = convertDepTreeList(organizationService.findAllDepartmentByDepartment(department),organizationService);
             temp.setNodes(deplist.size() == 0 ? null : deplist);
             tree.add(temp);

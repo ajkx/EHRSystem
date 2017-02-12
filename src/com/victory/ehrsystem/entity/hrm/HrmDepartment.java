@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 部门表
  *
  * @author ajkx_Du
- * @create 2016-10-19 10:20
+ * @createDate 2016-10-19 10:20
  */
 @Entity
 public class HrmDepartment {
@@ -15,16 +15,16 @@ public class HrmDepartment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "departmentname",nullable = false,length = 200)
+    @Column(name = "departmentName",nullable = false,length = 200)
     private String name;
 
     @ManyToOne(targetEntity = HrmSubCompany.class)
-    @JoinColumn(name = "subcompanyid",nullable = false)
-    private HrmSubCompany subcomid;
+    @JoinColumn(name = "subCompanyId",nullable = false)
+    private HrmSubCompany subCompany;
 
     @ManyToOne(targetEntity = HrmDepartment.class)
-    @JoinColumn(name = "supdepid")
-    private HrmDepartment supid;
+    @JoinColumn(name = "parentDep")
+    private HrmDepartment parent;
 
     @Column(name = "cancel")
     private boolean cancel;
@@ -32,10 +32,10 @@ public class HrmDepartment {
     public HrmDepartment() {
     }
 
-    public HrmDepartment(String name, HrmSubCompany subcomid, HrmDepartment supid, boolean cancel) {
+    public HrmDepartment(String name, HrmSubCompany subCompany, HrmDepartment parent, boolean cancel) {
         this.name = name;
-        this.subcomid = subcomid;
-        this.supid = supid;
+        this.subCompany = subCompany;
+        this.parent = parent;
         this.cancel = cancel;
     }
 
@@ -55,20 +55,20 @@ public class HrmDepartment {
         this.name = name;
     }
 
-    public HrmSubCompany getSubcomid() {
-        return subcomid;
+    public HrmSubCompany getSubCompany() {
+        return subCompany;
     }
 
-    public void setSubcomid(HrmSubCompany subcomid) {
-        this.subcomid = subcomid;
+    public void setSubCompany(HrmSubCompany subCompany) {
+        this.subCompany = subCompany;
     }
 
-    public HrmDepartment getSupid() {
-        return supid;
+    public HrmDepartment getParent() {
+        return parent;
     }
 
-    public void setSupid(HrmDepartment supid) {
-        this.supid = supid;
+    public void setParent(HrmDepartment parent) {
+        this.parent = parent;
     }
 
     public boolean getCancel() {

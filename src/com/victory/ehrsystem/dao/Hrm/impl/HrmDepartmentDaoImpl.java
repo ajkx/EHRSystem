@@ -16,17 +16,17 @@ import java.util.List;
 public class HrmDepartmentDaoImpl extends BaseDaoImpl<HrmDepartment> implements HrmDepartmentDao{
     @Override
     public List<HrmDepartment> findByHrmSubCompany(HrmSubCompany supcompany) {
-        return find("select d from HrmDepartment d where d.subcomid = ?0",supcompany);
+        return find("select d from HrmDepartment d where d.subCompany = ?0",supcompany);
     }
 
     @Override
     public List<HrmDepartment> findRootDepByHrmSubCompany(HrmSubCompany supcompany) {
-        return find("select d from HrmDepartment d where d.subcomid = ?0 and d.supid is null",supcompany);
+        return find("select d from HrmDepartment d where d.subCompany = ?0 and d.parent is null",supcompany);
     }
 
     @Override
     public List<HrmDepartment> findBysupDepartment(HrmDepartment supdepartment) {
-        return find("select d from HrmDepartment d where d.supid = ?0",supdepartment);
+        return find("select d from HrmDepartment d where d.parent = ?0",supdepartment);
     }
 
 

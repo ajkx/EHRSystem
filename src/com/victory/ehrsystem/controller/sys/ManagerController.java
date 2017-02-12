@@ -1,6 +1,5 @@
 package com.victory.ehrsystem.controller.sys;
 
-import com.victory.ehrsystem.entity.hrm.HrmJobGroups;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.entity.sys.User;
 import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;

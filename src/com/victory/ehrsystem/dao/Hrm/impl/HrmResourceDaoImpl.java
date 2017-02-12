@@ -18,12 +18,12 @@ import java.util.List;
 public class HrmResourceDaoImpl extends BaseDaoImpl<HrmResource> implements HrmResourceDao{
     @Override
     public List<HrmResource> findBySubCompany(HrmSubCompany subCompany) {
-        return find("select r from HrmResource r where r.subCompanyid = ?0",subCompany);
+        return find("select r from HrmResource r where r.subCompany = ?0",subCompany);
     }
 
     @Override
     public List<HrmResource> findByDepartment(HrmDepartment department) {
-        return find("select r from HrmResource r where r.departmentid = ?0",department);
+        return find("select r from HrmResource r where r.department = ?0",department);
     }
 
     @Override

@@ -49,11 +49,11 @@
                 <value>com.victory.ehrsystem.entity.hrm.HrmContract</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmContractTemplet</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmContractType</value>
-                <value>com.victory.ehrsystem.entity.hrm.HrmEducationLevel</value>
-                <value>com.victory.ehrsystem.entity.hrm.HrmJobActivities</value>
-                <value>com.victory.ehrsystem.entity.hrm.HrmJobCall</value>
-                <value>com.victory.ehrsystem.entity.hrm.HrmJobGroups</value>
-                <value>com.victory.ehrsystem.entity.hrm.HrmJobTitles</value>
+                <value>com.victory.ehrsystem.entity.hrm.EducationInfo</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobDuty</value>
+                <value>com.victory.ehrsystem.entity.hrm.JobCall</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobGroup</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmJobPosition</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmUsekind</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmSpeciality</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmLocation</value>
@@ -88,11 +88,11 @@
 
     <bean id="baseDao" class="com.victory.ehrsystem.common.dao.impl.BaseDaoImpl" parent="daoTemplate"/>
     <bean id="departmentDao" class="com.victory.ehrsystem.dao.Hrm.impl.HrmDepartmentDaoImpl" parent="daoTemplate"/>
-    <bean id="subcompanyDao" class="com.victory.ehrsystem.dao.Hrm.impl.HrmSubCompanyDaoImpl" parent="daoTemplate"/>
-    <bean id="jobcall" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobCallDaoImpl" parent="daoTemplate"/>
-    <bean id="jobActivities" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobActivitiesDaoImpl" parent="daoTemplate"/>
-    <bean id="jobGroup" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobGroupsDaoImpl" parent="daoTemplate"/>
-    <bean id="jobTitle" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobTitlesDaoImpl" parent="daoTemplate"/>
+    <bean id="subCompanyDao" class="com.victory.ehrsystem.dao.Hrm.impl.HrmSubCompanyDaoImpl" parent="daoTemplate"/>
+    <bean id="jobCall" class="com.victory.ehrsystem.dao.Hrm.impl.JobCallDaoImpl" parent="daoTemplate"/>
+    <bean id="jobActivities" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobDutyDaoImpl" parent="daoTemplate"/>
+    <bean id="jobGroup" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobGroupDaoImpl" parent="daoTemplate"/>
+    <bean id="jobTitle" class="com.victory.ehrsystem.dao.Hrm.impl.HrmJobPositionDaoImpl" parent="daoTemplate"/>
     <bean id="location" class="com.victory.ehrsystem.dao.Hrm.impl.HrmLocationDaoImpl" parent="daoTemplate"/>
     <bean id="Speciality" class="com.victory.ehrsystem.dao.Hrm.impl.HrmSpecialityDaoImpl" parent="daoTemplate"/>
     <bean id="resource" class="com.victory.ehrsystem.dao.Hrm.impl.HrmResourceDaoImpl" parent="daoTemplate"/>

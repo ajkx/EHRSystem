@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 办公地点表
  *
  * @author ajkx_Du
- * @create 2016-10-19 14:35
+ * @createDate 2016-10-19 14:35
  */
 @Entity
 public class HrmLocation {
@@ -15,7 +15,7 @@ public class HrmLocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "locationname",nullable = false)
+    @Column(name = "name",nullable = false)
     private String name;
 
     @Column(name = "address")
@@ -24,13 +24,13 @@ public class HrmLocation {
     @Column(name = "postcode",length = 20)
     private String postcode;
 
-    @Column(name = "locationcity")
+    @Column(name = "city")
     private String city;
 
     @Column(name = "country")
     private String country;
 
-    @Column(name = "telephone")
+    @Column(name = "phone")
     private String phone;
 
     @Column(name = "fax")

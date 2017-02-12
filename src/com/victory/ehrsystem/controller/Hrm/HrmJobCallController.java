@@ -1,8 +1,7 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.entity.hrm.HrmJobCall;
-import com.victory.ehrsystem.entity.hrm.HrmLocation;
-import com.victory.ehrsystem.service.hrm.impl.HrmJobCallService;
+import com.victory.ehrsystem.entity.hrm.JobCall;
+import com.victory.ehrsystem.service.hrm.impl.JobCallService;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.PageInfo;
@@ -27,7 +26,7 @@ import java.util.*;
 public class HrmJobCallController {
 
     @Autowired
-    private HrmJobCallService jobCallService;
+    private JobCallService jobCallService;
 
     @RequiresPermissions(value = "jobCall:view")
     @RequestMapping(method = RequestMethod.GET)
@@ -49,7 +48,7 @@ public class HrmJobCallController {
     @RequestMapping(value = "/list")
     public @ResponseBody
     PageInfo list(HttpServletRequest request) {
-        PageInfo pageInfo = jobCallService.findByPage(HrmJobCall.class,request);
+        PageInfo pageInfo = jobCallService.findByPage(JobCall.class,request);
         return pageInfo;
     }
 
@@ -74,7 +73,7 @@ public class HrmJobCallController {
     @RequiresPermissions(value = "jobcall:create")
     @RequestMapping(value = "/create")
     public @ResponseBody
-    JsonVo create(HrmJobCall jobcall) {
+    JsonVo create(JobCall jobcall) {
         jobCallService.save(jobcall);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("添加成功");
@@ -90,7 +89,7 @@ public class HrmJobCallController {
     @RequiresPermissions(value = "jobcall:update")
     @RequestMapping(value = "/{id}")
     public String modal_update(@PathVariable int id, Model model) {
-        HrmJobCall jobCall = jobCallService.findOne(HrmJobCall.class, id);
+        JobCall jobCall = jobCallService.findOne(JobCall.class, id);
         Map<String, String> map = new HashMap<>();
         map.put("id",jobCall.getId()+"");
         map.put("name",jobCall.getName());
@@ -108,8 +107,8 @@ public class HrmJobCallController {
      */
     @RequiresPermissions(value = "jobcall:update")
     @RequestMapping(value = "/update")
-    public @ResponseBody JsonVo update(HrmJobCall jobcall,Model model) {
-        jobCallService.update(HrmJobCall.class, jobcall);
+    public @ResponseBody JsonVo update(JobCall jobcall, Model model) {
+        jobCallService.update(JobCall.class, jobcall);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("修改成功");
         return jsonVo;
@@ -123,7 +122,7 @@ public class HrmJobCallController {
     @RequiresPermissions(value = "jobcall:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
-        jobCallService.delete(HrmJobCall.class,id);
+        jobCallService.delete(JobCall.class,id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
         return jsonVo;
