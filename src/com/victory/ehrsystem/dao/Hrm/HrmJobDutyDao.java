@@ -10,7 +10,7 @@ import java.util.List;
  * 职务数据层接口
  *
  * @author ajkx_Du
- * @create 2016-10-19 17:19
+ * @createDate 2016-10-19 17:19
  */
 public interface HrmJobDutyDao extends BaseDao<HrmJobDuty>{
     /**

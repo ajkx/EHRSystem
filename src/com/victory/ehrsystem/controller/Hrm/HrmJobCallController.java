@@ -93,7 +93,7 @@ public class HrmJobCallController {
         Map<String, String> map = new HashMap<>();
         map.put("id",jobCall.getId()+"");
         map.put("name",jobCall.getName());
-        map.put("description", jobCall.getDescription());
+        map.put("description", jobCall.getName());
         model.addAttribute("topic", "职称信息修改");
         model.addAttribute("action","/jobcall/update");
         model.addAttribute("map",map);

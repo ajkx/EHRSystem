@@ -54,10 +54,16 @@
                 <value>com.victory.ehrsystem.entity.hrm.JobCall</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmJobGroup</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmJobPosition</value>
-                <value>com.victory.ehrsystem.entity.hrm.HrmUsekind</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmUseKind</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmSpeciality</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmLocation</value>
                 <value>com.victory.ehrsystem.entity.hrm.HrmResource</value>
+                <value>com.victory.ehrsystem.entity.hrm.HrmContract</value>
+                <value>com.victory.ehrsystem.entity.hrm.WorkInfo</value>
+                <value>com.victory.ehrsystem.entity.hrm.DismissRecord</value>
+                <value>com.victory.ehrsystem.entity.hrm.SkillInfo</value>
+                <value>com.victory.ehrsystem.entity.hrm.TransferRecord</value>
+                <value>com.victory.ehrsystem.entity.hrm.ReEmployRecord</value>
                 <!--考勤信息表-->
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceSchedule</value>
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceRecord</value>

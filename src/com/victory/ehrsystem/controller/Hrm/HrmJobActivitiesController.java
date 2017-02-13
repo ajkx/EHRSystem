@@ -1,7 +1,7 @@
 package com.victory.ehrsystem.controller.Hrm;
 
 import com.victory.ehrsystem.entity.hrm.HrmJobDuty;
-import com.victory.ehrsystem.service.hrm.impl.HrmJobActivitiesService;
+import com.victory.ehrsystem.service.hrm.impl.HrmJobDutyService;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.PageInfo;
@@ -28,7 +28,7 @@ import java.util.*;
 public class HrmJobActivitiesController {
 
     @Autowired
-    private HrmJobActivitiesService jobActivitiesService;
+    private HrmJobDutyService jobActivitiesService;
 
     @RequiresPermissions(value = "jobActivities:view")
     @RequestMapping(method = RequestMethod.GET)
@@ -91,8 +91,8 @@ public class HrmJobActivitiesController {
         map.put("id",jobActivities.getId()+"");
         map.put("name",jobActivities.getName());
         map.put("description", jobActivities.getDescription());
-        map.put("groupid", jobActivities.getGroupid().getId()+"");
-        map.put("groupname", jobActivities.getGroupid().getName());
+        map.put("groupid", jobActivities.getGroupId().getId()+"");
+        map.put("groupname", jobActivities.getGroupId().getName());
         model.addAttribute("topic", "职务修改");
         model.addAttribute("action","/jobactivities/update");
         model.addAttribute("map", map);

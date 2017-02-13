@@ -99,7 +99,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public List<HrmDepartment> findAllDepartmentByDepartment(HrmDepartment department) {
-        return departmentDao.findBysupDepartment(department);
+        return departmentDao.findBySupDepartment(department);
     }
 
     @Override

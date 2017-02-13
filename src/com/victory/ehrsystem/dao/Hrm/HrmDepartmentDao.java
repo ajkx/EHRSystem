@@ -16,23 +16,23 @@ public interface HrmDepartmentDao extends BaseDao<HrmDepartment>{
 
     /**
      * 根据上级分部找寻下属所有部门
-     * @param supcompany
+     * @param supCompany
      * @return
      */
-    List<HrmDepartment> findByHrmSubCompany(HrmSubCompany supcompany);
+    List<HrmDepartment> findByHrmSubCompany(HrmSubCompany supCompany);
 
     /**
      * 找分部下的根部门
-     * @param supcompany
+     * @param supCompany
      * @return
      */
-    List<HrmDepartment> findRootDepByHrmSubCompany(HrmSubCompany supcompany);
+    List<HrmDepartment> findRootDepByHrmSubCompany(HrmSubCompany supCompany);
 
     /**
      * 通过上级分部来找下属部门
-     * @param supdepartment
+     * @param supDepartment
      * @return
      */
-    List<HrmDepartment> findBysupDepartment(HrmDepartment supdepartment);
+    List<HrmDepartment> findBySupDepartment(HrmDepartment supDepartment);
 
 }

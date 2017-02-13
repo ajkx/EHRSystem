@@ -249,3 +249,82 @@ span.error:before{
 .topic-toolbar{
 	margin-bottom: 5px;
 }
+
+#resourceImg {
+	width: 120px;
+	height: 120px;
+	position: absolute;
+	top: -40px;
+	left: 40px;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.w100 {
+	width: 100px;
+	height: 36px;
+	/*border-radius: 2px;*/
+	background-color: #FFF;
+	/*border: 1px solid #D2D2D2;*/
+	color: #2EA0EE;
+	font-size: 14px;
+	line-height: 24px;
+	margin-right: 16px;
+}
+
+.float-right {
+	float: right;
+}
+
+.rowContent .panel {
+	border-radius: 10px;
+}
+
+.panel {
+	background-color: #FFFFFF;
+	-webkit-box-shadow: 0 1px 2px #c3c3c3;
+	-moz-box-shadow: 0 1px 2px #c3c3c3;
+	box-shadow: 0 1px 2px #c3c3c3;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #8b91a0;
+	border: none;
+	position: relative;
+}
+
+.rowContent .panel-heading {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding-top: 0;
+	padding-bottom: 0;
+	color: #FFF;
+	font-size: 16px;
+	line-height: 40px;
+	text-align: center;
+	position: relative;
+}
+
+.rowContent .panel-heading span {
+	position: absolute;
+	font-size: 12px;
+	line-height: 12px;
+	top: 16px;
+	right: 28px;
+	cursor: pointer;
+}
+
+.rowContent .panel-body {
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 14px;
+	color: #444;
+	line-height: 44px;
+}
+
+.rowContent .panel-body .detail-info div {
+	border-bottom: 1px solid #EEEFF1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

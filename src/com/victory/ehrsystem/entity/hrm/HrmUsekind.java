@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @createDate 2016-10-19 14:22
  */
 @Entity
-public class HrmUsekind {
+public class HrmUseKind {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class HrmUsekind {
     @Column(name = "description")
     private String description;
 
-    public HrmUsekind() {
+    public HrmUseKind() {
     }
 
-    public HrmUsekind(String name, String description) {
+    public HrmUseKind(String name, String description) {
 
         this.name = name;
         this.description = description;

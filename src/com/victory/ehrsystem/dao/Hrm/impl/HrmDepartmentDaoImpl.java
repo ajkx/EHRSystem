@@ -15,18 +15,18 @@ import java.util.List;
  */
 public class HrmDepartmentDaoImpl extends BaseDaoImpl<HrmDepartment> implements HrmDepartmentDao{
     @Override
-    public List<HrmDepartment> findByHrmSubCompany(HrmSubCompany supcompany) {
-        return find("select d from HrmDepartment d where d.subCompany = ?0",supcompany);
+    public List<HrmDepartment> findByHrmSubCompany(HrmSubCompany supCompany) {
+        return find("select d from HrmDepartment d where d.subCompany = ?0",supCompany);
     }
 
     @Override
-    public List<HrmDepartment> findRootDepByHrmSubCompany(HrmSubCompany supcompany) {
-        return find("select d from HrmDepartment d where d.subCompany = ?0 and d.parent is null",supcompany);
+    public List<HrmDepartment> findRootDepByHrmSubCompany(HrmSubCompany supCompany) {
+        return find("select d from HrmDepartment d where d.subCompany = ?0 and d.parent is null",supCompany);
     }
 
     @Override
-    public List<HrmDepartment> findBysupDepartment(HrmDepartment supdepartment) {
-        return find("select d from HrmDepartment d where d.parent = ?0",supdepartment);
+    public List<HrmDepartment> findBySupDepartment(HrmDepartment supDepartment) {
+        return find("select d from HrmDepartment d where d.parent = ?0",supDepartment);
     }
 
 

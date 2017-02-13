@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
  * @create 2016-11-21 15:00
  */
 @Service
-public class HrmJobActivitiesService extends BaseService<HrmJobDuty>{
+public class HrmJobDutyService extends BaseService<HrmJobDuty>{
 }

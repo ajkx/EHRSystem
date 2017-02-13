@@ -1,6 +1,6 @@
 package com.victory.ehrsystem.controller.Hrm;
 
-import com.victory.ehrsystem.entity.hrm.HrmUsekind;
+import com.victory.ehrsystem.entity.hrm.HrmUseKind;
 import com.victory.ehrsystem.service.hrm.impl.HrmUseKindService;
 import com.victory.ehrsystem.util.CollectionUtil;
 import com.victory.ehrsystem.vo.ColInfo;
@@ -49,7 +49,7 @@ public class HrmUseKindController {
     @RequestMapping(value = "/list")
     public @ResponseBody
     PageInfo list(HttpServletRequest request) {
-        PageInfo pageInfo = useKindService.findByPage(HrmUsekind.class,request);
+        PageInfo pageInfo = useKindService.findByPage(HrmUseKind.class,request);
         return pageInfo;
     }
 
@@ -63,7 +63,7 @@ public class HrmUseKindController {
     public String modal_create(Model model) {
         model.addAttribute("topic","用工性质创建");
         model.addAttribute("action","/usekind/create");
-        model.addAttribute("map", CollectionUtil.getObjectFields(HrmUsekind.class));
+        model.addAttribute("map", CollectionUtil.getObjectFields(HrmUseKind.class));
         return "common/modal";
     }
     /**
@@ -75,7 +75,7 @@ public class HrmUseKindController {
     @RequiresPermissions(value = "useKind:create")
     @RequestMapping(value = "/create")
     public @ResponseBody
-    JsonVo create(HrmUsekind usekind) {
+    JsonVo create(HrmUseKind usekind) {
         useKindService.save(usekind);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("添加成功");
@@ -93,7 +93,7 @@ public class HrmUseKindController {
     public String modal_update(@PathVariable int id, Model model) {
         model.addAttribute("topic", "用工性质修改");
         model.addAttribute("action","/usekind/update");
-        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(useKindService.findOne(HrmUsekind.class, id)));
+        model.addAttribute("map", CollectionUtil.getObejctValueAndFields(useKindService.findOne(HrmUseKind.class, id)));
         return "common/modal";
     }
 
@@ -104,8 +104,8 @@ public class HrmUseKindController {
      */
     @RequiresPermissions(value = "useKind:update")
     @RequestMapping(value = "/update")
-    public @ResponseBody JsonVo update(HrmUsekind usekind,Model model) {
-        useKindService.update(HrmUsekind.class, usekind);
+    public @ResponseBody JsonVo update(HrmUseKind usekind, Model model) {
+        useKindService.update(HrmUseKind.class, usekind);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("修改成功");
         return jsonVo;
@@ -119,7 +119,7 @@ public class HrmUseKindController {
     @RequiresPermissions(value = "useKind:delete")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public @ResponseBody JsonVo delete(@PathVariable("id") int id) {
-        useKindService.delete(HrmUsekind.class,id);
+        useKindService.delete(HrmUseKind.class,id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
         return jsonVo;

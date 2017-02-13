@@ -4484,7 +4484,7 @@ textarea.ant-input {
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   position: relative;
   color: rgba(0, 0, 0, 0.65);
-  background-color: #f7f7f7;
+  background-color: #fff;
   border-color: #d9d9d9;
 }
 .ant-btn > .anticon {
@@ -14939,6 +14939,7 @@ tr.ant-table-expanded-row:hover {
 .ant-tabs-extra-content .ant-tabs-new-tab:hover {
   color: #404040;
 }
+
  > .no-flex > .ant-tabs-content-animated,
  > .ant-tabs-no-animation > .ant-tabs-content-animated,
  > .ant-tabs-vertical > .ant-tabs-content-animated {

@@ -1,7 +1,9 @@
 package com.victory.ehrsystem.controller.Hrm;
 
+import com.victory.ehrsystem.entity.hrm.EducationInfo;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -28,9 +31,15 @@ public class HrmResourceController {
     @RequiresPermissions(value = "resource:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model){
-        List<HrmResource> list = hrmResourceService.findAll(HrmResource.class);
-        model.addAttribute("list", list);
-        return "resource";
+        return "hrm/resource/list";
+    }
+
+    @RequiresPermissions(value = "resource:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody
+    PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = hrmResourceService.findByPage(HrmResource.class,request);
+        return pageInfo;
     }
 
     /**
@@ -40,11 +49,11 @@ public class HrmResourceController {
      * @return
      */
     @RequiresPermissions(value = "resource:view")
-    @RequestMapping(value = "/{id}")
+    @RequestMapping(value = "/view/{id}")
     public String viewResource(@PathVariable int id, Model model){
         HrmResource resource = hrmResourceService.findOne(HrmResource.class, id);
         model.addAttribute("resource", resource);
-        return "hrm/detail";
+        return "hrm/resource/detail";
     }
 
 
