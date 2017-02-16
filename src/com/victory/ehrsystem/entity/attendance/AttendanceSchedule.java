@@ -2,6 +2,7 @@ package com.victory.ehrsystem.entity.attendance;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.Set;
 
 /**
  * 班次表
@@ -74,6 +75,13 @@ public class AttendanceSchedule {
 
     @Column
     private String description;
+
+    //关联的考勤组
+    @ManyToMany(targetEntity = AttendanceSchedule.class)
+    @JoinTable(name = "attendanceGroup_Schedule",
+            joinColumns = @JoinColumn(name="schedule_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id",referencedColumnName = "id"))
+    private Set<AttendanceGroup> groups;
 
     public AttendanceSchedule() {
     }

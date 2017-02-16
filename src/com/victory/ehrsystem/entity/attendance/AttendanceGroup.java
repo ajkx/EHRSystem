@@ -1,0 +1,200 @@
+package com.victory.ehrsystem.entity.attendance;
+
+import com.victory.ehrsystem.entity.hrm.HrmResource;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.Set;
+
+/**
+ * Created by ajkx on 2017/2/16.
+ */
+@Entity
+public class AttendanceGroup {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "groupName",nullable = false)
+    private String name;
+
+    //1 代表 固定班制 2 代表 自由排班  3 代表 自由打卡
+    @Column(name="scheduleType",nullable = false)
+    private Integer scheduleType;
+
+    @Column(name="monday")
+    private AttendanceSchedule monday;
+
+    @Column(name="tuesday")
+    private AttendanceSchedule tuesday;
+
+    @Column(name="wednesday")
+    private AttendanceSchedule wednesday;
+
+    @Column(name="thursday")
+    private AttendanceSchedule thursday;
+
+    @Column(name="friday")
+    private AttendanceSchedule friday;
+
+    @Column(name="saturday")
+    private AttendanceSchedule saturday;
+
+    @Column(name="sunday")
+    private AttendanceSchedule sunday;
+
+    @Column(name = "autoOff")
+    private Boolean isAuto;
+
+    private String description;
+    //相关人员
+    @OneToMany(targetEntity = HrmResource.class,mappedBy = "attendanceGroup")
+    private Set<HrmResource> resources;
+
+    //自由排班相关的班次
+    @ManyToMany(targetEntity = AttendanceSchedule.class)
+    @JoinTable(name = "attendanceGroup_Schedule",
+        joinColumns = @JoinColumn(name="group_id",referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "schedule_id",referencedColumnName = "id"))
+    private Set<AttendanceSchedule> schedules;
+
+    //必须打卡的日期
+    @ElementCollection(targetClass = Date.class)
+    @CollectionTable(name="mustPunchDate",joinColumns = @JoinColumn(name = "group_id",nullable = false))
+    @Column(name = "punchDate")
+    private Set<Date> mustPunchDate;
+
+    //不需要打卡的日期
+    @ElementCollection(targetClass = Date.class)
+    @CollectionTable(name="noNeedPunchDate",joinColumns = @JoinColumn(name = "group_id",nullable = false))
+    @Column(name = "noNeedDate")
+    private Set<Date> noNeedPunchDate;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getScheduleType() {
+        return scheduleType;
+    }
+
+    public void setScheduleType(Integer scheduleType) {
+        this.scheduleType = scheduleType;
+    }
+
+    public AttendanceSchedule getMonday() {
+        return monday;
+    }
+
+    public void setMonday(AttendanceSchedule monday) {
+        this.monday = monday;
+    }
+
+    public AttendanceSchedule getTuesday() {
+        return tuesday;
+    }
+
+    public void setTuesday(AttendanceSchedule tuesday) {
+        this.tuesday = tuesday;
+    }
+
+    public AttendanceSchedule getWednesday() {
+        return wednesday;
+    }
+
+    public void setWednesday(AttendanceSchedule wednesday) {
+        this.wednesday = wednesday;
+    }
+
+    public AttendanceSchedule getThursday() {
+        return thursday;
+    }
+
+    public void setThursday(AttendanceSchedule thursday) {
+        this.thursday = thursday;
+    }
+
+    public AttendanceSchedule getFriday() {
+        return friday;
+    }
+
+    public void setFriday(AttendanceSchedule friday) {
+        this.friday = friday;
+    }
+
+    public AttendanceSchedule getSaturday() {
+        return saturday;
+    }
+
+    public void setSaturday(AttendanceSchedule saturday) {
+        this.saturday = saturday;
+    }
+
+    public AttendanceSchedule getSunday() {
+        return sunday;
+    }
+
+    public void setSunday(AttendanceSchedule sunday) {
+        this.sunday = sunday;
+    }
+
+    public Boolean getAuto() {
+        return isAuto;
+    }
+
+    public void setAuto(Boolean auto) {
+        isAuto = auto;
+    }
+
+    public Set<HrmResource> getResources() {
+        return resources;
+    }
+
+    public void setResources(Set<HrmResource> resources) {
+        this.resources = resources;
+    }
+
+    public Set<AttendanceSchedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<AttendanceSchedule> schedules) {
+        this.schedules = schedules;
+    }
+
+    public Set<Date> getMustPunchDate() {
+        return mustPunchDate;
+    }
+
+    public void setMustPunchDate(Set<Date> mustPunchDate) {
+        this.mustPunchDate = mustPunchDate;
+    }
+
+    public Set<Date> getNoNeedPunchDate() {
+        return noNeedPunchDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setNoNeedPunchDate(Set<Date> noNeedPunchDate) {
+        this.noNeedPunchDate = noNeedPunchDate;
+    }
+}

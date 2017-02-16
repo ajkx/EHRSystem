@@ -70,6 +70,7 @@
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceDetail</value>
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceScheduleInfo</value>
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceType</value>
+                <value>com.victory.ehrsystem.entity.attendance.AttendanceGroup</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -108,6 +109,7 @@
     <bean id="attendanceRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceRecordDaoImpl" parent="daoTemplate"/>
     <bean id="attendanceScheduleInfoDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceScheduleInfoDaoImpl" parent="daoTemplate"/>
     <bean id="attendanceTypeDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceTypeDaoImpl" parent="daoTemplate"/>
+    <bean id="attendanceGroupDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceGroupDaoImpl" parent="daoTemplate"/>
     <!--配置hibernate结束-->
 
     <!--配置hibernate事务-->

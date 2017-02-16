@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.entity.hrm;
 
+import com.victory.ehrsystem.entity.attendance.AttendanceGroup;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.sys.User;
 
@@ -209,11 +210,10 @@ public class HrmResource {
 
     //========考勤信息==========
     //恒定的排班
-    @ManyToOne(targetEntity = AttendanceSchedule.class)
-    private AttendanceSchedule schedule;
+    @ManyToOne(targetEntity = AttendanceGroup.class)
+    @JoinColumn(name = "attendanceGroup", referencedColumnName = "id")
+    private AttendanceGroup attendanceGroup;
 
-    @OneToOne(targetEntity = HrmContract.class, mappedBy = "resource")
-    private HrmContract contract;
 
     public Integer getId() {
         return id;
@@ -567,21 +567,6 @@ public class HrmResource {
         this.user = user;
     }
 
-    public AttendanceSchedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(AttendanceSchedule schedule) {
-        this.schedule = schedule;
-    }
-
-    public HrmContract getContract() {
-        return contract;
-    }
-
-    public void setContract(HrmContract contract) {
-        this.contract = contract;
-    }
 }
 
 
