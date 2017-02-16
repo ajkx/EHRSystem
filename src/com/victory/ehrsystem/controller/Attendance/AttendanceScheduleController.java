@@ -1,8 +1,11 @@
 package com.victory.ehrsystem.controller.Attendance;
 
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.service.attendance.AttendanceScheduleService;
+import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
+import com.victory.ehrsystem.vo.PageInfo;
 import com.victory.ehrsystem.vo.ScheduleVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Time;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by ajkx
@@ -28,25 +29,31 @@ public class AttendanceScheduleController {
     @Autowired
     private AttendanceScheduleService scheduleService;
 
-    @RequiresPermissions(value = "AttendanceSchedule:view")
+    @RequiresPermissions(value = "schedule:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
-        List<AttendanceSchedule> list = scheduleService.findAll(AttendanceSchedule.class);
-        Map<Integer,LinkedHashMap<String, String>> map = new HashMap<Integer,LinkedHashMap<String,String>>();
-        for (AttendanceSchedule schedule : list) {
-            LinkedHashMap<String,String> tempmap = new LinkedHashMap<>();
-            tempmap.put("班次名称", schedule.getName());
-//            tempmap.put("详述", schedule.getDescription());
-            map.put(schedule.getId(),tempmap);
-        }
+
+        List<ColInfo> colInfos = new ArrayList<>();
+        colInfos.add(new ColInfo("name","班次名称"));
+        colInfos.add(new ColInfo("time", "考勤时间"));
+        colInfos.add(new ColInfo("description", "描述"));
         model.addAttribute("topic","考勤班次");
         model.addAttribute("simplename","班次");
         model.addAttribute("url","/schedule");
-        model.addAttribute("map",map);
+        model.addAttribute("col", colInfos);
+        model.addAttribute("per", "schedule");
         return "topic";
     }
 
-    @RequiresPermissions(value = "AttendanceSchedule:create")
+    @RequiresPermissions(value = "schedule:view")
+    @RequestMapping(value = "/list")
+    public @ResponseBody
+    PageInfo list(HttpServletRequest request) {
+        PageInfo pageInfo = scheduleService.findByPage(AttendanceSchedule.class,request);
+        return pageInfo;
+    }
+
+    @RequiresPermissions(value = "schedule:create")
     @RequestMapping(value = "/edit")
     public String modal_create(Model model){
         model.addAttribute("topic","新增班次");
@@ -54,14 +61,14 @@ public class AttendanceScheduleController {
         return "modal/attendance/schedule";
     }
 
-    @RequiresPermissions(value = "AttendanceSchedule:create")
+    @RequiresPermissions(value = "schedule:create")
     @RequestMapping(value = "/create")
     public @ResponseBody JsonVo create(ScheduleVo scheduleVo){
-        System.out.println(scheduleVo.toString());
         AttendanceSchedule schedule = new AttendanceSchedule();
         schedule.setName(scheduleVo.getName());
         schedule.setSimplename(scheduleVo.getName().substring(0,1));
         schedule.setScheduleType(scheduleVo.getScheduleType());
+        schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
         schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
         schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
         schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
@@ -78,7 +85,7 @@ public class AttendanceScheduleController {
         return json;
     }
 
-    @RequiresPermissions(value = "AttendanceSchedule:update")
+    @RequiresPermissions(value = "schedule:update")
     @RequestMapping(value = "/{id}")
     public String modal_edit(@PathVariable int id, Model model) {
         AttendanceSchedule schedule = scheduleService.findOne(AttendanceSchedule.class, id);
@@ -88,10 +95,27 @@ public class AttendanceScheduleController {
         return "modal/attendance/schedule";
     }
 
-    @RequiresPermissions(value = "AttendanceSchedule:update")
+    @RequiresPermissions(value = "schedule:update")
     @RequestMapping(value = "/update")
-    public @ResponseBody JsonVo update(){
-        JsonVo jsonVo = new JsonVo();
-        return jsonVo;
+    public @ResponseBody JsonVo update(ScheduleVo scheduleVo){
+        AttendanceSchedule schedule = scheduleService.findOne(AttendanceSchedule.class, scheduleVo.getId());
+        schedule.setName(scheduleVo.getName());
+        schedule.setSimplename(scheduleVo.getName().substring(0,1));
+        schedule.setScheduleType(scheduleVo.getScheduleType());
+        schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
+        schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
+        schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
+        schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
+        schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
+        schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
+        schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
+        schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
+        schedule.setAttendanceTime(scheduleVo.getAttendanceTime());
+        schedule.setScope_up(scheduleVo.getScope_up());
+        schedule.setScope_down(scheduleVo.getScope_down());
+        scheduleService.update(AttendanceSchedule.class,schedule);
+        JsonVo json = new JsonVo();
+        json.setStatus(true).setMsg("修改成功");
+        return json;
     }
 }

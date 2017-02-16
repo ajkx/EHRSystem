@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".sub-module li").click(function () {
-            $('.sub-module .active').removeClass("active");
+            $('#module .active').removeClass("active");
             $(this).addClass("active");
         });
 
@@ -14,11 +14,16 @@
         $('.collapse').on("hide.bs.collapse", function () {
             $(this).siblings("div").removeClass("on");
         });
+
+        $('#home').click(function(){
+            $('#module .active').removeClass("active");
+            $(this).addClass("active");
+        });
     });
 </script>
 <div id="menu">
     <ul id="module">
-        <li class="menu-item" style="padding: 0">
+        <li class="menu-item" style="padding: 0" id="home">
             <a class="link-item" style="padding: 0 16px 0 28px;" href="/home.html" data-pjax="#main-content">
 				<span class="module-name">
 				<i class="iconf icon-fire module-icon"></i>

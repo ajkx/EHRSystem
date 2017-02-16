@@ -6,6 +6,7 @@ package com.victory.ehrsystem.vo;
  * Time:20:50
  */
 public class ScheduleVo {
+    public Integer id;
     public String name;
     public Integer scheduleType = 1;
     public String first_up;
@@ -17,9 +18,17 @@ public class ScheduleVo {
     public Long scope_up;
     public Long scope_down;
     public Integer attendanceTime = 0;
-    public String isPunch;
+    public Integer isPunch;
     public Integer acrossDay = 0;
     public Integer offsetTime = 0;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -109,11 +118,11 @@ public class ScheduleVo {
         this.attendanceTime = attendanceTime;
     }
 
-    public String getIsPunch() {
+    public Integer getIsPunch() {
         return isPunch;
     }
 
-    public void setIsPunch(String isPunch) {
+    public void setIsPunch(Integer isPunch) {
         this.isPunch = isPunch;
     }
 

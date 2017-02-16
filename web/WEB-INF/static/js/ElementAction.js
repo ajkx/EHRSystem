@@ -186,6 +186,7 @@ function checkStr(main,value){
     return true;
 }
 function setScheduleType(value,node){
+    var node = $(node);
     $('#sheduletype').val(value);
     node.siblings().removeClass("scheduletype");
     var nodes = node.parent().children();

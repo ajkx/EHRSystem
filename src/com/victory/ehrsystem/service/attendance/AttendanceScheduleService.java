@@ -6,11 +6,16 @@ import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.attendance.AttendanceScheduleInfo;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.service.BaseService;
+import com.victory.ehrsystem.util.StringUtil;
+import com.victory.ehrsystem.vo.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ajkx
@@ -33,7 +38,6 @@ public class AttendanceScheduleService extends BaseService<AttendanceSchedule>{
      */
     public List<HrmResource> findHrmResourceBySchedule(boolean acrossday) {
         List<AttendanceSchedule> schedules = attendanceScheduleDao.findByAcrossDay(acrossday);
-
         List<HrmResource> resources = new ArrayList<>();
         for (AttendanceSchedule schedule : schedules) {
             List<AttendanceScheduleInfo> attendanceScheduleInfos = attendanceScheduleInfoDao.findBySchedule(schedule);
@@ -42,5 +46,37 @@ public class AttendanceScheduleService extends BaseService<AttendanceSchedule>{
             }
         }
         return resources;
+    }
+
+    @Override
+    public PageInfo findByPage(Class<AttendanceSchedule> entityClazz, HttpServletRequest request) {
+        PageInfo info = super.findByPage(entityClazz, request);
+        List<AttendanceSchedule> list = info.getData();
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        for (AttendanceSchedule schedule : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", schedule.getId());
+            map.put("name", StringUtil.nullString(schedule.getName()));
+            String time = "";
+            switch (schedule.getScheduleType()){
+                case 1:
+                    time = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down());
+                    break;
+                case 2:
+                    time = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down())
+                            + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getSecond_time_up()) + "-" + StringUtil.subString(schedule.getSecond_time_down());
+                    break;
+                case 3:
+                    time = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down())
+                            + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getSecond_time_up()) + "-" + StringUtil.subString(schedule.getSecond_time_down())
+                            + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getThird_time_up()) + "-" + StringUtil.subString(schedule.getThird_time_down());
+                    break;
+            }
+            map.put("time", time);
+            map.put("description", StringUtil.nullString(schedule.getDescription()));
+            mapList.add(map);
+        }
+        info.setData(mapList);
+        return info;
     }
 }

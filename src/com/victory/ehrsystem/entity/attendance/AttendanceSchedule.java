@@ -71,6 +71,10 @@ public class AttendanceSchedule {
 
     @Column
     private Boolean acrossDay;
+
+    @Column
+    private String description;
+
     public AttendanceSchedule() {
     }
 
@@ -218,5 +222,13 @@ public class AttendanceSchedule {
 
     public void setAcrossDay(Boolean acrossDay) {
         this.acrossDay = acrossDay;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -49,4 +49,9 @@ public class StringUtil {
 
         }
     }
+
+    public static String subString(Object object) {
+        String str = object.toString();
+        return str.substring(0, 5);
+    }
 }

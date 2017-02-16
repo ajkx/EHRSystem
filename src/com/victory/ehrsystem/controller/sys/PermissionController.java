@@ -59,6 +59,7 @@ public class PermissionController {
         model.addAttribute("col", colInfos);
         model.addAttribute("per", "permission");
         model.addAttribute("canedit", false);
+
         return "topic";
     }
 
