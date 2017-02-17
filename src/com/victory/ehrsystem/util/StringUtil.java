@@ -1,5 +1,7 @@
 package com.victory.ehrsystem.util;
 
+import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+
 /**
  * 字符串工具类
  *
@@ -53,5 +55,52 @@ public class StringUtil {
     public static String subString(Object object) {
         String str = object.toString();
         return str.substring(0, 5);
+    }
+
+    public static String getWeek(int i) {
+        String week = "";
+        switch (i) {
+            case 0:
+                week = "周一";
+                break;
+            case 1:
+                week = "周二";
+                break;
+            case 2:
+                week = "周三";
+                break;
+            case 3:
+                week = "周四";
+                break;
+            case 4:
+                week = "周五";
+                break;
+            case 5:
+                week = "周六";
+                break;
+            case 6:
+                week = "周日";
+                break;
+        }
+        return week;
+    }
+
+    public static String getScheduleTime(AttendanceSchedule schedule) {
+        String value = "";
+        switch (schedule.getScheduleType()){
+            case 1:
+                value = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down());
+                break;
+            case 2:
+                value = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down())
+                        + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getSecond_time_up()) + "-" + StringUtil.subString(schedule.getSecond_time_down());
+                break;
+            case 3:
+                value = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down())
+                        + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getSecond_time_up()) + "-" + StringUtil.subString(schedule.getSecond_time_down())
+                        + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getThird_time_up()) + "-" + StringUtil.subString(schedule.getThird_time_down());
+                break;
+        }
+        return value;
     }
 }

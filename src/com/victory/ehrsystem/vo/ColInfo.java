@@ -21,6 +21,12 @@ public class ColInfo {
         this.text = text;
     }
 
+    public ColInfo(String key, String text,String width,String template) {
+        this.key = key;
+        this.text = text;
+        this.width = width;
+    }
+
     public ColInfo(String key, String text, String template) {
         this.text = text;
         this.key = key;

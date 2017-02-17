@@ -32,10 +32,10 @@ public class AttendanceGroupController {
     public String index(Model model) {
 
         List<ColInfo> colInfos = new ArrayList<>();
-        colInfos.add(new ColInfo("name","名称"));
+        colInfos.add(new ColInfo("name","名称","300px",""));
         colInfos.add(new ColInfo("count", "人数"));
         colInfos.add(new ColInfo("type", "类型"));
-        colInfos.add(new ColInfo("type", "考勤时间"));
+        colInfos.add(new ColInfo("time", "考勤时间","500px",""));
         colInfos.add(new ColInfo("description","描述"));
         model.addAttribute("topic","考勤组");
         model.addAttribute("simplename","考勤组");

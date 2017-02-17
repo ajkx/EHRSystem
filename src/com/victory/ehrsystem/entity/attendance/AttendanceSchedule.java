@@ -76,6 +76,30 @@ public class AttendanceSchedule {
     @Column
     private String description;
 
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "monday")
+    private Set<AttendanceGroup> mondays;
+
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "tuesday")
+    private Set<AttendanceGroup> tuesdays;
+
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "wednesday")
+    private Set<AttendanceGroup> wednesdays;
+
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "thursday")
+    private Set<AttendanceGroup> thursdays;
+
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "friday")
+    private Set<AttendanceGroup> fridays;
+
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "saturday")
+    private Set<AttendanceGroup> saturdays;
+
+    @OneToMany(targetEntity = AttendanceGroup.class,mappedBy = "sunday")
+    private Set<AttendanceGroup> sundays;
+
+    //是否休息班次
+    private Boolean isRest;
+
     //关联的考勤组
     @ManyToMany(targetEntity = AttendanceSchedule.class)
     @JoinTable(name = "attendanceGroup_Schedule",
@@ -238,5 +262,78 @@ public class AttendanceSchedule {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public Set<AttendanceGroup> getMondays() {
+        return mondays;
+    }
+
+    public void setMondays(Set<AttendanceGroup> mondays) {
+        this.mondays = mondays;
+    }
+
+    public Set<AttendanceGroup> getTuesdays() {
+        return tuesdays;
+    }
+
+    public void setTuesdays(Set<AttendanceGroup> tuesdays) {
+        this.tuesdays = tuesdays;
+    }
+
+    public Set<AttendanceGroup> getWednesdays() {
+        return wednesdays;
+    }
+
+    public void setWednesdays(Set<AttendanceGroup> wednesdays) {
+        this.wednesdays = wednesdays;
+    }
+
+    public Set<AttendanceGroup> getThursdays() {
+        return thursdays;
+    }
+
+    public void setThursdays(Set<AttendanceGroup> thursdays) {
+        this.thursdays = thursdays;
+    }
+
+    public Set<AttendanceGroup> getFridays() {
+        return fridays;
+    }
+
+    public void setFridays(Set<AttendanceGroup> fridays) {
+        this.fridays = fridays;
+    }
+
+    public Set<AttendanceGroup> getSaturdays() {
+        return saturdays;
+    }
+
+    public void setSaturdays(Set<AttendanceGroup> saturdays) {
+        this.saturdays = saturdays;
+    }
+
+    public Set<AttendanceGroup> getSundays() {
+        return sundays;
+    }
+
+    public void setSundays(Set<AttendanceGroup> sundays) {
+        this.sundays = sundays;
+    }
+
+    public Set<AttendanceGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<AttendanceGroup> groups) {
+        this.groups = groups;
+    }
+
+    public Boolean getRest() {
+        return isRest;
+    }
+
+    public void setRest(Boolean rest) {
+        isRest = rest;
     }
 }

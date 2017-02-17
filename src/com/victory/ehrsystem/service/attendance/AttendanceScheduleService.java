@@ -57,21 +57,7 @@ public class AttendanceScheduleService extends BaseService<AttendanceSchedule>{
             Map<String, Object> map = new HashMap<>();
             map.put("id", schedule.getId());
             map.put("name", StringUtil.nullString(schedule.getName()));
-            String time = "";
-            switch (schedule.getScheduleType()){
-                case 1:
-                    time = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down());
-                    break;
-                case 2:
-                    time = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down())
-                            + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getSecond_time_up()) + "-" + StringUtil.subString(schedule.getSecond_time_down());
-                    break;
-                case 3:
-                    time = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down())
-                            + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getSecond_time_up()) + "-" + StringUtil.subString(schedule.getSecond_time_down())
-                            + "&nbsp;&nbsp;" + StringUtil.subString(schedule.getThird_time_up()) + "-" + StringUtil.subString(schedule.getThird_time_down());
-                    break;
-            }
+            String time = StringUtil.getScheduleTime(schedule);
             map.put("time", time);
             map.put("description", StringUtil.nullString(schedule.getDescription()));
             mapList.add(map);

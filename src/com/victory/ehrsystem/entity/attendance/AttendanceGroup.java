@@ -19,28 +19,35 @@ public class AttendanceGroup {
     private String name;
 
     //1 代表 固定班制 2 代表 自由排班  3 代表 自由打卡
-    @Column(name="scheduleType",nullable = false)
-    private Integer scheduleType;
+    @Column(name="groupType",nullable = false)
+    private Integer groupType;
 
-    @Column(name="monday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "monday")
     private AttendanceSchedule monday;
 
-    @Column(name="tuesday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "tuesday")
     private AttendanceSchedule tuesday;
 
-    @Column(name="wednesday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "wednesday")
     private AttendanceSchedule wednesday;
 
-    @Column(name="thursday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "thursday")
     private AttendanceSchedule thursday;
 
-    @Column(name="friday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "friday")
     private AttendanceSchedule friday;
 
-    @Column(name="saturday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "saturday")
     private AttendanceSchedule saturday;
 
-    @Column(name="sunday")
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "sunday")
     private AttendanceSchedule sunday;
 
     @Column(name = "autoOff")
@@ -86,12 +93,12 @@ public class AttendanceGroup {
         this.name = name;
     }
 
-    public Integer getScheduleType() {
-        return scheduleType;
+    public Integer getGroupType() {
+        return groupType;
     }
 
-    public void setScheduleType(Integer scheduleType) {
-        this.scheduleType = scheduleType;
+    public void setGroupType(Integer groupType) {
+        this.groupType = groupType;
     }
 
     public AttendanceSchedule getMonday() {
