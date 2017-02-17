@@ -9,9 +9,9 @@ public class ScheduleVo {
     public Integer id;
     public String name;
     public Integer scheduleType = 1;
-    public String first_up;
+    public String first_up = "";
     public String first_down;
-    public String second_up;
+    public String second_up = "";
     public String second_down;
     public String third_up;
     public String third_down;

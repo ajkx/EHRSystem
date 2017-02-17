@@ -54,6 +54,8 @@ public class AttendanceScheduleService extends BaseService<AttendanceSchedule>{
         List<AttendanceSchedule> list = info.getData();
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (AttendanceSchedule schedule : list) {
+            //如果为休息的
+            if(schedule.getRest() != null && schedule.getRest())continue;
             Map<String, Object> map = new HashMap<>();
             map.put("id", schedule.getId());
             map.put("name", StringUtil.nullString(schedule.getName()));

@@ -44,20 +44,24 @@ public class AttendanceGroupService extends BaseService<AttendanceGroup>{
                         String value = "";
                         for (AttendanceSchedule key : tempMap.keySet()) {
                             if (key.getName().equals(temp.get(i).getName())) {
-                                value = map.get(key) + " " + StringUtil.getWeek(i).substring(1, 2);
+                                value = tempMap.get(key) + "&nbsp&nbsp" + StringUtil.getWeek(i).substring(1, 2);
                             }
                         }
                         tempMap.put(temp.get(i), value.equals("") ? StringUtil.getWeek(i) + "" : value);
                     }
                     for (AttendanceSchedule key : tempMap.keySet()) {
-                        builder.append(tempMap.get(key)+"&nbsp;&nbsp;&nbsp;");
-                        builder.append(key.getName() + ":" + StringUtil.getScheduleTime(key));
+                        builder.append("每"+tempMap.get(key)+"&nbsp;&nbsp;&nbsp;");
+                        if(key.getRest() != null && key.getRest()){
+                            builder.append(key.getName()+"</br>");
+                        }else {
+                            builder.append(key.getName() + ":" + StringUtil.getScheduleTime(key)+"</br>");
+                        }
                     }
                     break;
                 case 2:
                     type = "排班制";
                     for (AttendanceSchedule schedule : group.getSchedules()) {
-                        builder.append(schedule.getName()+":"+StringUtil.getScheduleTime(schedule)+"\r\n");
+                        builder.append(schedule.getName()+":"+StringUtil.getScheduleTime(schedule)+"</br>");
                     }
                     break;
                 case 3:

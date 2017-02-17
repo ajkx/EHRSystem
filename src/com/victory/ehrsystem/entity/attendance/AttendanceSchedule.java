@@ -24,7 +24,7 @@ public class AttendanceSchedule {
     private String simplename;
 
     @Column(nullable = false)
-    private int scheduleType = 1;
+    private Integer scheduleType = 1;
 
     //第一次上班打卡时间
     @Column
@@ -52,23 +52,23 @@ public class AttendanceSchedule {
 
     //上班有效打卡范围
     @Column
-    private long scope_up;
+    private Long scope_up;
 
     //下班有效打卡范围
     @Column
-    private long scope_down;
+    private Long scope_down;
 
     //出勤合计时间
     @Column
-    private int attendanceTime;
+    private Integer attendanceTime;
 
     //下班是否需要打卡
     @Column
-    private boolean isPunch;
+    private Boolean isPunch;
 
     //迟到早退的限定时间
     @Column
-    private int offsetTime;
+    private Integer offsetTime;
 
     @Column
     private Boolean acrossDay;
@@ -110,7 +110,7 @@ public class AttendanceSchedule {
     public AttendanceSchedule() {
     }
 
-    public AttendanceSchedule(String name, String simplename, int scheduleType, Time first_time_up, Time first_time_down, Time second_time_up, Time second_time_down, Time third_time_up, Time third_time_down, long scope_up, long scope_down, int attendanceTime, boolean isPunch, int offsetTime, Boolean acrossDay) {
+    public AttendanceSchedule(String name, String simplename, int scheduleType, Time first_time_up, Time first_time_down, Time second_time_up, Time second_time_down, Time third_time_up, Time third_time_down, Long scope_up, Long scope_down, int attendanceTime, boolean isPunch, int offsetTime, Boolean acrossDay) {
         this.name = name;
         this.simplename = simplename;
         this.scheduleType = scheduleType;
@@ -216,27 +216,27 @@ public class AttendanceSchedule {
         this.attendanceTime = attendanceTime;
     }
 
-    public long getScope_up() {
+    public Long getScope_up() {
         return scope_up;
     }
 
-    public void setScope_up(long scope_up) {
+    public void setScope_up(Long scope_up) {
         this.scope_up = scope_up;
     }
 
-    public long getScope_down() {
+    public Long getScope_down() {
         return scope_down;
     }
 
-    public void setScope_down(long scope_down) {
+    public void setScope_down(Long scope_down) {
         this.scope_down = scope_down;
     }
 
-    public int getOffsetTime() {
+    public Integer getOffsetTime() {
         return offsetTime;
     }
 
-    public void setOffsetTime(int offsetTime) {
+    public void setOffsetTime(Integer offsetTime) {
         this.offsetTime = offsetTime;
     }
 

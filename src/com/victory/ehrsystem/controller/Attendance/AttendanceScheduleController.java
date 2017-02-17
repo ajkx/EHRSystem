@@ -71,10 +71,14 @@ public class AttendanceScheduleController {
         schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
         schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
         schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
-        schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
-        schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
-        schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
-        schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
+        if(scheduleVo.getScheduleType() > 1){
+            schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
+            schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
+            if(scheduleVo.getScheduleType() > 2){
+                schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
+                schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
+            }
+        }
         schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
         schedule.setAttendanceTime(scheduleVo.getAttendanceTime());
         schedule.setScope_up(scheduleVo.getScope_up());

@@ -77,16 +77,19 @@
                 key: 'id',
                 text: '操作',
                 template:function(id,rowObject){
-                    if(id == -1){
-                        return '<div><a disable="" class="font-color" href="javascript:void(0)">编辑排班</a><span class="ant-divider"></span><a disable="" class="font-color" href="javascript:void(0)">删除</a></div>';
+                    var str = "";
+                    if(rowObject.type != "排班制"){
+                        str = '<a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> disable="" class="font-color" href="/group/schedule/'+id+'"  data-pjax="#main-content">编辑排班</a>';
                     }else{
-                        return '<div><a  class="font-color" href="javascript:void(0)" onclick="showEditModal(\'/group/'+id+'\')">编辑</a><span class="ant-divider"></span><a  class="font-color" href="javascript:void(0)" onclick="showDelModal(\'/group/delete/'+id+'\')">删除</a> </div>';
+                        str = '<a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="/group/schedule/'+id+'"  data-pjax="#main-content">编辑排班</a>'
                     }
-
+                    return  str +
+                            '<span class="ant-divider"></span>' +
+                            '<a  <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="/group/setting/'+id+'" data-pjax="#main-content">修改规则</a>'+
+                            '<span class="ant-divider"></span>' +
+                            '<a  <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showDelModal(\'/group/delete/'+id+'\')">删除</a></div>';
                 }
             }
-
-
         ]
     });
 

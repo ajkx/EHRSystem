@@ -42,7 +42,7 @@ public class AttendanceGroupController {
         model.addAttribute("url","/group");
         model.addAttribute("col", colInfos);
         model.addAttribute("per", "AttendanceGroup");
-        return "topic";
+        return "attendance/attendanceGroup";
     }
 
     @RequiresPermissions(value = "AttendanceGroup:view")
@@ -51,5 +51,10 @@ public class AttendanceGroupController {
     PageInfo list(HttpServletRequest request) {
         PageInfo pageInfo = groupService.findByPage(AttendanceGroup.class,request);
         return pageInfo;
+    }
+
+    @RequestMapping(value = "/setting/{id}")
+    public String detail(){
+        return "attendance/group_detail";
     }
 }
