@@ -79,13 +79,13 @@
                 template:function(id,rowObject){
                     var str = "";
                     if(rowObject.type != "排班制"){
-                        str = '<a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> disable="" class="font-color" href="/group/schedule/'+id+'"  data-pjax="#main-content">编辑排班</a>';
+                        str = '<a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> disable="" class="font-color" href="/group/schedule/'+id+'.html"  data-pjax="#main-content">编辑排班</a>';
                     }else{
-                        str = '<a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="/group/schedule/'+id+'"  data-pjax="#main-content">编辑排班</a>'
+                        str = '<a <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="/group/schedule/'+id+'.html"  data-pjax="#main-content">编辑排班</a>'
                     }
                     return  str +
                             '<span class="ant-divider"></span>' +
-                            '<a  <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="/group/setting/'+id+'" data-pjax="#main-content">修改规则</a>'+
+                            '<a  <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="/group/setting/'+id+'.html" data-pjax="#main-content">修改规则</a>'+
                             '<span class="ant-divider"></span>' +
                             '<a  <shiro:lacksPermission name="${per}:update">disable=""</shiro:lacksPermission> class="font-color" href="javascript:void(0)" onclick="showDelModal(\'/group/delete/'+id+'\')">删除</a></div>';
                 }

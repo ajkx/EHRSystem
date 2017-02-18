@@ -51,7 +51,7 @@
                 width:'${col.width}',
              </c:if>
              remind: '${col.remind}', <c:if test="${not empty col.sorting}">sorting: '${col.sorting}',</c:if><c:if test="${not empty col.template}">
-                template:function(${col.key},rowObject){${col.template}}</c:if>
+                template:function(${col.key},rowObject){if(rowObject.${col.key} == null){return "";}${col.template}}</c:if>
             }, </c:forEach>
             <c:choose>
                 <c:when test="${canedit == false}">

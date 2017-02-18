@@ -110,7 +110,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
 
                 <div class="div-group">
                     <div style="width:14px;height: 14px;display: inline-block;margin-right: 8px">
-                    <input type="checkbox" class="icheckbox"/>
+                    <input type="checkbox" name="punch" class="icheckbox"/>
                     </div>
                     <span>下班不用打卡（开启后，下班不打卡也不会记作异常)</span>
                 </div>

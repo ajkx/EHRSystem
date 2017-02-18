@@ -60,9 +60,9 @@ public class RoleController {
         }
 
         if (subject.isPermitted("permission:view")) {
-            template2 = StringUtil.getMultiScript("resource","resources",true);
+            template2 = StringUtil.getMultiScript("permission","resources",true);
         }else{
-            template2 = StringUtil.getMultiScript("resource","resources",false);
+            template2 = StringUtil.getMultiScript("permission","resources",false);
         }
 
         colInfos.add(new ColInfo("users", "相关管理员",template1));

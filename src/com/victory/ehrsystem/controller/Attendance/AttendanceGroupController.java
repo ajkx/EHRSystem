@@ -9,6 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,7 +55,9 @@ public class AttendanceGroupController {
     }
 
     @RequestMapping(value = "/setting/{id}")
-    public String detail(){
+    public String detail(@PathVariable int id,Model model){
+        AttendanceGroup group = groupService.findOne(AttendanceGroup.class, id);
+        model.addAttribute("group", group);
         return "attendance/group_detail";
     }
 }
