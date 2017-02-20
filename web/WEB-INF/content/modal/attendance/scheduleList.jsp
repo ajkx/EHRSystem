@@ -10,6 +10,21 @@
 <script>
     $(function(){
         var schedule = $("#scheduleInfo");
+        //控制已选择的班次的默认显示
+        var nodestr = $('#currentNode').val();
+        var currentId;
+        if(nodestr == "all"){
+            currentId = $("#currentSchedule").attr("data-id");
+        }else{
+            currentId = $('#'+nodestr).val();
+        }
+        if(currentId != ""){
+            var node = $('input[data-id="' + currentId + '"]');
+            node.parent().addClass("ant-radio-checked");
+            schedule.attr("data-id", node.attr("data-id"));
+            schedule.attr("data-name", node.attr("data-name"));
+        }
+
         $('.modal-body input[type="radio"]').click(function(){
             var id = $(this).attr("data-id");
             var name = $(this).attr("data-name");
@@ -18,7 +33,6 @@
             }
             $('.modal-body .ant-radio-checked').removeClass("ant-radio-checked");
             $(this).parent().addClass('ant-radio-checked');
-            console.log($(this).attr("data-id"));
             schedule.attr("data-id", $(this).attr("data-id"));
             schedule.attr("data-name", $(this).attr("data-name"));
         });
@@ -26,17 +40,26 @@
     function setSchedule(){
         var nodestr = $('#currentNode').val();
         var schedule = $("#scheduleInfo");
-        var node = $('a[data-index="all"]');
+        var temp = $('#currentSchedule');
+        $('#edit-modal').modal('hide');
+        if(schedule.attr("data-id") == "")return;
         if(nodestr == "all"){
-            var temp = node.siblings('span');
             temp.attr('data-id', schedule.attr("data-id"));
             temp.text(schedule.attr("data-name"));
+            $("#checkAll").val("off");
+            $('#checkAll').click();
         }else{
-            var parent = node.parent();
-            var temp = parent.siblings('.scheduleName');
-            temp.text(schedule.attr("data-name"));
             $('#' + nodestr).val(schedule.attr("data-id"));
+            var checkbox = $("input[data-input='"+nodestr+"']");
+            checkbox.parent().addClass('ant-checkbox-checked');
+            checkbox.val("on");
+            checkbox.parents(".ant-table-selection-column").siblings(".scheduleName").text(schedule.attr("data-name"));
+            if(temp.attr("data-id") == ""){
+                temp.attr("data-id",schedule.attr("data-id"));
+                temp.text(schedule.attr("data-name"));
+            }
         }
+
     }
 </script>
 <div class="modal-dialog" style="width:520px">
@@ -90,9 +113,9 @@
                                                                     <td class="ant-table-selection-column">
                                                                         <span>
                                                                             <label class="ant-radio-wrapper ant-radio-wrapper-checked">
-                                                                                <span class="ant-radio <c:if test="${current.index == 0}">ant-radio-checked</c:if>">
+                                                                                <span class="ant-radio">
                                                                                     <span class="ant-radio-inner"></span>
-                                                                                    <input class="ant-radio-input" value="<c:if test="${current.index == 0}">on-</c:if>" data-id="${schedule.id}" data-name="${schedule.name}:${schedule.time}" type="radio">
+                                                                                    <input class="ant-radio-input" value="" data-id="${schedule.id}" data-name="${schedule.name}:${schedule.time}" type="radio">
                                                                                 </span>
                                                                             </label>
                                                                         </span>

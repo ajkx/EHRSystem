@@ -16,13 +16,13 @@
                 <input type="hidden" name="groupType" id="groupType"
                        value="${group.groupType == null ? 1 : group.groupType}"/>
                 <input type="hidden" name="isAuto" id="autoRest" value="${group.auto == true ? 1 : 0}"/>
-                <input type="hidden" name="monday" id="monday" value="${group.monday.id}"/>
-                <input type="hidden" name="tuesday" id="tuesday" value="${group.tuesday.id}"/>
-                <input type="hidden" name="wednesday" id="wednesday" value="${group.wednesday.id}"/>
-                <input type="hidden" name="thursday" id="thursday" value="${group.thursday.id}"/>
-                <input type="hidden" name="friday" id="friday" value="${group.friday.id}"/>
-                <input type="hidden" name="saturday" id="saturday" value="${group.saturday.id}"/>
-                <input type="hidden" name="sunday" id="sunday" value="${group.sunday.id}"/>
+                <input type="hidden" name="monday" id="monday" value="${group.monday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="tuesday" id="tuesday" value="${group.tuesday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="wednesday" id="wednesday" value="${group.wednesday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="thursday" id="thursday" value="${group.thursday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="friday" id="friday" value="${group.friday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="saturday" id="saturday" value="${group.saturday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="sunday" id="sunday" value="${group.sunday.rest == true ? "" : group.monday.id}"/>
                 <input type="hidden" id="currentNode" value=""/>
 
                 <div class="ant-row ant-form-item">
@@ -47,20 +47,20 @@
                         <div class="ant-form-item-control ">
                             <div class="ant-radio-group ant-radio-group-large">
                                 <label style="font-weight: 500;" class="ant-radio-wrapper ant-radio-wrapper-checked">
-                                    <span class="ant-radio ant-radio-checked">
+                                    <span class="ant-radio <c:if test="${group.groupType == null || group.groupType == 1}">ant-radio-checked</c:if> ">
                                         <span class="ant-radio-inner"></span>
                                         <input type="radio" class="ant-radio-input" data-type="1" value="on">
                                     </span>
                                     <span>固定班制 (每天考勤时间一样)</span>
                                 </label>
                                 <label style="font-weight: 500;" class="ant-radio-wrapper">
-                                    <span class="ant-radio">
+                                    <span class="ant-radio <c:if test="${group.groupType == 2}">ant-radio-checked</c:if>">
                                         <span class="ant-radio-inner"></span>
                                         <input type="radio" class="ant-radio-input" data-type="2" value="on">
                                     </span><span>排班制 (自定义设置考勤时间)</span>
                                 </label>
                                 <label style="font-weight: 500;" class="ant-radio-wrapper">
-                                    <span class="ant-radio">
+                                    <span class="ant-radio <c:if test="${group.groupType == 3}">ant-radio-checked</c:if>">
                                         <span class="ant-radio-inner"></span>
                                         <input type="radio" class="ant-radio-input" data-type="3" value="on">
                                     </span>
@@ -111,7 +111,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.monday != null && group.monday.rest != true}">ant-checkbox-checked</c:if> "><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                             <input type="checkbox"
                                                                                    class="ant-checkbox-input"
@@ -128,8 +128,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                           休息
-
+                                                                            <c:choose>
+                                                                                <c:when test="${group.monday != null && group.monday.rest != true}">
+                                                                                    ${monday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
                                                                         </td>
                                                                         <td class=""><a data-index="monday" href="javascript:void(0)"
                                                                                         onclick="chooseSchedule(this)">更改班次</a></td>
@@ -137,7 +143,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.tuesday != null && group.tuesday.rest != true}">ant-checkbox-checked</c:if>"><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                                 <input type="checkbox"
                                                                                        class="ant-checkbox-input"
@@ -155,7 +161,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                            休息
+                                                                            <c:choose>
+                                                                                <c:when test="${group.tuesday != null && group.tuesday.rest != true}">
+                                                                                    ${tuesday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
 
                                                                         </td>
                                                                         <td class=""><a data-index="tuesday" href="javascript:void(0)"
@@ -164,7 +177,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.wednesday != null && group.wednesday.rest != true}">ant-checkbox-checked</c:if>"><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                                 <input type="checkbox"
                                                                                        class="ant-checkbox-input"
@@ -182,7 +195,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                            休息
+                                                                            <c:choose>
+                                                                                <c:when test="${group.wednesday != null && group.wednesday.rest != true}">
+                                                                                    ${wednesday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
 
                                                                         </td>
                                                                         <td class=""><a data-index="wednesday" href="javascript:void(0)"
@@ -191,7 +211,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.thursday != null && group.thursday.rest != true}">ant-checkbox-checked</c:if>"><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                                 <input type="checkbox"
                                                                                        class="ant-checkbox-input"
@@ -209,7 +229,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                            休息
+                                                                            <c:choose>
+                                                                                <c:when test="${group.thursday != null && group.thursday.rest != true}">
+                                                                                    ${thursday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
 
                                                                         </td>
                                                                         <td class=""><a data-index="thursday" href="javascript:void(0)"
@@ -218,7 +245,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.friday != null && group.friday.rest != true}">ant-checkbox-checked</c:if>"><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                                 <input type="checkbox"
                                                                                        class="ant-checkbox-input"
@@ -236,7 +263,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                            休息
+                                                                            <c:choose>
+                                                                                <c:when test="${group.friday != null && group.friday.rest != true}">
+                                                                                    ${friday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
 
                                                                         </td>
                                                                         <td class=""><a data-index="friday" href="javascript:void(0)"
@@ -245,7 +279,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.saturday != null && group.saturday.rest != true}">ant-checkbox-checked</c:if>"><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                                 <input type="checkbox"
                                                                                        class="ant-checkbox-input"
@@ -263,7 +297,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                            休息
+                                                                            <c:choose>
+                                                                                <c:when test="${group.saturday != null && group.saturday.rest != true}">
+                                                                                    ${saturday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
 
                                                                         </td>
                                                                         <td class=""><a data-index="saturday" href="javascript:void(0)"
@@ -272,7 +313,7 @@
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
                                                                                 class="ant-checkbox-wrapper">
-                                                                            <span class="ant-checkbox"><span
+                                                                            <span class="ant-checkbox <c:if test="${group.sunday != null && group.sunday.rest != true}">ant-checkbox-checked</c:if>"><span
                                                                                     class="ant-checkbox-inner"></span>
                                                                                 <input type="checkbox"
                                                                                        class="ant-checkbox-input"
@@ -290,7 +331,14 @@
 
                                                                         </td>
                                                                         <td class="scheduleName">
-                                                                            休息
+                                                                            <c:choose>
+                                                                                <c:when test="${group.sunday != null && group.sunday.rest != true}">
+                                                                                    ${sunday}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    休息
+                                                                                </c:otherwise>
+                                                                            </c:choose>
 
                                                                         </td>
                                                                         <td class=""><a data-index="sunday" href="javascript:void(0)"
@@ -394,38 +442,45 @@
         });
         $('input[data-check="true"]').click(function () {
             var node = $(this);
+            var nodeStr = node.attr('data-input');
             if (node.val() == 'on') {
-                $(this).parent().removeClass('ant-checkbox-checked');
-                $(this).val("off");
-                //判断是否有选择
-                var i = 0;
-                $('input[data-check="true"]').each(function () {
-                    if ($(this).val() == "on") {
-                        i++;
-                    }
-                });
-                if (i == 0) {
-                    $("#checkAll").parent().removeClass("ant-checkbox-indeterminate");
-                }
+                node.parent().removeClass('ant-checkbox-checked');
+                node.val("off");
+                $('#' + nodeStr).val("");
+                node.parents(".ant-table-selection-column").siblings(".scheduleName").text("休息");
             } else {
-                $(this).parent().addClass(' ant-checkbox-checked');
-                $(this).val("on");
-                $("#checkAll").parent().addClass("ant-checkbox-indeterminate");
-            }
+                node.parent().addClass(' ant-checkbox-checked');
+                node.val("on");
+                $('#' + nodeStr).val($("#currentSchedule").attr("data-id"));
+                var text = $("#currentSchedule").text();
+                node.parents(".ant-table-selection-column").siblings(".scheduleName").text(text == "" ? "休息" : text);
+        }
         });
         $('#checkAll').click(function () {
             var checks = $('input[data-check="true"]');
             var node = $(this);
             if (node.val() == 'on') {
-                checks.parent().removeClass('ant-checkbox-checked');
-                node.parent().removeClass('ant-checkbox-indeterminate').removeClass('ant-checkbox-checked');
-                checks.val("off");
+                node.parent().removeClass('ant-checkbox-checked');
                 node.val('off');
+                checks.each(function(){
+                    $(this).parent().removeClass('ant-checkbox-checked');
+                    $(this).val("off");
+                    var nodeStr = $(this).attr('data-input');
+                    $("#" + nodeStr).val("");
+                    $(this).parents(".ant-table-selection-column").siblings(".scheduleName").text("休息");
+                });
             } else {
-                checks.parent().addClass('ant-checkbox-checked');
                 node.parent().addClass('ant-checkbox-checked');
                 node.val("on");
-                checks.val('on');
+                var text = $("#currentSchedule").text();
+                checks.each(function(){
+                    $(this).parent().addClass('ant-checkbox-checked');
+                    $(this).val('on');
+                    var nodeStr = $(this).attr('data-input');
+                    $("#" + nodeStr).val($("#currentSchedule").attr("data-id"));
+                    $(this).parents(".ant-table-selection-column").siblings(".scheduleName").text(text == "" ? "休息" : text);
+                });
+
             }
         });
         $("#isAuto").click(function () {

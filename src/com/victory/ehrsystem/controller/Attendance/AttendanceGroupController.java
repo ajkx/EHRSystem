@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Attendance;
 import com.victory.ehrsystem.entity.attendance.AttendanceGroup;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.service.attendance.AttendanceGroupService;
+import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ajkx on 2017/2/17.
@@ -57,7 +60,43 @@ public class AttendanceGroupController {
     @RequestMapping(value = "/setting/{id}")
     public String detail(@PathVariable int id,Model model){
         AttendanceGroup group = groupService.findOne(AttendanceGroup.class, id);
+
+
         model.addAttribute("group", group);
+        AttendanceSchedule monday = group.getMonday();
+        if(monday != null && (monday.getRest() == null || !monday.getRest())){
+            model.addAttribute("monday", monday.getName()+":"+StringUtil.getScheduleTime(monday));
+        }
+
+        AttendanceSchedule tuesday = group.getTuesday();
+        if(tuesday != null && (tuesday.getRest() == null || !tuesday.getRest())){
+            model.addAttribute("tuesday", tuesday.getName()+":"+StringUtil.getScheduleTime(tuesday));
+        }
+
+        AttendanceSchedule wednesday = group.getWednesday();
+        if(wednesday != null && (wednesday.getRest() == null || !wednesday.getRest())){
+            model.addAttribute("wednesday", wednesday.getName()+":"+StringUtil.getScheduleTime(wednesday));
+        }
+
+        AttendanceSchedule thursday = group.getThursday();
+        if(thursday != null && (thursday.getRest() == null || !thursday.getRest())){
+            model.addAttribute("thursday", thursday.getName()+":"+StringUtil.getScheduleTime(thursday));
+        }
+
+        AttendanceSchedule friday = group.getFriday();
+        if(friday != null && (friday.getRest() == null || !friday.getRest())){
+            model.addAttribute("friday", friday.getName()+":"+StringUtil.getScheduleTime(friday));
+        }
+
+        AttendanceSchedule saturday = group.getSaturday();
+        if(saturday != null && (saturday.getRest() == null || !saturday.getRest())){
+            model.addAttribute("saturday", saturday.getName()+":"+StringUtil.getScheduleTime(saturday));
+        }
+
+        AttendanceSchedule sunday = group.getSunday();
+        if(sunday != null && (sunday.getRest() == null || !sunday.getRest())){
+            model.addAttribute("sunday", sunday.getName()+":"+StringUtil.getScheduleTime(sunday));
+        }
         return "attendance/group_detail";
     }
 }
