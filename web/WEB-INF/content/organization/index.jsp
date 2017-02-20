@@ -12,6 +12,7 @@
 <script>
 $('#treeview').ready(function(){
     $(document).pjax('a','#detail-content');
+    var str = ".node-treeview";
     $.get("/organization/tree",function(data1){
         $('#treeview').treeview({
             //开通超链接效果
@@ -30,11 +31,10 @@ $('#treeview').ready(function(){
             expandIcon:'fa fa-caret-right',
             collapseIcon:'fa fa-caret-down',
             color:'#666',
-            data:data1
-            //右边显示提示信息
+            data:data1,
         });
     });
-})
+});
 </script>
 
 <div id="treeview"></div>

@@ -26,7 +26,7 @@ public class HrmSubCompany{
     private HrmSubCompany parent;
 
     @Column(name = "cancel")
-    private boolean cancel;
+    private Boolean cancel;
 
     public HrmSubCompany() {
     }

@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Attendance;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.service.attendance.AttendanceScheduleService;
+import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.PageInfo;
@@ -121,5 +122,22 @@ public class AttendanceScheduleController {
         JsonVo json = new JsonVo();
         json.setStatus(true).setMsg("修改成功");
         return json;
+    }
+
+    @RequiresPermissions(value = "schedule:view")
+    @RequestMapping(value = "/modal/list")
+    public String modal_list(Model model) {
+        List<AttendanceSchedule> list = scheduleService.findAll(AttendanceSchedule.class);
+        List<Map<String, String>> mapList = new ArrayList<>();
+        for (AttendanceSchedule schedule : list) {
+            Map<String, String> temp = new HashMap<>();
+            if(schedule.getRest() != null && schedule.getRest())continue;
+            temp.put("id", schedule.getId()+"");
+            temp.put("name", schedule.getName());
+            temp.put("time", StringUtil.getScheduleTime(schedule));
+            mapList.add(temp);
+        }
+        model.addAttribute("list", mapList);
+        return "modal/attendance/scheduleList";
     }
 }

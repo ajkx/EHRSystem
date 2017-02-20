@@ -10,7 +10,7 @@
 <div class="detail-container">
     <div class="main-info" style="margin-bottom: 15px">
         <h3 class="" style="margin-bottom: 15px">${entity.name}</h3>
-        <p style="color: rgb(153, 153, 153); margin-bottom: 15px">${entity.desc}</p>
+        <p style="color: rgb(153, 153, 153); margin-bottom: 15px">${entity.description}</p>
         <c:if test="${entity.parent != ''}">
             <p style="margin-bottom: 15px">上级分部:  &nbsp;&nbsp;<a href="${entity.parent}">${entity.parent.name}</a></p>
         </c:if>
