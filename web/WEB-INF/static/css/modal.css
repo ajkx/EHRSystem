@@ -313,7 +313,7 @@
     border-left: solid 1px #e0e0e0;
     overflow: auto;
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 0;
     bottom: 0;
     left: 50%;
@@ -344,6 +344,9 @@
     color: #6f6f6f;
 }
 .resource-list li div .fa-check-square{
+    color: #14A8F5;
+}
+.resource-header li div .fa-check-square{
     color: #14A8F5;
 }
 #resource-content .modal-header{

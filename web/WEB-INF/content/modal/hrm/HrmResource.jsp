@@ -15,77 +15,114 @@
     function searchResource(url){
         $.get(url,function(result){
             if(result.status){
-                var ul = $('#resource-list1');
+                //获取当前激活的面板下的ul,并清空元素
+                var ul = $('#resource-tab .tab-pane.active .resource-list');
                 ul.empty();
-                var resourceList = $('#resource-list li');
+                //遍历返回的数据
                 $(result.data).each(function(index,element){
-                    var li = $("<li></li>").attr("data-id",element.id).attr("data-name",element.name);
-                    var span = $("<span></span>").text(element.name);
-                    var span2 = $("<span class='span-name'></span>").text(element.department);
-                    var div = $("<div class='check-div'></div>");
-                    var i = $("<i class='fa fa-square-o'></i>");
-                    //根据上面部分的resourceList判断可选列表是否已选
-                    resourceList.each(function(index,currentLi){
-                        if($(currentLi).attr("data-id") == element.id){
-                            i.addClass("fa-check-square");
-                        }
-                    });
-                    div.append(i);
-                    li.append(span);
-                    li.append(span2);
-                    li.append(div);
-                    ul.append(li);
+                    //添加员工待选列表
+                    addResourceList(ul, element);
                 });
-                $('.check-div').click(function () {
-                    var node = $(this).children('i');
-                    var id = $(this).parent().attr("data-id");
-                    var name = $(this).parent().attr("data-name");
-                    var resourceList = $('#resource-list li');
-                    if (node.hasClass("fa-check-square")) {
-                        node.removeClass("fa-check-square");
-                        resourceList.each(function(index,currentLi){
-                            if($(currentLi).attr("data-id") == id) {
-                                $(currentLi).remove();
-                            }
-                        });
-                    } else {
-                        node.addClass("fa-check-square");
-                        var ul = $("#resource-list");
-                        var li = $("<li class='ant-tag ant-tag-blue'></li>").attr("data-id", id);
-                        var span = $("<span></span>").text(name);
-                        var i = $("<i class='fa fa-times'></i>").click(function(){
-                            //这是闭包吗 保留了node的引用
-                            node.click();
-                        });
-                        li.append(span);
-                        li.append(i);
-                        ul.append(li);
-                    }
-                });
+                //绑定checkDiv点击事件
+                bindCheckDiv();
             }else{
                 toastr.error(result.msg);
             }
         });
     }
+
+    //resourceList里的删除图标的点击方法
+    function removeTag(node){
+        //获取点击的人员的ID
+        var id = $(node).parent().attr("data-id");
+        //删除所在的li
+        $(node).parent().remove();
+
+        //移除组织架构面板里的待选列表的对应li
+        var li1 = $("#resource-list1 li[data-id='"+id+"']");
+        if(li1.length > 0) {
+            li1.find("i").removeClass('fa-check-square');
+        }
+        //移除搜索面板里的待选列表对应li
+        var li2 = $("#resource-list2 li[data-id='"+id+"']");
+        if(li2.length > 0) {
+            li2.find("i").removeClass('fa-check-square');
+        }
+    }
+
+    //绑定checkbox的点击事件
+    function bindCheckDiv(){
+        //绑定激活面板下的checkdiv
+        $("#resource-tab .tab-pane.active .resource-list .check-div").click(function(){
+            var node = $(this).children('i');
+            var id = $(this).parent().attr("data-id");
+            var name = $(this).parent().attr("data-name");
+            //判断当前的点击状态
+            if (node.hasClass("fa-check-square")) {
+                node.removeClass("fa-check-square");
+                //获取对应的存数据的li 并且删除
+                var currentLi = $('#resource-list li[data-id="'+id+'"]');
+                if(currentLi.length > 0 ){
+                    currentLi.remove();
+                }
+            } else {
+                node.addClass("fa-check-square");
+                addTag(id, name);
+            }
+        });
+    }
+    function addResourceList(ul,element){
+        var li = $("<li></li>").attr("data-id",element.id).attr("data-name",element.name);
+        var span = $("<span></span>").text(element.name);
+        var span2 = $("<span class='span-name'></span>").text(element.department);
+        var div = $("<div class='check-div'></div>");
+        var i = $("<i class='fa fa-square-o'></i>");
+        //根据currentLi是否为空判断可选列表是否已选
+        var currentLi = $('#resource-list li[data-id="'+element.id+'"]');
+        if(currentLi.length > 0){
+            i.addClass("fa-check-square");
+        }
+        div.append(i);
+        li.append(span);
+        li.append(span2);
+        li.append(div);
+        ul.append(li);
+    }
+    function addTag(id,name){
+        var ul = $("#resource-list");
+        var li = $("<li class='ant-tag ant-tag-blue'></li>").attr("data-id", id);
+        var span = $("<span></span>").text(name);
+        var i = $("<i class='fa fa-times'></i>").click(function(){
+            removeTag(this);
+            //这是闭包吗 保留了node的引用
+//                    node.click();
+        });
+        li.append(span);
+        li.append(i);
+        ul.append(li);
+    }
     $(function () {
         var currentList = $('#resourceIds').val();
+        //初始化已选的员工的li
         if(currentList != ""){
+            var ul = $("#resource-list");
             $.get("/resource/list/customer",{resourceStr:currentList},function(result){
-
+                if(result.status){
+                    $(result.data).each(function(index,element) {
+                        addTag(element.id, element.name);
+                    });
+                }
             });
         }
+        //初始化组织架构树
         $.get("/organization/tree",{type:"resource"},function(data){
             $('#organization-tree').treeview({
                 //开通超链接效果
                 enableLinks:false,
                 backColor: '#fff',
-//            backColor: '#F7F6F2',
                 showBorder: false,
                 levels: 1,
                 showIcon:true,
-//            onhoverColor:'#F2F1ED',
-//            selectedBackColor:'#E4E3DF',
-//            selectedColor:'#414140',
                 onhoverColor:'#ecf6fd',
                 selectedBackColor:'#d2eafb',
                 selectedColor:'#666',
@@ -98,10 +135,53 @@
                 }
             });
         });
+        //初始化tabpane的事件
         $('a[data-toggle="tab"]').on('show.bs.tab',function(e){
-            $("a.active").removeClass('active');
+            $(".select-menu .active").removeClass('active');
             $(this).addClass('active');
+            var id = $(this).attr("href");
+            //切换面板判断待选列表存不存在
+            var lis = $(id).children(".resource-list").children('li');
+            lis.each(function(index,element) {
+                var i = element.find('i');
+                //如果是在前一个面板新增的，则将待选列表的对应的i加上class
+                if(!i.hasClass("fa-check-square")){
+                    var currentLi = $('#resource-list li[data-id="'+element.attr("data-id")+'"]');
+                    if(currentLi.length > 0 ){
+                        i.addClass("fa-check-square");
+                    }
+                }
+
+            });
         });
+        //初始化checkAll的全选事件
+        $(".checkAll").click(function () {
+            console.log("a");
+            var node = $(this).children("i");
+            var resourceList = $(this).parents('.resource-header').siblings(".resource-list").children("li");
+            if(node.hasClass("fa-check-square")){
+                node.removeClass("fa-check-square");
+                resourceList.each(function(index,element) {
+                    var i = $(element).find('i');
+                    var id = $(element).attr("data-id");
+                    i.removeClass("fa-check-square");
+                    var currentLi = $('#resource-list li[data-id="'+id+'"]');
+                    currentLi.remove();
+                });
+            }else{
+                node.addClass("fa-check-square");
+                resourceList.each(function(index,element) {
+                    var i = $(element).find('i');
+                    var id = $(element).attr("data-id");
+                    var name = $(element).attr("data-name");
+                    if(!i.hasClass('fa-check-square')){
+                        i.addClass("fa-check-square");
+                        addTag(id, name);
+                    }
+                });
+            }
+        });
+
     })
 </script>
 <div class="modal-dialog" style="width: 600px;height:550px;">
@@ -115,23 +195,28 @@
             <div style="padding:10px">
                 <div style="width: 570px; height: 440px;">
                     <ul id="resource-list" style="height:80px;background: #fff;border: dashed 1px #e0e0e0;margin-bottom: 8px;overflow: auto;">
-                        <li class="ant-tag ant-tag-blue">
-                            <span>qqa</span>
-                            <i class="fa fa-times"></i>
-                        </li>
                     </ul>
                     <div class="select-menu">
                         <a class="active" href="#organizationPanel" data-toggle="tab">架构</a>
                         <a href="#searchPanel" data-toggle="tab">搜索</a>
                     </div>
-                    <div class="tab-content" style="border: solid 1px #e0e0e0;border-top: none;">
+                    <div id="resource-tab" class="tab-content" style="border: solid 1px #e0e0e0;border-top: none;">
                         <div class="tab-pane fade in active" id="organizationPanel"
                              style="position: relative;height: 320px;">
                             <div class="resource-menu">
                                 <div id="organization-tree" style="padding: 5px 0">
-
                                 </div>
                             </div>
+                            <ul class="resource-header" style="border-left: solid 1px #e0e0e0;position: absolute;top: 0;right: 0;left: 50%;background-color: rgb(247, 247, 247)">
+                                <li style="padding: 0 30px 0 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;position: relative;line-height: 30px;font-size: 14px;">
+                                <span>姓名</span>
+                                <span style="position: absolute;top: 0;left: 37.5%;">部门</span>
+                                <div class="checkAll check-div" style="position: absolute;top: 0;right: 5px;cursor: pointer;">
+                                    <i class="fa fa-square-o">
+                                    </i>
+                                </div>
+                                </li>
+                            </ul>
                             <ul class="resource-list" id="resource-list1">
                             </ul>
                         </div>
@@ -141,13 +226,17 @@
 
                                 </div>
                             </div>
-                            <ul class="resource-list" id="resource-list2">
-                                <li>
-                                    <span>aaa</span>
-                                    <div class="check-div">
-                                        <i class="fa fa-square-o"></i>
+                            <ul class="resource-header" style="border-left: solid 1px #e0e0e0;position: absolute;top: 0;right: 0;left: 50%;background-color: rgb(247, 247, 247)">
+                                <li style="padding: 0 30px 0 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;position: relative;line-height: 30px;font-size: 14px;">
+                                    <span>姓名</span>
+                                    <span style="position: absolute;top: 0;left: 37.5%;">部门</span>
+                                    <div class="checkAll check-div" style="position: absolute;top: 0;right: 5px;cursor: pointer;">
+                                        <i class="fa fa-square-o">
+                                        </i>
                                     </div>
                                 </li>
+                            </ul>
+                            <ul class="resource-list" id="resource-list2">
                             </ul>
                         </div>
                     </div>
