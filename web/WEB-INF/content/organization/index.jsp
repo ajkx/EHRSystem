@@ -13,7 +13,7 @@
 $('#treeview').ready(function(){
     $(document).pjax('a','#detail-content');
     var str = ".node-treeview";
-    $.get("/organization/tree",function(data1){
+    $.get("/organization/tree",{type:"department"},function(data){
         $('#treeview').treeview({
             //开通超链接效果
             enableLinks:true,
@@ -31,7 +31,7 @@ $('#treeview').ready(function(){
             expandIcon:'fa fa-caret-right',
             collapseIcon:'fa fa-caret-down',
             color:'#666',
-            data:data1,
+            data:data,
         });
     });
 });

@@ -52,9 +52,9 @@ public class OrganizationController {
      */
     @RequiresPermissions(value = "organization:view")
     @RequestMapping(value = "/tree")
-    public @ResponseBody List<JsonTreeData> getTree(){
+    public @ResponseBody List<JsonTreeData> getTree(String type){
         List<HrmSubCompany> list = organizationService.findAllSubCompany_NoParent();
-        List<JsonTreeData> tree = TreeNodeUtil.convertSubTreeList(list,organizationService);
+        List<JsonTreeData> tree = TreeNodeUtil.convertSubTreeList(list,organizationService,type);
         return tree;
     }
 

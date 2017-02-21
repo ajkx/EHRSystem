@@ -23,6 +23,7 @@
                 <input type="hidden" name="friday" id="friday" value="${group.friday.rest == true ? "" : group.monday.id}"/>
                 <input type="hidden" name="saturday" id="saturday" value="${group.saturday.rest == true ? "" : group.monday.id}"/>
                 <input type="hidden" name="sunday" id="sunday" value="${group.sunday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="resources" id="resourceIds" value="<c:forEach items="${group.resources}" var="resource">${resource.id},</c:forEach>"/>
                 <input type="hidden" id="currentNode" value=""/>
 
                 <div class="ant-row ant-form-item">
@@ -30,14 +31,14 @@
                     <div class="ant-col-8">
                         <div class="ant-form-item-control "><span class="ant-input-wrapper">
                             <input type="text" placeholder="请输入考勤组名称" class="ant-input ant-input-lg" name="name"
-                                   value="" autocomplete="off"></span></div>
+                                   value="${group.name}" autocomplete="off"></span></div>
                     </div>
                 </div>
                 <div class="ant-row ant-form-item">
                     <div class="ant-col-2 ant-form-item-label"><label class="">考勤人员</label></div>
                     <div class="ant-col-8">
                         <div class="ant-form-item-control ">
-                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg"><span>请选择</span></button>
+                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg" onclick="showEditModal('/resource/modal/list')"><span>请选择</span></button>
                         </div>
                     </div>
                 </div>
@@ -71,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ant-row ant-form-item type1">
+                <div class="ant-row ant-form-item type1" style="<c:if test="${group.groupType != null && group.groupType != 1}">display:none;</c:if> ">
                     <div class="ant-col-2 ant-form-item-label"><label class="">工作日设置</label></div>
                     <div class="ant-col-14">
                         <div class="ant-form-item-control ">
@@ -395,7 +396,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ant-row ant-form-item type2">
+                <div class="ant-row ant-form-item type2" style="<c:if test="${group.groupType == null || group.groupType != 2}">display:none;</c:if>">
                     <div class="ant-col-2 ant-form-item-label"><label class="">考勤班次</label></div>
                     <div class="ant-col-14">
                         <div class="ant-form-item-control ">

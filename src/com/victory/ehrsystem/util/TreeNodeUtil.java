@@ -17,7 +17,7 @@ import java.util.List;
 public class TreeNodeUtil {
 
 
-    public static List<JsonTreeData> convertSubTreeList(List<HrmSubCompany> list,OrganizationService organizationService) {
+    public static List<JsonTreeData> convertSubTreeList(List<HrmSubCompany> list,OrganizationService organizationService,String type) {
         List<JsonTreeData> tree = new ArrayList<>();
             for (HrmSubCompany subCompany : list) {
                 //如果是封存的，则继续下一循环
@@ -29,18 +29,24 @@ public class TreeNodeUtil {
                 //temp.setType("sub");
                 temp.setText(subCompany.getName());
                 //temp.setPid(subCompany.getParent().toString());
-                List<JsonTreeData> sublist =  convertSubTreeList(organizationService.findAllSubcompanyBySubcompany(subCompany),organizationService);
-                List<JsonTreeData> deplist = convertDepTreeList(organizationService.findRootDepartmentBySubcompany(subCompany),organizationService);
+                List<JsonTreeData> sublist =  convertSubTreeList(organizationService.findAllSubcompanyBySubcompany(subCompany),organizationService,type);
+                List<JsonTreeData> deplist = convertDepTreeList(organizationService.findRootDepartmentBySubcompany(subCompany),organizationService,type);
                 deplist.addAll(sublist);
                 temp.setIcon("fa fa-home");
-                temp.setHref("/organization/subcompany/"+subCompany.getId()+".html");
+                String link = "";
+                if(type.equals("organization")){
+                    link = "/organization/subcompany/" + subCompany.getId() + ".html";
+                }else if(type.equals("resource")){
+                    link = "/resource/subcompany/" + subCompany.getId();
+                }
+                temp.setHref(link);
                 temp.setNodes(deplist.size() == 0 ? null : deplist);
                 tree.add(temp);
             }
         return tree;
     }
 
-    public static List<JsonTreeData> convertDepTreeList(List<HrmDepartment> list,OrganizationService organizationService) {
+    public static List<JsonTreeData> convertDepTreeList(List<HrmDepartment> list,OrganizationService organizationService,String type) {
         List<JsonTreeData> tree = new ArrayList<>();
         for (HrmDepartment department : list) {
             //如果是封存的，则继续下一循环
@@ -52,9 +58,15 @@ public class TreeNodeUtil {
             //temp.setType("dep");
             temp.setText(department.getName());
             temp.setIcon("fa fa-folder");
-            temp.setHref("/organization/department/"+department.getId()+".html");
+            String link = "";
+            if(type.equals("organization")){
+                link = "/organization/department/" + department.getId() + ".html";
+            }else if(type.equals("resource")){
+                link = "/resource/department/" + department.getId();
+            }
+            temp.setHref(link);
             //temp.setPid(department.getParent().toString());
-            List<JsonTreeData> deplist = convertDepTreeList(organizationService.findAllDepartmentByDepartment(department),organizationService);
+            List<JsonTreeData> deplist = convertDepTreeList(organizationService.findAllDepartmentByDepartment(department),organizationService,type);
             temp.setNodes(deplist.size() == 0 ? null : deplist);
             tree.add(temp);
         }

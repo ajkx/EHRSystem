@@ -2,7 +2,9 @@ package com.victory.ehrsystem.service.hrm.impl;
 
 import com.victory.ehrsystem.dao.Hrm.HrmResourceDao;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+import com.victory.ehrsystem.entity.hrm.HrmDepartment;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.BaseService;
 import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.PageInfo;
@@ -55,5 +57,13 @@ public class HrmResourceService extends BaseService<HrmResource>{
         }
         info.setData(mapList);
         return info;
+    }
+
+    public List<HrmResource> findBySubCompany(HrmSubCompany subCompany) {
+        return hrmResourceDao.findBySubCompany(subCompany);
+    }
+
+    public List<HrmResource> findByDepartment(HrmDepartment department) {
+        return hrmResourceDao.findByDepartment(department);
     }
 }
