@@ -24,6 +24,7 @@
                 <input type="hidden" name="saturday" id="saturday" value="${group.saturday.rest == true ? "" : group.monday.id}"/>
                 <input type="hidden" name="sunday" id="sunday" value="${group.sunday.rest == true ? "" : group.monday.id}"/>
                 <input type="hidden" name="resources" id="resourceIds" value="<c:forEach items="${group.resources}" var="resource">${resource.id},</c:forEach>"/>
+                <input type="hidden" name="schedules" id="schedules" value="<c:forEach items="${group.schedules}" var="schedule">${schedule.id},</c:forEach>"/>
                 <input type="hidden" id="currentNode" value=""/>
 
                 <div class="ant-row ant-form-item">
@@ -80,7 +81,7 @@
                                 <div>
                                     <div style="margin-bottom: 5px;">
                                         快捷设置班次：<span id="currentSchedule" data-id=""></span><a data-index="all" style="margin-left: 10px;" href="javascript:void(0)"
-                                     onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></div>
+                                     onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></div>
                                     <div class=" clearfix">
                                         <div class="">
                                             <div class="ant-spin"><span class="ant-spin-dot"></span>
@@ -139,7 +140,7 @@
                                                                             </c:choose>
                                                                         </td>
                                                                         <td class=""><a data-index="monday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
@@ -173,7 +174,7 @@
 
                                                                         </td>
                                                                         <td class=""><a data-index="tuesday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
@@ -207,7 +208,7 @@
 
                                                                         </td>
                                                                         <td class=""><a data-index="wednesday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
@@ -241,7 +242,7 @@
 
                                                                         </td>
                                                                         <td class=""><a data-index="thursday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
@@ -275,7 +276,7 @@
 
                                                                         </td>
                                                                         <td class=""><a data-index="friday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
@@ -309,7 +310,7 @@
 
                                                                         </td>
                                                                         <td class=""><a data-index="saturday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                     <tr class="ant-table-row  ant-table-row-level-0">
                                                                         <td class="ant-table-selection-column"><span><label
@@ -343,7 +344,7 @@
 
                                                                         </td>
                                                                         <td class=""><a data-index="sunday" href="javascript:void(0)"
-                                                                                        onclick="chooseModal(this,'schedule/modal/list')">更改班次</a></td>
+                                                                                        onclick="chooseModal(this,'/schedule/modal/list/single')">更改班次</a></td>
                                                                     </tr>
                                                                 </tbody>
                                                                 </table>
@@ -400,8 +401,16 @@
                     <div class="ant-col-2 ant-form-item-label"><label class="">考勤班次</label></div>
                     <div class="ant-col-14">
                         <div class="ant-form-item-control ">
-                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg"><span>选择班次</span></button>
+                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg" onclick="chooseModal(this,'/schedule/modal/list/multi')" data-index="schedules"><span>选择班次</span></button>
                             <div style="margin-top: 15px; margin-bottom: -10px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ant-row ant-form-item">
+                    <div class="ant-col-2 ant-form-item-label"><label class="">详细描述</label></div>
+                    <div class="ant-col-14">
+                        <div class="ant-form-item-control ">
+                            <textarea name="description" rows="3" class="ant-input"></textarea>
                         </div>
                     </div>
                 </div>

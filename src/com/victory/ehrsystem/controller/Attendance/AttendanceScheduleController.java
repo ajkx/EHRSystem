@@ -125,8 +125,8 @@ public class AttendanceScheduleController {
     }
 
     @RequiresPermissions(value = "schedule:view")
-    @RequestMapping(value = "/modal/list")
-    public String modal_list(Model model) {
+    @RequestMapping(value = "/modal/list/{type}")
+    public String modal_list(@PathVariable String type, Model model) {
         List<AttendanceSchedule> list = scheduleService.findAll(AttendanceSchedule.class);
         List<Map<String, String>> mapList = new ArrayList<>();
         for (AttendanceSchedule schedule : list) {
@@ -138,6 +138,11 @@ public class AttendanceScheduleController {
             mapList.add(temp);
         }
         model.addAttribute("list", mapList);
-        return "modal/attendance/scheduleList";
+        if(type.equals("multi")){
+            return "modal/attendance/scheduleMultiList";
+        }else{
+            return "modal/attendance/scheduleList";
+        }
+
     }
 }

@@ -101,8 +101,7 @@
 
 </script>
 <div class="topic-toolbar">
-    <a style="font-size: 14px;color:#2db7f5" href="javascript:void(0)"
-       onclick="showEditModal('/group/edit')">新增考勤组</a>
+    <a style="font-size: 14px;color:#2db7f5" href="/group/edit.html" data-pjax="#main-content">新增考勤组</a>
     <div class="ant-search-input-wrapper" style="width: 200px; float: right;margin-bottom: 10px">
         <span class="ant-input-group ant-search-input">
             <div class="ant-select ant-select-combobox ant-select-enabled">

@@ -57,6 +57,15 @@ public class AttendanceGroupController {
         return pageInfo;
     }
 
+    /**
+     * 返回创建页面
+     * @return
+     */
+    @RequiresPermissions(value = "AttendanceGroup:create")
+    @RequestMapping(value = "/edit")
+    public String page_create(){
+        return "attendance/group_detail";
+    }
     @RequestMapping(value = "/setting/{id}")
     public String detail(@PathVariable int id,Model model){
         AttendanceGroup group = groupService.findOne(AttendanceGroup.class, id);

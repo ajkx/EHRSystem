@@ -13,7 +13,6 @@
         var nodeStr = $('#currentNode').val();
         var currentList = $('#'+nodeStr).val();
         //初始化已选的员工的li
-        console.log(currentList);
         if (currentList != "") {
             var ul = $("#resource-list");
             $.get("/resource/list/array", {resourceStr: currentList}, function (result) {

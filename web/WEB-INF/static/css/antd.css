@@ -14953,6 +14953,7 @@ tr.ant-table-expanded-row:hover {
 .ant-tabs-vertical > .ant-tabs-content > .ant-tabs-tabpane-inactive {
   display: none;
 }
+
 .ant-tag {
   display: inline-block;
   line-height: 22px;
@@ -15022,16 +15023,18 @@ tr.ant-table-expanded-row:hover {
 }
 .ant-tag-blue {
   background: #2db7f5;
-  color:#fff;
 }
 .ant-tag-green {
-  background: #00A854;
+  background: #87d068;
 }
 .ant-tag-yellow {
-  background: #ffbf00;
+  background: #fa0;
 }
 .ant-tag-red {
-  background: #F04134;
+  background: #f50;
+}
+.ant-tag-blue, .ant-tag-blue .anticon-cross, .ant-tag-blue .anticon-cross:hover, .ant-tag-blue a, .ant-tag-blue a:hover, .ant-tag-green, .ant-tag-green .anticon-cross, .ant-tag-green .anticon-cross:hover, .ant-tag-green a, .ant-tag-green a:hover, .ant-tag-red, .ant-tag-red .anticon-cross, .ant-tag-red .anticon-cross:hover, .ant-tag-red a, .ant-tag-red a:hover, .ant-tag-yellow, .ant-tag-yellow .anticon-cross, .ant-tag-yellow .anticon-cross:hover, .ant-tag-yellow a, .ant-tag-yellow a:hover{
+  color:#fff;
 }
 .ant-tag-checkable {
   background-color: transparent;
