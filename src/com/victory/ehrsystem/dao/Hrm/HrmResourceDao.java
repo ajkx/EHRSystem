@@ -54,4 +54,11 @@ public interface HrmResourceDao extends BaseDao<HrmResource>{
      * @return
      */
     List<HrmResource> findNoManager();
+
+    /**
+     * name可为部门名称或者姓名
+     * @param names
+     * @return
+     */
+    List<HrmResource> findByName(String[] names);
 }

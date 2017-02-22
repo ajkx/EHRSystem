@@ -4,9 +4,9 @@
 $(function () {
 
     //初始化a标记的pjax事件
-    $(document).pjax('a[data-pjax]','#main-content',{timeout:5000});
+    $(document).pjax('a[data-pjax]', '#main-content', {timeout: 5000});
     //每次载入页面完成时进行一次pjax请求
-    $.pjax({url:'', container: '#main-content'});
+    $.pjax({url: '', container: '#main-content'});
     // $.pjax.defaults.timeout = 1200;
 
     //绑定模态框的隐藏事件
@@ -36,63 +36,63 @@ toastr.options = {
 };
 
 //弹出修改的模态框
-function showEditModal(url){
-    $('#edit-modal').load(url,function(resp){
+function showEditModal(url) {
+    $('#edit-modal').load(url, function (resp) {
         $('#edit-modal').modal("show");
     });
 }
 
-function showDelModal(url){
+function showDelModal(url) {
     $('#confirmModal').modal('show');
-    $('#del-btn').attr('data-del-url',url);
+    $('#del-btn').attr('data-del-url', url);
 }
 
-function deleteData(){
+function deleteData() {
     console.log("data");
-    $.get($('#del-btn').attr('data-del-url'),function(data){
+    $.get($('#del-btn').attr('data-del-url'), function (data) {
         $('#confirmModal').modal("hide");
-        if(data.status) {
-            $.pjax({url:location.href,container:'#main-content'});
+        if (data.status) {
+            $.pjax({url: location.href, container: '#main-content'});
             console.log("删除成功");
-        }else{
+        } else {
             console.log("删除失败，原因未知");
         }
     });
 }
 
-function submitForm(){
+function submitForm() {
     var form = $('#modal-form');
     $.ajax({
-       url:form.attr('action'),
-       type:"POST",
-       dataType:"json",
-       data:form.serialize(),
-       success:function(result) {
-           if(result.status) {
-               $('#edit-modal').modal('hide');
-               toastr.success(result.msg);
-               $.pjax({url:location.href,container:'#main-content'});
-           }else{
-               toastr.error(result.msg);
-           }
-       },
-       error:function(xhr,status) {
-           alert("数据传输错误" + status + ",请联系系统管理员");
-       }
+        url: form.attr('action'),
+        type: "POST",
+        dataType: "json",
+        data: form.serialize(),
+        success: function (result) {
+            if (result.status) {
+                $('#edit-modal').modal('hide');
+                toastr.success(result.msg);
+                $.pjax({url: location.href, container: '#main-content'});
+            } else {
+                toastr.error(result.msg);
+            }
+        },
+        error: function (xhr, status) {
+            alert("数据传输错误" + status + ",请联系系统管理员");
+        }
     });
 
     return false;
 }
 
-function ajaxSubmit(node){
+function ajaxSubmit(node) {
     var form = $(node);
     console.log("ajax");
     $.ajax({
-        url:form.attr('action'),
-        type:"POST",
-        dataType:"json",
-        data:form.serialize(),
-        success:function (result) {
+        url: form.attr('action'),
+        type: "POST",
+        dataType: "json",
+        data: form.serialize(),
+        success: function (result) {
             // window.location.href = "/login";
             console.log(result.status);
         }
@@ -100,7 +100,7 @@ function ajaxSubmit(node){
 }
 
 // 日期格式化,不是插件的代码,只用于处理时间格式化
-Date.prototype.format = function(fmt) {
+Date.prototype.format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份
         "D+": this.getDate(), //日
@@ -121,4 +121,19 @@ Date.prototype.format = function(fmt) {
         }
     }
     return fmt;
+}
+
+function Trim(str, is_global) {
+    var result;
+    result = str.replace(/(^\s+)|(\s+$)/g, "");
+    if (is_global.toLowerCase() == "g") {
+        result = result.replace(/\s/g, "");
+    }
+    return result;
+}
+
+function CastChar(str){
+    var result;
+    result = str.replace(/，/g, ",");
+    return result;
 }

@@ -334,7 +334,7 @@
     right: 50%;
 }
 
-#resource-list-choose {
+.resource-list {
     border-left: solid 1px #e0e0e0;
     overflow: auto;
     position: absolute;
@@ -343,7 +343,7 @@
     bottom: 0;
     left: 50%;
 }
-#resource-list-choose li{
+.resource-list li{
     cursor: pointer;
     padding: 0 30px 0 10px;
     overflow: hidden;
@@ -353,22 +353,22 @@
     line-height: 30px;
     font-size: 14px;
 }
-#resource-list-choose li span{
+.resource-list li span{
     font-size: 12px;
 }
-#resource-list-choose li:hover{
+.resource-list li:hover{
     background: #eee;
 }
-#resource-list-choose li div{
+.resource-list li div{
     position: absolute;
     top: 0;
     right: 5px;
     cursor: pointer;
 }
-#resource-list-choose li div i{
+.resource-list li div i{
     color: #6f6f6f;
 }
-#resource-list-choose li div .fa-check-square{
+.resource-list li div .fa-check-square{
     color: #14A8F5;
 }
 .resource-header li div .fa-check-square{

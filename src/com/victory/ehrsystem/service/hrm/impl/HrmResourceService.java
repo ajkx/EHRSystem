@@ -49,7 +49,7 @@ public class HrmResourceService extends BaseService<HrmResource>{
             map.put("department", resource.getDepartment() == null ? "" :resource.getDepartment().getName());
             map.put("manager", resource.getManager() == null ? "" :resource.getManager().getName());
             map.put("jobPosition", resource.getJobPosition() == null ? "" :resource.getJobPosition().getName());
-            map.put("status", StringUtil.nullString(resource.getStatus()));
+            map.put("status", StringUtil.nullString(resource.getStatus()+""));
             map.put("officePhone", StringUtil.nullString(resource.getOfficePhone()));
             map.put("mobile", StringUtil.nullString(resource.getMobile()));
             map.put("email", StringUtil.nullString(resource.getEmail()));
@@ -65,5 +65,10 @@ public class HrmResourceService extends BaseService<HrmResource>{
 
     public List<HrmResource> findByDepartment(HrmDepartment department) {
         return hrmResourceDao.findByDepartment(department);
+    }
+
+    public List<HrmResource> findByName(String name) {
+        String[] names = name.split(",");
+        return hrmResourceDao.findByName(names);
     }
 }

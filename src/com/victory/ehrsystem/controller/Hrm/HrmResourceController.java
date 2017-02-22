@@ -120,18 +120,28 @@ public class HrmResourceController {
     }
 
     @RequiresPermissions(value = "resource:view")
-    @RequestMapping("list/customer")
-    public @ResponseBody JsonVo listByCustomer(String resourceStr) {
+    @RequestMapping("list/array")
+    public @ResponseBody JsonVo listByArray(String resourceStr) {
         String[] resources = resourceStr.split(",");
         List<HrmResource> resourceList = new ArrayList<>();
         JsonVo jsonVo = new JsonVo();
         for (String temp : resources) {
             if(temp.equals("")) continue;
-            HrmResource resource = hrmResourceService.findOne(HrmResource.class, temp);
+            HrmResource resource = hrmResourceService.findOne(HrmResource.class, Integer.parseInt(temp));
             if(resource != null){
                 resourceList.add(resource);
             }
         }
+        jsonVo.setStatus(true);
+        jsonVo.put("data", getResourceList(resourceList));
+        return jsonVo;
+    }
+
+    @RequiresPermissions(value = "resource:view")
+    @RequestMapping("list/name")
+    public @ResponseBody JsonVo listByName(String name) {
+        List<HrmResource> resourceList = hrmResourceService.findByName(name);
+        JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true);
         jsonVo.put("data", getResourceList(resourceList));
         return jsonVo;
@@ -149,4 +159,5 @@ public class HrmResourceController {
         }
         return mapList;
     }
+
 }

@@ -98,7 +98,6 @@ public class HrmResource {
     @ManyToOne(targetEntity = HrmDepartment.class)
     @JoinColumn(name = "departmentId")
     private HrmDepartment department;
-
     //职位id
     @ManyToOne(targetEntity = HrmJobPosition.class)
     @JoinColumn(name = "jobPosition")
@@ -132,9 +131,9 @@ public class HrmResource {
     @Column(name = "officePhone")
     private String officePhone;
 
-    //状态
+    //状态 0 代表试用 1 代表正式 2 代表离职
     @Column(name = "status")
-    private String status;
+    private Integer status;
 
     //招聘来源
     @Column(name = "recruit")
@@ -423,11 +422,11 @@ public class HrmResource {
         this.officePhone = officePhone;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
