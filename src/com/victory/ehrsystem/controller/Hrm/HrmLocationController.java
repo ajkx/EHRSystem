@@ -123,7 +123,6 @@ public class HrmLocationController {
         locationService.delete(HrmLocation.class,id);
         JsonVo jsonVo = new JsonVo();
         jsonVo.setStatus(true).setMsg("删除成功");
-        Subject subject = SecurityUtils.getSubject();
         return jsonVo;
     }
 }

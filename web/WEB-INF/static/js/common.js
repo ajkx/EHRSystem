@@ -53,9 +53,9 @@ function deleteData() {
         $('#confirmModal').modal("hide");
         if (data.status) {
             $.pjax({url: location.href, container: '#main-content'});
-            console.log("删除成功");
+            toastr.success("删除成功");
         } else {
-            console.log("删除失败，原因未知");
+            toastr.error("删除失败，原因未知");
         }
     });
 }

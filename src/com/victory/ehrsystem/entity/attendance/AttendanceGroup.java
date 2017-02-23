@@ -55,7 +55,10 @@ public class AttendanceGroup {
 
     private String description;
     //相关人员
-    @OneToMany(targetEntity = HrmResource.class,mappedBy = "attendanceGroup",cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = HrmResource.class)
+    @JoinTable(name = "group_resource",
+            joinColumns =@JoinColumn(name = "group_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "resource_id",referencedColumnName = "id",unique = true))
     private Set<HrmResource> resources;
 
     //自由排班相关的班次

@@ -124,6 +124,16 @@ public class AttendanceScheduleController {
         return json;
     }
 
+
+    @RequiresPermissions(value = "schedule:delete")
+    @RequestMapping(value = "/delete/{id}")
+    public @ResponseBody JsonVo delete(@PathVariable int id) {
+        scheduleService.delete(AttendanceSchedule.class, id);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
+    }
+
     @RequiresPermissions(value = "schedule:view")
     @RequestMapping(value = "/modal/list/{type}")
     public String modal_list(@PathVariable String type, Model model) {

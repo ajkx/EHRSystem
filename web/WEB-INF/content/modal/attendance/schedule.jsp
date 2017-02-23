@@ -18,7 +18,7 @@
             </div>
         </div>
         <form class="form-horizontal" id="modal-form" role="form" action="${action}" method="post"
-              onsubmit="return submitForm()">
+              onsubmit="">
         <div class="modal-body">
 
                 <div class="div-group">
@@ -30,19 +30,19 @@
                     最多6个字符（中英文或数字），首个字符会作为班次简称
                 </div>
                 <input type="hidden" name="id" value="${schedule.id}"/>
-                <input type="hidden" name="groupType" id="sheduletype" value="${schedule.groupType}"/>
+                <input type="hidden" name="sheduletype" id="sheduletype" value="${schedule.scheduleType}"/>
                 <input type="hidden" name="acrossDay" id="acrossDay" value="${schedule.acrossDay == true ? 1 : 0}"/>
                 <input type="hidden" name="isPunch" id="isPunch" value="${schedule.punch == true ? 1 : 0}"/>
                 <div class="div-group">
                     <span style="margin-right: 20px;">设置该班次一天内上下班的次数</span>
                     <div class="btn-group">
-                        <div class="div-component <c:if test="${schedule.groupType == 1}" >scheduletype</c:if>" style="border-top-right-radius: 0;
+                        <div class="div-component <c:if test="${schedule.scheduleType == 1}" >scheduletype</c:if>" style="border-top-right-radius: 0;
 border-bottom-right-radius: 0" onclick="setScheduleType(1,this)">1天1次上下班
                         </div>
-                        <div class="div-component <c:if test="${schedule.groupType == 2}" >scheduletype</c:if>" style="border-radius: 0;border-left: 0;border-right:0"
+                        <div class="div-component <c:if test="${schedule.scheduleType == 2}" >scheduletype</c:if>" style="border-radius: 0;border-left: 0;border-right:0"
                              onclick="setScheduleType(2,this)">1天2次上下班
                         </div>
-                        <div class="div-component <c:if test="${schedule.groupType == 3}" >scheduletype</c:if>" style="border-top-left-radius: 0;
+                        <div class="div-component <c:if test="${schedule.scheduleType == 3}" >scheduletype</c:if>" style="border-top-left-radius: 0;
 border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下班
                         </div>
                     </div>
@@ -66,7 +66,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                                     class="timepick-icon fa fa-clock-o"></span></span>
                         </div>
                     </div>
-                    <div class="div-group" id="twoSchedule" style="<c:if test="${schedule.groupType != 2 && schedule.groupType != 3}">display: none;</c:if>">
+                    <div class="div-group" id="twoSchedule" style="<c:if test="${schedule.scheduleType != 2 && schedule.scheduleType != 3}">display: none;</c:if>">
                         <div style="width: 275px; display: inline-block;">
                             <span style="width: 200px; margin-right: 20px;">第2次上下班</span>
                             上班:
@@ -84,7 +84,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                                     class="timepick-icon fa fa-clock-o"></span></span>
                         </div>
                     </div>
-                    <div class="div-group" id="threeSchedule" style="<c:if test="${schedule.groupType != 3}">display: none;</c:if>">
+                    <div class="div-group" id="threeSchedule" style="<c:if test="${schedule.scheduleType != 3}">display: none;</c:if>">
                         <div style="width: 275px; display: inline-block;">
                             <span style="width: 200px; margin-right: 20px;">第3次上下班</span>
                             上班:
@@ -199,7 +199,21 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
     });
 
 
-    function AcrossDay(node){
+    $(function(){
+        $("#modal-form").validate({
+//            errorElement: "span",
+//            errorClass: "error",
+            submitHandler: function (form) {
+                console.log("validate success!");
+                submitForm();
+            },
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 6,
+                }
+            },
+        })
+    });
 
-    }
 </script>

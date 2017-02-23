@@ -144,6 +144,15 @@ public class AttendanceGroupController {
     }
 
 
+    @RequiresPermissions(value = "AttendanceGroup:delete")
+    @RequestMapping(value = "/delete/{id}")
+    public @ResponseBody JsonVo delete(@PathVariable int id) {
+        groupService.delete(AttendanceGroup.class, id);
+        JsonVo jsonVo = new JsonVo();
+        jsonVo.setStatus(true).setMsg("删除成功");
+        return jsonVo;
+    }
+
     //封装group
     public JsonVo packagingByRequest(HttpServletRequest request) {
         String id = StringUtil.nullString(request.getParameter("id"));
@@ -162,9 +171,6 @@ public class AttendanceGroupController {
             msg = "更新成功";
         }
         List<HrmResource> list = StringUtil.splitForList(groupService,resourceStr,HrmResource.class);
-        for (HrmResource resource : list) {
-            resource.setAttendanceGroup(group);
-        }
         Set<HrmResource> set = new HashSet<>();
         set.addAll(list);
         group.setResources(set);

@@ -33,7 +33,8 @@
                 errorClass: "error",
                 submitHandler: function (form) {
                     console.log("validate success!");
-                    form.submit();
+                    ajaxSubmit(form);
+
                 },
                 rules: {
                     regist_account: {
@@ -67,12 +68,6 @@
                 showMethod: "fadeIn",
                 hideMethod: "fadeOut"
             };
-
-            $('.form-signup').submit(function(){
-                console.log("aa");
-                return false;
-                // /return ajaxSubmit(this);
-            });
         });
         function ajaxSubmit(node) {
             $.ajax({
@@ -81,7 +76,7 @@
                 data: $(node).serialize(),
                 dataType: 'json',
                 error: function () {
-                    console.log("error");
+                    toastr.error("error");
                 },
                 success: function (data) {
                     if (data.status) {
@@ -153,7 +148,7 @@
                 <%--onsubmit="return ajaxSubmit(this)"     --%>
                 <div class="tab-pane" id="signup">
                     <form class="form-signup group-input" name="signup" action="/regist" method="post"
-                          autocomplete="off">
+                          autocomplete="off" onsubmit="">
                         <div class="group-inputs">
                             <%--<div class="input-wrapper">--%>
                             <%--<label for="username" class="sr-only">username</label>--%>
