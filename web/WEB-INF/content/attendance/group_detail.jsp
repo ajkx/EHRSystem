@@ -11,7 +11,7 @@
 <div style="margin-top: 15px; width: 1150px; background: rgb(255, 255, 255);">
     <div>
         <div class="" style="margin: 20px 0px 30px; opacity: 1; visibility: visible; transform: translateX(0px);">
-            <form class="ant-form ant-form-horizontal">
+            <form class="ant-form ant-form-horizontal" action="/group/edit" onsubmit="return submitFormByPage(this,'/group.html')">
                 <input type="hidden" name="id" value="${group.id}"/>
                 <input type="hidden" name="groupType" id="groupType"
                        value="${group.groupType == null ? 1 : group.groupType}"/>
@@ -39,7 +39,18 @@
                     <div class="ant-col-2 ant-form-item-label"><label class="">考勤人员</label></div>
                     <div class="ant-col-8">
                         <div class="ant-form-item-control ">
-                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg" onclick="chooseModal(this,'/resource/modal/list')" data-index="resourceIds"><span>请选择</span></button>
+                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg" onclick="chooseModal(this,'/resource/modal/list')" data-index="resourceIds">
+                                 <span>
+                                    <c:choose>
+                                        <c:when test="${group.resources.size() > 0}">
+                                            ${group.resources.size()}人
+                                        </c:when>
+                                        <c:otherwise>
+                                            请选择
+                                        </c:otherwise>
+                                    </c:choose>
+                                 </span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -416,7 +427,7 @@
                 </div>
                 <div class="ant-row" style="margin: 24px 0px;">
                     <div class="ant-col-16 ant-col-offset-8">
-                        <button type="button" class="ant-btn ant-btn-primary"><span>保存设置</span></button>
+                        <button type="submit" class="ant-btn ant-btn-primary"><span>保存设置</span></button>
                     </div>
                 </div>
             </form>

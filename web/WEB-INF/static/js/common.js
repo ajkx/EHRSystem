@@ -84,6 +84,27 @@ function submitForm() {
     return false;
 }
 
+function submitFormByPage(node,url) {
+    var form = $(node);
+    $.ajax({
+        url: form.attr("action"),
+        type: "POST",
+        dataType: "json",
+        data: form.serialize(),
+        success: function (result) {
+            if(result.status){
+                toastr.success(result.msg);
+                $.pjax({url:url,container:'#main-content'});
+            }else{
+                toastr.error("执行错误!");
+            }
+        },
+        error: function (xhr, status) {
+            alert("数据传输错误" + status + ",请联系系统管理员");
+        }
+    })
+    return false;
+}
 function ajaxSubmit(node) {
     var form = $(node);
     console.log("ajax");

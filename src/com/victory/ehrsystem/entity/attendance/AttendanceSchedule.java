@@ -23,8 +23,8 @@ public class AttendanceSchedule {
     @Column(nullable = false)
     private String simplename;
 
-    @Column(nullable = false)
-    private Integer scheduleType = 1;
+    @Column(nullable = false,columnDefinition = "int default 1")
+    private Integer scheduleType;
 
     //第一次上班打卡时间
     @Column

@@ -209,10 +209,17 @@ public class HrmResource {
 
     //========考勤信息==========
     //恒定的排班
-    @ManyToOne(targetEntity = AttendanceGroup.class)
+    @ManyToOne(targetEntity = AttendanceGroup.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "attendanceGroup", referencedColumnName = "id")
     private AttendanceGroup attendanceGroup;
 
+    public AttendanceGroup getAttendanceGroup() {
+        return attendanceGroup;
+    }
+
+    public void setAttendanceGroup(AttendanceGroup attendanceGroup) {
+        this.attendanceGroup = attendanceGroup;
+    }
 
     public Integer getId() {
         return id;

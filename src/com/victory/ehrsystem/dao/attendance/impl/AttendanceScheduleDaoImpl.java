@@ -17,4 +17,9 @@ public class AttendanceScheduleDaoImpl extends BaseDaoImpl<AttendanceSchedule> i
     public List<AttendanceSchedule> findByAcrossDay(boolean acrossday) {
         return find("select s from AttendanceSchedule s where s.acrossDay = ?0", acrossday);
     }
+
+    @Override
+    public List<AttendanceSchedule> findRestSchedule() {
+        return find("select s from AttendanceSchedule s where s.isRest = ?0",true);
+    }
 }

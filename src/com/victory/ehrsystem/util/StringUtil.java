@@ -1,6 +1,11 @@
 package com.victory.ehrsystem.util;
 
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.service.BaseService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 字符串工具类
@@ -26,28 +31,28 @@ public class StringUtil {
     public static String nullString(String str) {
         if (str == null) {
             return "";
-        }else{
+        } else {
             return str;
         }
     }
 
     public static String getScript(String topic, String prop, boolean hasPermission) {
         if (hasPermission) {
-            return "return \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+"+prop+".id+\"')\\\" class='font-color'>\"+"+prop+".name+\"</a>\";";
-        }else{
-            return "return \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+"+prop+".id+\"')\\\" class='font-color'>\"+"+prop+".name+\"</a>\";";
+            return "return \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/" + topic + "/view/\"+" + prop + ".id+\"')\\\" class='font-color'>\"+" + prop + ".name+\"</a>\";";
+        } else {
+            return "return \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/" + topic + "/view/\"+" + prop + ".id+\"')\\\" class='font-color'>\"+" + prop + ".name+\"</a>\";";
         }
     }
 
     public static String getMultiScript(String topic, String prop, boolean hasPermission) {
         if (hasPermission) {
             return "var el = '';" +
-                    "$("+prop+").each(function(index,element){" +
-                    "el += \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>&nbsp;&nbsp;\";});return el;";
-        }else{
+                    "$(" + prop + ").each(function(index,element){" +
+                    "el += \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/" + topic + "/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>&nbsp;&nbsp;\";});return el;";
+        } else {
             return "var el = '';" +
-                    "$("+prop+").each(function(index,element){" +
-                    "el += \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/"+topic+"/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>&nbsp;&nbsp;\";});return el;";
+                    "$(" + prop + ").each(function(index,element){" +
+                    "el += \"<a disable='' href='javascript:void(0)' onclick=\\\"showEditModal('/" + topic + "/view/\"+element.id+\"')\\\" class='font-color'>\"+element.name+\"</a>&nbsp;&nbsp;\";});return el;";
 
         }
     }
@@ -87,7 +92,7 @@ public class StringUtil {
 
     public static String getScheduleTime(AttendanceSchedule schedule) {
         String value = "";
-        switch (schedule.getScheduleType()){
+        switch (schedule.getScheduleType()) {
             case 1:
                 value = StringUtil.subString(schedule.getFirst_time_up()) + "-" + StringUtil.subString(schedule.getFirst_time_down());
                 break;
@@ -103,4 +108,18 @@ public class StringUtil {
         }
         return value;
     }
+
+    public static <T> List<T> splitForList(BaseService baseService, String str,Class<T> entityClass){
+        String[] array = str.split(",");
+        List<T> list = new ArrayList<T>();
+        for (String temp : array) {
+            if(temp.equals("")) continue;
+                T entity = (T)baseService.findOne(entityClass, Integer.parseInt(temp));
+                if (entity != null) {
+                    list.add(entity);
+                }
+        }
+        return list;
+    }
+
 }

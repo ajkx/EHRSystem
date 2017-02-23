@@ -67,4 +67,8 @@ public class AttendanceScheduleService extends BaseService<AttendanceSchedule>{
         info.setData(mapList);
         return info;
     }
+
+    public AttendanceSchedule findRestSchedule(){
+        return attendanceScheduleDao.findRestSchedule().get(0);
+    }
 }

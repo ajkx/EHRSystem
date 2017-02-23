@@ -55,7 +55,7 @@ public class AttendanceGroup {
 
     private String description;
     //相关人员
-    @OneToMany(targetEntity = HrmResource.class,mappedBy = "attendanceGroup")
+    @OneToMany(targetEntity = HrmResource.class,mappedBy = "attendanceGroup",cascade = CascadeType.ALL)
     private Set<HrmResource> resources;
 
     //自由排班相关的班次

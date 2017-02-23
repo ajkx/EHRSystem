@@ -19,4 +19,10 @@ public interface AttendanceScheduleDao extends BaseDao<AttendanceSchedule>{
      * @return
      */
     List<AttendanceSchedule> findByAcrossDay(boolean acrossday);
+
+    /**
+     * 找出休息的班次id
+     * @return
+     */
+    List<AttendanceSchedule> findRestSchedule();
 }
