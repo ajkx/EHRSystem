@@ -43,6 +43,12 @@ public interface HrmResourceDao extends BaseDao<HrmResource>{
     List<HrmResource> findNoSchedule();
 
     /**
+     * 找出有考勤组的员工
+     * @return
+     */
+    List<HrmResource> findHaveSchedule();
+
+    /**
      * 根据排班找出相应的员工
      * @param schedule
      * @return
