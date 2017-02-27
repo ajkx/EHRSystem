@@ -71,6 +71,7 @@
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceScheduleInfo</value>
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceType</value>
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceGroup</value>
+                <value>com.victory.ehrsystem.entity.attendance.DateRecord</value>
             </list>
         </property>
         <property name="hibernateProperties">

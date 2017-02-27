@@ -47,4 +47,11 @@ public class DateUtil {
     public static Long getOneDayTime(){
         return Long.valueOf(86400000);
     }
+
+    public static int getDayOfWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int week = calendar.get(Calendar.DAY_OF_WEEK);
+        return week;
+    }
 }
