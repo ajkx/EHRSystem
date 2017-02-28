@@ -111,6 +111,7 @@
     <bean id="attendanceScheduleInfoDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceScheduleInfoDaoImpl" parent="daoTemplate"/>
     <bean id="attendanceTypeDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceTypeDaoImpl" parent="daoTemplate"/>
     <bean id="attendanceGroupDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceGroupDaoImpl" parent="daoTemplate"/>
+    <bean id="dateRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.DateRecordDaoImpl" parent="daoTemplate"/>
     <!--配置hibernate结束-->
 
     <!--配置hibernate事务-->

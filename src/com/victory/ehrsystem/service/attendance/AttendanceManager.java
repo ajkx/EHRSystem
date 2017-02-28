@@ -97,8 +97,14 @@ public class AttendanceManager {
         if(schedule.getRest()){
             return;
         }
-        //执行考勤计算
-        initDetail(resource, date, schedule);
+        if(schedule.getAcrossDay()){
+            //执行考勤计算
+            //initDetailAcrossDay(resource, date, schedule);
+        }else{
+            //执行考勤计算
+            initDetail(resource, date, schedule);
+        }
+
 
     }
 
@@ -292,6 +298,10 @@ public class AttendanceManager {
             ClassUtil.invokeMethod(detail,method_up,Time.class,new Time(0));
             ClassUtil.invokeMethod(detail,method_down,Time.class,new Time(0));
         }
+
+    }
+
+    private void setDetail(AttendanceDetail detail, List<AttendanceRecord> records) {
 
     }
 }

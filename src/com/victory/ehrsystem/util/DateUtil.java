@@ -2,8 +2,10 @@ package com.victory.ehrsystem.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by ajkx
@@ -53,5 +55,24 @@ public class DateUtil {
         calendar.setTime(date);
         int week = calendar.get(Calendar.DAY_OF_WEEK);
         return week;
+    }
+
+    /**
+     * 返回两个日期之间的日期集合，包括开始日期和结束日期
+     * @param begin
+     * @param end
+     * @return
+     */
+    public static List<Date> getDateList(Date begin,Date end){
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(begin);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(end);
+        List<Date> dateList = new ArrayList<>();
+        while(cal1.compareTo(cal2) <= 0){
+            dateList.add(new Date(cal1.getTimeInMillis()));
+            cal1.add(Calendar.DATE,1);
+        }
+        return dateList;
     }
 }
