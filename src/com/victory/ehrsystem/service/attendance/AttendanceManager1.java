@@ -70,16 +70,16 @@ public class AttendanceManager1 {
                 continue;
             } else if (scheduleType == 1) {
                 //一天一班制
-                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
+//                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
             } else if (scheduleType == 2) {
                 //一天两班制
-                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Second");
+//                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
+//                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Second");
             } else if (scheduleType == 3) {
                 //一天三班制
-                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(), "Second");
-                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Third");
+//                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
+//                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(), "Second");
+//                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Third");
             }
             //记录明细实际出勤天数
             if(detail.getActual_attendance_time() != 0){
@@ -240,49 +240,49 @@ public class AttendanceManager1 {
     /**
      * 跨天自动考勤计算
      */
-    private void autoAttendanceForAcrossDay(){
-        Date yesterday = DateUtil.getYesterday();
-        Date beforeYesterday = DateUtil.getBeforeYesterday();
-        List<HrmResource> resources = hrmResourceDao.findAllWorking();
-        for (HrmResource resource : resources) {
-           List<AttendanceScheduleInfo> temp = attendanceScheduleInfoDao.findOneByNameAndDate(resource, beforeYesterday);
-            if(temp.size() < 1)continue;
-            AttendanceSchedule schedule = temp.get(0).getSchedule();
-            //不是跨天的continue
-            if(!schedule.getAcrossDay()){
-                continue;
-            }
-            //获取班次类型
-            int scheduleType = schedule.getScheduleType();
-
-            //初始化明细数据
-            AttendanceDetail detail = new AttendanceDetail();
-            detail.setResourceid(resource);
-            detail.setDate(beforeYesterday);
-            detail.setShould_attendance_time(schedule.getAttendanceTime());
-            detail.setShould_attendance_day(1);
-
-
-            //特殊班次不用进行考勤
-            if (scheduleType == 0) {
-                continue;
-            } else if (scheduleType == 1) {
-                executeAttendanceForAcrossDay(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First",yesterday);
-            } else if (scheduleType == 2) {
-                executeAttendanceForAcrossDay(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First",yesterday);
-                executeAttendanceForAcrossDay(detail,schedule,schedule.getSecond_time_up().getTime(),schedule.getSecond_time_down().getTime(),"Second",yesterday);
-            } else if (scheduleType == 3) {
-                executeAttendanceForAcrossDay(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First",yesterday);
-                executeAttendanceForAcrossDay(detail,schedule,schedule.getSecond_time_up().getTime(),schedule.getSecond_time_down().getTime(),"Second",yesterday);
-                executeAttendanceForAcrossDay(detail,schedule,schedule.getThird_time_up().getTime(),schedule.getThird_time_down().getTime(),"Third",yesterday);
-            }
-            //记录明细实际出勤天数
-            if(detail.getActual_attendance_time() != 0){
-                detail.setActual_attendance_day((int) (detail.getActual_attendance_time() / detail.getShould_attendance_time()));
-            }
-            attendanceDetailDao.save(detail);
-        }
-    }
+//    private void autoAttendanceForAcrossDay(){
+//        Date yesterday = DateUtil.getYesterday();
+//        Date beforeYesterday = DateUtil.getBeforeYesterday();
+//        List<HrmResource> resources = hrmResourceDao.findAllWorking();
+//        for (HrmResource resource : resources) {
+//           List<AttendanceScheduleInfo> temp = attendanceScheduleInfoDao.findOneByNameAndDate(resource, beforeYesterday);
+//            if(temp.size() < 1)continue;
+//            AttendanceSchedule schedule = temp.get(0).getSchedule();
+//            //不是跨天的continue
+//            if(!schedule.getAcrossDay()){
+//                continue;
+//            }
+//            //获取班次类型
+//            int scheduleType = schedule.getScheduleType();
+//
+//            //初始化明细数据
+//            AttendanceDetail detail = new AttendanceDetail();
+//            detail.setResourceid(resource);
+//            detail.setDate(beforeYesterday);
+//            detail.setShould_attendance_time(schedule.getAttendanceTime());
+//            detail.setShould_attendance_day(1);
+//
+//
+//            //特殊班次不用进行考勤
+//            if (scheduleType == 0) {
+//                continue;
+//            } else if (scheduleType == 1) {
+//                executeAttendanceForAcrossDay(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First",yesterday);
+//            } else if (scheduleType == 2) {
+//                executeAttendanceForAcrossDay(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First",yesterday);
+//                executeAttendanceForAcrossDay(detail,schedule,schedule.getSecond_time_up().getTime(),schedule.getSecond_time_down().getTime(),"Second",yesterday);
+//            } else if (scheduleType == 3) {
+//                executeAttendanceForAcrossDay(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First",yesterday);
+//                executeAttendanceForAcrossDay(detail,schedule,schedule.getSecond_time_up().getTime(),schedule.getSecond_time_down().getTime(),"Second",yesterday);
+//                executeAttendanceForAcrossDay(detail,schedule,schedule.getThird_time_up().getTime(),schedule.getThird_time_down().getTime(),"Third",yesterday);
+//            }
+//            //记录明细实际出勤天数
+//            if(detail.getActual_attendance_time() != 0){
+//                detail.setActual_attendance_day((int) (detail.getActual_attendance_time() / detail.getShould_attendance_time()));
+//            }
+//            attendanceDetailDao.save(detail);
+//        }
+//    }
 
     /**
      * 跨天的执行打卡的判断

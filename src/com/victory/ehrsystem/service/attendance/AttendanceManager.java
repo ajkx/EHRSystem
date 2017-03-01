@@ -1,12 +1,10 @@
 package com.victory.ehrsystem.service.attendance;
 
 import com.victory.ehrsystem.dao.Hrm.HrmResourceDao;
-import com.victory.ehrsystem.dao.attendance.AttendanceDetailDao;
-import com.victory.ehrsystem.dao.attendance.AttendanceGroupDao;
-import com.victory.ehrsystem.dao.attendance.AttendanceRecordDao;
-import com.victory.ehrsystem.dao.attendance.AttendanceTypeDao;
+import com.victory.ehrsystem.dao.attendance.*;
 import com.victory.ehrsystem.entity.attendance.*;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
 import com.victory.ehrsystem.util.ClassUtil;
 import com.victory.ehrsystem.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,10 @@ import java.util.List;
  * Date: 2017/2/24.
  * Time:15:47
  */
-@Service
+@Service("attendanceManager")
 public class AttendanceManager {
 
+    public static final long ONE_DAY_TIME = 86400000;
     @Autowired
     private HrmResourceDao resourceDao;
 
@@ -39,8 +38,28 @@ public class AttendanceManager {
     @Autowired
     private AttendanceTypeDao typeDao;
 
+    @Autowired
+    private AcrossDayScheduleDao acrossDayScheduleDao;
 
+    @Autowired
+    private DateRecordDao dateRecordDao;
+
+    public Date getRecordDate(){
+        DateRecord date = dateRecordDao.getTopRecord();
+        return date.getDate();
+    }
     public void autoAttendance(Date date) {
+
+        //先执行AcrossDaySchedule表中的前天数据
+        Date beforeYesterday = DateUtil.getYesterday(date);
+
+        List<AcrossDaySchedule> acrossDayScheduleList = acrossDayScheduleDao.findScheduleListByDate(beforeYesterday);
+        //执行上一天的跨天的运算
+        for (AcrossDaySchedule temp : acrossDayScheduleList) {
+            initDetail(temp.getResource(), temp.getDate() ,temp.getSchedule());
+        }
+
+        //下面执行正常的考勤
 
         //获取并遍历有考勤组的在职员工
         List<HrmResource> resourceList = resourceDao.findHaveSchedule();
@@ -98,8 +117,12 @@ public class AttendanceManager {
             return;
         }
         if(schedule.getAcrossDay()){
-            //执行考勤计算
-            //initDetailAcrossDay(resource, date, schedule);
+            //跨天存起当天数据,待后天执行
+            AcrossDaySchedule acrossDaySchedule = new AcrossDaySchedule();
+            acrossDaySchedule.setDate(date);
+            acrossDaySchedule.setResource(resource);
+            acrossDaySchedule.setSchedule(schedule);
+            acrossDayScheduleDao.save(acrossDaySchedule);
         }else{
             //执行考勤计算
             initDetail(resource, date, schedule);
@@ -135,24 +158,29 @@ public class AttendanceManager {
         detail.setShould_attendance_day(1);
         detail.setShould_attendance_time(schedule.getAttendanceTime());
 
+        List<AttendanceRecord> records = recordDao.findByResourceAndDate(resource,date);
+        if(schedule.getAcrossDay()){
+            List<AttendanceRecord> records1 = recordDao.findByResourceAndDate(resource,DateUtil.getNextDay(date));
+            records.addAll(records1);
+        }
         switch (scheduleType) {
             case 0:
                 //特殊班次，不用进行考勤
                 return;
             case 1:
                 //一天一班制
-                executeAttendance(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),"First");
+                executeAttendance(detail,schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_up().getTime(),schedule.getFirst_time_down().getTime(),records,"First");
                 break;
             case 2:
                 //一天两班制
-                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Second");
+                long long1 = executeAttendance(detail, schedule,schedule.getFirst_time_up().getTime(),schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),records,"First");
+                executeAttendance(detail, schedule,long1,schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),records,"Second");
                 break;
             case 3:
                 //一天三班制
-                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(), "Second");
-                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Third");
+                long long2 = executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime() ,schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),records,"First");
+                long long3 = executeAttendance(detail, schedule, long2 ,schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),records, "Second");
+                executeAttendance(detail, schedule,long3, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),records,"Third");
                 break;
         }
         //记录明细实际出勤天数
@@ -161,7 +189,18 @@ public class AttendanceManager {
         }
         detailDao.save(detail);
     }
-    public void executeAttendance(AttendanceDetail detail, AttendanceSchedule schedule, long time_up, long time_down, String order){
+    public long executeAttendance(AttendanceDetail detail, AttendanceSchedule schedule,long currentTime, long time_up, long time_down, List<AttendanceRecord> records,String order){
+
+        //如果为跨天班次则将上下班的时间加上一天
+        if(currentTime > ONE_DAY_TIME || time_up < currentTime){
+            time_up += ONE_DAY_TIME;
+            currentTime = time_up;
+        }
+        if(currentTime > ONE_DAY_TIME || time_down < currentTime){
+            time_down += ONE_DAY_TIME;
+            currentTime = time_down;
+        }
+
         //打卡范围时间
         long scope_up = schedule.getScope_up();
         long scope_down = schedule.getScope_down();
@@ -185,11 +224,12 @@ public class AttendanceManager {
         String method_down = "set"+order+"_time_down";
 
 
-        //遍历该员工当天的所有打卡记录
-        List<AttendanceRecord> records = recordDao.findByResourceAndDate(detail.getResourceid(), detail.getDate());
-
         for(AttendanceRecord record : records){
             long time = record.getPunchTime().getTime();
+
+            //如果打卡日期大于当前明细的日期，则将打卡时间加上一天的毫秒数
+            if(record.getPunchDate().compareTo(detail.getDate()) > 0)time += ONE_DAY_TIME;
+
             //如果打卡时间，可能存在加班的情况
             if (time < beginTime || time > endTime) {
                 continue;
@@ -298,9 +338,12 @@ public class AttendanceManager {
             ClassUtil.invokeMethod(detail,method_up,Time.class,new Time(0));
             ClassUtil.invokeMethod(detail,method_down,Time.class,new Time(0));
         }
-
+        return currentTime;
     }
 
+    public void initDetailByAcross(HrmResource resource,Date date,AttendanceSchedule schedule){
+
+    }
     private void setDetail(AttendanceDetail detail, List<AttendanceRecord> records) {
 
     }

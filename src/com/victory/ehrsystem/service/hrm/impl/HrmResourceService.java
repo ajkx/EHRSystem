@@ -71,4 +71,5 @@ public class HrmResourceService extends BaseService<HrmResource>{
         String[] names = name.split(",");
         return hrmResourceDao.findByName(names);
     }
+
 }

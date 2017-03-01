@@ -35,6 +35,13 @@ public class DateUtil {
         return date;
     }
 
+    public static Date getYesterday(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE,-1);
+        Date date1 = new Date(calendar.getTimeInMillis());
+        return date1;
+    }
     /**
      * 获取sql.date格式的前天日期
      * @return
@@ -46,6 +53,12 @@ public class DateUtil {
         return date;
     }
 
+    public static Date getNextDay(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,1);
+        Date date1 = new Date(calendar.getTimeInMillis());
+        return date1;
+    }
     public static Long getOneDayTime(){
         return Long.valueOf(86400000);
     }
