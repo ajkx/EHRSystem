@@ -17,7 +17,7 @@ import java.util.List;
 public class AttendanceDetailDaoImpl extends BaseDaoImpl<AttendanceDetail> implements AttendanceDetailDao{
     @Override
     public List<AttendanceDetail> findByHrmResource(HrmResource resource) {
-        return find("select a from AttendanceDetail where resourceid = ?0",resource);
+        return find("select a from AttendanceDetail where resourceId = ?0",resource);
     }
 
     @Override

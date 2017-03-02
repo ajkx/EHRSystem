@@ -36,6 +36,38 @@ public class StringUtil {
         }
     }
 
+    public static long nullLong(Long num){
+        if (num == null) {
+            return 0;
+        } else {
+            return num;
+        }
+    }
+
+    public static int nullInteger(Integer num){
+        if (num == null) {
+            return 0;
+        } else {
+            return num;
+        }
+    }
+
+    public static float nullFloat(Float num){
+        if (num == null) {
+            return 0;
+        } else {
+            return num;
+        }
+    }
+
+    public static boolean nullBoolean(Boolean num){
+        if (num == null) {
+            return false;
+        } else {
+            return num;
+        }
+    }
+
     public static String getScript(String topic, String prop, boolean hasPermission) {
         if (hasPermission) {
             return "return \"<a href='javascript:void(0)' onclick=\\\"showEditModal('/" + topic + "/view/\"+" + prop + ".id+\"')\\\" class='font-color'>\"+" + prop + ".name+\"</a>\";";

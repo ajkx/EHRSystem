@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.entity.attendance;
 
+import com.victory.ehrsystem.entity.consume.Card;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 
 import javax.persistence.*;
@@ -19,26 +20,30 @@ public class AttendanceRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "cardNo",nullable = false)
-    private String card;
+    @ManyToOne(targetEntity = Card.class)
+    @JoinColumn(name="card")
+    private Card card;
 
     @ManyToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "resourceid",nullable = false)
-    private HrmResource resourceid;
+    @JoinColumn(name = "resourceId",nullable = false)
+    private HrmResource resourceId;
 
-    @Column(name = "mechineno")
-    private String mechineNo;
+    @Column(name = "machineNo")
+    private String machineNo;
 
-    @Column(name = "punchdate")
+    @Column(name = "punchDate")
     private Date punchDate;
 
-    @Column(name = "punchtime")
+    @Column(name = "punchTime")
     private Time punchTime;
 
-    public AttendanceRecord(String card, HrmResource resourceid, String mechineNo, Date punchDate, Time punchTime) {
+    public AttendanceRecord() {
+    }
+
+    public AttendanceRecord(Card card, HrmResource resourceId, String machineNo, Date punchDate, Time punchTime) {
         this.card = card;
-        this.resourceid = resourceid;
-        this.mechineNo = mechineNo;
+        this.resourceId = resourceId;
+        this.machineNo = machineNo;
         this.punchDate = punchDate;
         this.punchTime = punchTime;
     }
@@ -51,28 +56,28 @@ public class AttendanceRecord {
         this.id = id;
     }
 
-    public String getCard() {
+    public Card getCard() {
         return card;
     }
 
-    public void setCard(String card) {
+    public void setCard(Card card) {
         this.card = card;
     }
 
-    public HrmResource getResourceid() {
-        return resourceid;
+    public HrmResource getResourceId() {
+        return resourceId;
     }
 
-    public void setResourceid(HrmResource resourceid) {
-        this.resourceid = resourceid;
+    public void setResourceId(HrmResource resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public String getMechineNo() {
-        return mechineNo;
+    public String getMachineNo() {
+        return machineNo;
     }
 
-    public void setMechineNo(String mechineNo) {
-        this.mechineNo = mechineNo;
+    public void setMachineNo(String machineNo) {
+        this.machineNo = machineNo;
     }
 
     public Date getPunchDate() {

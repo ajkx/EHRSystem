@@ -73,6 +73,8 @@
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceGroup</value>
                 <value>com.victory.ehrsystem.entity.attendance.DateRecord</value>
                 <value>com.victory.ehrsystem.entity.attendance.AcrossDaySchedule</value>
+                <!--消费信息表-->
+                <value>com.victory.ehrsystem.entity.consume.Card</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -134,7 +136,7 @@
 
     <!-- 定义触发器来管理任务Bean
     cronExpression指定Cron表达式：周一到周五7点、12点执行调度-->
-    <bean id="cronTriggerAttendance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" p:cronExpression="0/10 * * * * ? *">
+    <bean id="cronTriggerAttendance" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" p:cronExpression="0 0 0 L * ? ">
         <property name="jobDetail">
             <!-- 使用嵌套Bean的方式来定义任务Bean
     jobClass指定任务Bean的实现类 -->

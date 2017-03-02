@@ -17,16 +17,16 @@ import java.util.List;
 public class AttendanceRecordDaoImpl extends BaseDaoImpl<AttendanceRecord> implements AttendanceRecordDao {
     @Override
     public List<AttendanceRecord> findByHrmResource(HrmResource resource) {
-        return find("select a from AttendanceRecord where resourceid = ?0",resource);
+        return find("select a from AttendanceRecord a where resourceId = ?0",resource);
     }
 
     @Override
     public List<AttendanceRecord> findByDate(Date date) {
-        return find("select a from AttendanceRecord where punchDate = ?0",date);
+        return find("select a from AttendanceRecord a where punchDate = ?0",date);
     }
 
     @Override
     public List<AttendanceRecord> findByResourceAndDate(HrmResource resource, Date date) {
-        return find("select a from AttendanceRecord where resourceid = ?0 and punchDate = ?1", resource, date);
+        return find("select a from AttendanceRecord a where resourceId = ?0 and punchDate = ?1", resource, date);
     }
 }

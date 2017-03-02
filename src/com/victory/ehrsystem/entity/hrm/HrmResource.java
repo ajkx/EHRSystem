@@ -2,6 +2,7 @@ package com.victory.ehrsystem.entity.hrm;
 
 import com.victory.ehrsystem.entity.attendance.AttendanceGroup;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
+import com.victory.ehrsystem.entity.consume.Card;
 import com.victory.ehrsystem.entity.sys.User;
 
 import javax.persistence.*;
@@ -214,6 +215,12 @@ public class HrmResource {
             joinColumns =@JoinColumn(name = "resource_id",referencedColumnName = "id",unique = true),
             inverseJoinColumns = @JoinColumn(name = "group_id",referencedColumnName = "id"))
     private AttendanceGroup attendanceGroup;
+
+    //========消费信息==========
+    //卡号
+    @OneToOne(targetEntity = Card.class)
+    private Card card;
+
 
     public AttendanceGroup getAttendanceGroup() {
         return attendanceGroup;
@@ -575,6 +582,13 @@ public class HrmResource {
         this.user = user;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
 }
 
 

@@ -30,7 +30,7 @@
                     最多6个字符（中英文或数字），首个字符会作为班次简称
                 </div>
                 <input type="hidden" name="id" value="${schedule.id}"/>
-                <input type="hidden" name="sheduletype" id="sheduletype" value="${schedule.scheduleType}"/>
+                <input type="hidden" name="scheduleType" id="scheduleType" value="${schedule.scheduleType}"/>
                 <input type="hidden" name="acrossDay" id="acrossDay" value="${schedule.acrossDay == true ? 1 : 0}"/>
                 <input type="hidden" name="isPunch" id="isPunch" value="${schedule.punch == true ? 1 : 0}"/>
                 <div class="div-group">
@@ -147,7 +147,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
     var second_down = $('#second_up');
     var third_up = $('#third_up');
     var third_down = $('#third_down');
-    var sheduletype = $('#sheduletype');
+    var scheduleType = $('#scheduleType');
     input.clockpicker({
         autoclose: true
     });

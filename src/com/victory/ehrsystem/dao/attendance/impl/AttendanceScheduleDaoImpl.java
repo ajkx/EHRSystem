@@ -14,8 +14,8 @@ import java.util.List;
 
 public class AttendanceScheduleDaoImpl extends BaseDaoImpl<AttendanceSchedule> implements AttendanceScheduleDao {
     @Override
-    public List<AttendanceSchedule> findByAcrossDay(boolean acrossday) {
-        return find("select s from AttendanceSchedule s where s.acrossDay = ?0", acrossday);
+    public List<AttendanceSchedule> findByAcrossDay(boolean acrossDay) {
+        return find("select s from AttendanceSchedule s where s.acrossDay = ?0", acrossDay);
     }
 
     @Override

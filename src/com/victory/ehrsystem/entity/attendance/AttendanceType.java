@@ -19,7 +19,7 @@ public class AttendanceType {
 
     //比较类别的优先级
     @Column
-    private int priority;
+    private Integer priority;
     public AttendanceType() {
     }
 

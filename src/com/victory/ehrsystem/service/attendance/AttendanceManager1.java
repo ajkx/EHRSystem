@@ -4,13 +4,10 @@ import com.victory.ehrsystem.dao.Hrm.HrmResourceDao;
 import com.victory.ehrsystem.dao.attendance.*;
 import com.victory.ehrsystem.entity.attendance.*;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
-import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
-import com.victory.ehrsystem.util.ClassUtil;
 import com.victory.ehrsystem.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Date;
 import java.util.List;
 
@@ -60,7 +57,7 @@ public class AttendanceManager1 {
 
             //初始化明细数据
             AttendanceDetail detail = new AttendanceDetail();
-            detail.setResourceid(resource);
+            detail.setResourceId(resource);
             detail.setDate(date);
             detail.setShould_attendance_time(schedule.getAttendanceTime());
             detail.setShould_attendance_day(1);
@@ -122,7 +119,7 @@ public class AttendanceManager1 {
 //
 //
 //        //遍历该员工当天的所有打卡记录
-//        List<AttendanceRecord> records = attendanceRecordDao.findByResourceAndDate(detail.getResourceid(), detail.getDate());
+//        List<AttendanceRecord> records = attendanceRecordDao.findByResourceAndDate(detail.getResourceId(), detail.getDate());
 //
 //        for(AttendanceRecord record : records){
 //            long time = record.getPunchTime().getTime();
@@ -257,7 +254,7 @@ public class AttendanceManager1 {
 //
 //            //初始化明细数据
 //            AttendanceDetail detail = new AttendanceDetail();
-//            detail.setResourceid(resource);
+//            detail.setResourceId(resource);
 //            detail.setDate(beforeYesterday);
 //            detail.setShould_attendance_time(schedule.getAttendanceTime());
 //            detail.setShould_attendance_day(1);
@@ -320,8 +317,8 @@ public class AttendanceManager1 {
 //
 //
 //        //遍历该员工当天的所有打卡记录
-//        List<AttendanceRecord> records = attendanceRecordDao.findByResourceAndDate(detail.getResourceid(), detail.getDate());
-//        List<AttendanceRecord> record_yesterday = attendanceRecordDao.findByResourceAndDate(detail.getResourceid(), yesterday);
+//        List<AttendanceRecord> records = attendanceRecordDao.findByResourceAndDate(detail.getResourceId(), detail.getDate());
+//        List<AttendanceRecord> record_yesterday = attendanceRecordDao.findByResourceAndDate(detail.getResourceId(), yesterday);
 //        records.addAll(record_yesterday);
 //        for(AttendanceRecord record : records){
 //            long time = record.getPunchTime().getTime();

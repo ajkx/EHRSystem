@@ -17,4 +17,23 @@ import java.util.List;
  */
 
 public class AttendanceTypeDaoImpl extends BaseDaoImpl<AttendanceType> implements AttendanceTypeDao {
+    @Override
+    public AttendanceType getNormalType() {
+        return get(AttendanceType.class,1);
+    }
+
+    @Override
+    public AttendanceType getEarlyType() {
+        return get(AttendanceType.class,2);
+    }
+
+    @Override
+    public AttendanceType getLateType() {
+        return get(AttendanceType.class,3);
+    }
+
+    @Override
+    public AttendanceType getMissType() {
+        return get(AttendanceType.class,4);
+    }
 }

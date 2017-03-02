@@ -8,7 +8,7 @@ package com.victory.ehrsystem.vo;
 public class ScheduleVo {
     public Integer id;
     public String name;
-    public Integer scheduleType = 1;
+    public Integer scheduleType;
     public String first_up = "";
     public String first_down;
     public String second_up = "";

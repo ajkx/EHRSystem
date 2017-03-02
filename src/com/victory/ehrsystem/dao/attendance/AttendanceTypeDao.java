@@ -17,4 +17,28 @@ import java.util.List;
  */
 public interface AttendanceTypeDao extends BaseDao<AttendanceType>{
 
+    /**
+     * 正常考勤
+     * @return
+     */
+    AttendanceType getNormalType();
+
+    /**
+     * 早退考勤
+     * @return
+     */
+    AttendanceType getEarlyType();
+
+    /**
+     * 迟到考勤
+     * @return
+     */
+    AttendanceType getLateType();
+
+    /**
+     * 旷工考勤
+     * @return
+     */
+    AttendanceType getMissType();
+
 }
