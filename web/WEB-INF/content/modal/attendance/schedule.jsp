@@ -105,23 +105,23 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                 </div>
                 <div class="div-group">
                     <input type="hidden" name="timecount"/>
-                    合计工作时长9小时0分钟<span style="color: rgb(196, 196, 196);">（考勤统计工作时长及请假出差外出统计，会以此时间为准）</span>
+                    合计工作时长9小时0分钟<span style="color: rgb(196, 196, 196);">（考勤统计工作时长，会以此时间为准）</span>
                 </div>
 
-                <div class="div-group">
-                    <div style="width:14px;height: 14px;display: inline-block;margin-right: 8px">
-                    <input type="checkbox" name="punch" class="icheckbox"/>
-                    </div>
-                    <span>下班不用打卡（开启后，下班不打卡也不会记作异常)</span>
-                </div>
+                <%--<div class="div-group">--%>
+                    <%--<div style="width:14px;height: 14px;display: inline-block;margin-right: 8px">--%>
+                    <%--<input type="checkbox" name="punch" class="icheckbox"/>--%>
+                    <%--</div>--%>
+                    <%--<span>下班不用打卡（开启后，下班不打卡也不会记作异常)</span>--%>
+                <%--</div>--%>
                 <div class="div-group" style="margin-top: 20px; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"></div>
                 <div class="div-group" style="color: rgb(148, 148, 148);">弹性时间设置</div>
                 <div class="div-group">
-                    <span>上班打卡时长</span>
+                    <span>上班打卡时长(分钟)</span>
                     <input type="number" class="form-control u-input input-number" name="scope_up" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
                 </div>
                 <div class="div-group">
-                    <span>下班打卡时长</span>
+                    <span>下班打卡时长(分钟)</span>
                     <input type="number" class="form-control u-input input-number" name="scope_down" style="width:80px; margin-left: 20px" min="0" max="1440" value="30" autocomplete="off"/>
                 </div>
                 <div class="div-group">

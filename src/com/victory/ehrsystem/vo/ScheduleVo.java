@@ -17,10 +17,10 @@ public class ScheduleVo {
     public String third_down;
     public Long scope_up;
     public Long scope_down;
-    public Integer attendanceTime = 0;
+    public Long attendanceTime;
     public Integer isPunch;
-    public Integer acrossDay = 0;
-    public Integer offsetTime = 0;
+    public Integer acrossDay;
+    public Long offsetTime;
 
     public Integer getId() {
         return id;
@@ -110,11 +110,11 @@ public class ScheduleVo {
         this.scope_down = scope_down;
     }
 
-    public Integer getAttendanceTime() {
+    public Long getAttendanceTime() {
         return attendanceTime;
     }
 
-    public void setAttendanceTime(Integer attendanceTime) {
+    public void setAttendanceTime(Long attendanceTime) {
         this.attendanceTime = attendanceTime;
     }
 
@@ -134,11 +134,11 @@ public class ScheduleVo {
         this.acrossDay = acrossDay;
     }
 
-    public Integer getOffsetTime() {
+    public Long getOffsetTime() {
         return offsetTime;
     }
 
-    public void setOffsetTime(Integer offsetTime) {
+    public void setOffsetTime(Long offsetTime) {
         this.offsetTime = offsetTime;
     }
 

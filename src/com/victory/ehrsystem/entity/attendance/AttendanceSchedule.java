@@ -60,7 +60,7 @@ public class AttendanceSchedule {
 
     //出勤合计时间
     @Column
-    private Integer attendanceTime;
+    private Long attendanceTime;
 
     //下班是否需要打卡
     @Column
@@ -68,7 +68,7 @@ public class AttendanceSchedule {
 
     //迟到早退的限定时间
     @Column
-    private Integer offsetTime;
+    private Long offsetTime;
 
     @Column
     private Boolean acrossDay;
@@ -110,7 +110,7 @@ public class AttendanceSchedule {
     public AttendanceSchedule() {
     }
 
-    public AttendanceSchedule(String name, String simplename, int scheduleType, Time first_time_up, Time first_time_down, Time second_time_up, Time second_time_down, Time third_time_up, Time third_time_down, Long scope_up, Long scope_down, int attendanceTime, boolean isPunch, int offsetTime, Boolean acrossDay) {
+    public AttendanceSchedule(String name, String simplename, Integer scheduleType, Time first_time_up, Time first_time_down, Time second_time_up, Time second_time_down, Time third_time_up, Time third_time_down, Long scope_up, Long scope_down, Long attendanceTime, Boolean isPunch, Long offsetTime, Boolean acrossDay) {
         this.name = name;
         this.simplename = simplename;
         this.scheduleType = scheduleType;
@@ -152,7 +152,7 @@ public class AttendanceSchedule {
         this.simplename = simplename;
     }
 
-    public int getScheduleType() {
+    public Integer getScheduleType() {
         return scheduleType;
     }
 
@@ -208,11 +208,11 @@ public class AttendanceSchedule {
         this.third_time_down = third_time_down;
     }
 
-    public int getAttendanceTime() {
+    public Long getAttendanceTime() {
         return attendanceTime;
     }
 
-    public void setAttendanceTime(int attendanceTime) {
+    public void setAttendanceTime(Long attendanceTime) {
         this.attendanceTime = attendanceTime;
     }
 
@@ -232,15 +232,15 @@ public class AttendanceSchedule {
         this.scope_down = scope_down;
     }
 
-    public Integer getOffsetTime() {
+    public Long getOffsetTime() {
         return offsetTime;
     }
 
-    public void setOffsetTime(Integer offsetTime) {
+    public void setOffsetTime(Long offsetTime) {
         this.offsetTime = offsetTime;
     }
 
-    public boolean getPunch() {
+    public Boolean getPunch() {
         return isPunch;
     }
 

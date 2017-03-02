@@ -61,17 +61,16 @@ public class AttendanceManager {
     public void autoAttendance(Date date) {
 
         //先执行AcrossDaySchedule表中的前天数据
-        Date beforeYesterday = DateUtil.getYesterday(date);
+        Date beforeDate = DateUtil.getYesterday(date);
 
-        List<AcrossDaySchedule> acrossDayScheduleList = acrossDayScheduleDao.findScheduleListByDate(beforeYesterday);
-        //执行上一天的跨天的运算
+        List<AcrossDaySchedule> acrossDayScheduleList = acrossDayScheduleDao.findScheduleListByDate(beforeDate);
+        //执行上一天的跨天的运算m
         for (AcrossDaySchedule temp : acrossDayScheduleList) {
             System.out.println("遍历跨天班次中，人员为"+temp.getResource().getName()+",班次为"+temp.getSchedule().getName());
             initDetail(temp.getResource(), temp.getDate() ,temp.getSchedule());
         }
 
         //下面执行正常的考勤
-        List<HrmResource> resource1 = resourceDao.findAllWorking();
         //获取并遍历有考勤组的在职员工
         List<HrmResource> resourceList = resourceDao.findHaveSchedule();
         System.out.println("开始遍历员工,有"+resourceList.size()+"人!");
@@ -84,8 +83,8 @@ public class AttendanceManager {
             int groupType = group.getGroupType();
             switch (groupType) {
                 case 1:
-                    fixedScheduling(resource, group,date);
                     System.out.println("固定班制");
+                    fixedScheduling(resource, group,date);
                     break;
                 case 2:
                     arrangeScheduling(resource, group);
@@ -185,7 +184,7 @@ public class AttendanceManager {
         detail.setResourceId(resource);
         detail.setDate(date);
         detail.setShould_attendance_day(1);
-        detail.setShould_attendance_time(schedule.getAttendanceTime());
+        detail.setShould_attendance_time((float)StringUtil.nullLong(schedule.getAttendanceTime())/60);
 
         List<AttendanceRecord> records = recordDao.findByResourceAndDate(resource,date);
         System.out.println("读取考勤原纪录!Records大小为"+records.size());
@@ -202,7 +201,7 @@ public class AttendanceManager {
             detail.setAttendanceType(typeDao.getMissType());
             detail.setAbsenteeismTime(schedule.getAttendanceTime());
             detail.setAbsenteeismCount(schedule.getScheduleType());
-            detail.setActual_attendance_time(schedule.getAttendanceTime());
+            detail.setActual_attendance_time(0F);
             detail.setActual_attendance_day(0);
         }else{
             switch (scheduleType) {
@@ -230,7 +229,7 @@ public class AttendanceManager {
                     break;
             }
             //记录明细实际出勤天数
-            if(detail.getActual_attendance_time() != 0){
+            if(detail.getActual_attendance_time() != null && detail.getActual_attendance_time() != 0){
                 detail.setActual_attendance_day((int) (detail.getActual_attendance_time() / detail.getShould_attendance_time()));
             }
         }
@@ -253,8 +252,8 @@ public class AttendanceManager {
         }
 
         //打卡范围时间
-        long scope_up = schedule.getScope_up();
-        long scope_down = schedule.getScope_down();
+        long scope_up = schedule.getScope_up()*60*1000;
+        long scope_down = schedule.getScope_down()*60*1000;
 
         //上班开始打卡时间
         long beginTime = time_up - scope_up;
@@ -284,13 +283,16 @@ public class AttendanceManager {
 
             //如果打卡时间，可能存在加班的情况
             if (time < beginTime || time > endTime) {
+                System.out.println("打卡时间在打卡范围之外!");
                 continue;
             }
             //上班有效打卡时间范围
             else if (beginTime <= time && time <= time_up) {
+                System.out.println("打卡时间在上班有效打卡范围!");
                 //因为数据都是按时间的先后顺序找出来的，而存符合的时间是存最早的那个，因此下面的可以直接actual_time_up不等于0就continue的，但为了保险起见，做一个大小判断
                 if (actual_time_up != 0) {
                     if (actual_time_up > time) {
+                        System.out.println("读取上班打卡时间顺序出错！");
                         actual_time_up = time;
                     }
                 } else {
@@ -299,6 +301,7 @@ public class AttendanceManager {
             }
             //上班期间的偏差打卡
             else if (time_up < time && time < time_down) {
+                System.out.println("打卡时间在上班时间范围!");
                 if (offsetTime != 0) {
                     if (offsetTime > time) {
                         offsetTime = time;
@@ -309,6 +312,7 @@ public class AttendanceManager {
             }
             //下班有效打卡时间范围
             else if (time_down <= time && time <= endTime) {
+                System.out.println("打卡时间在下班有效打卡范围!");
                 if (actual_time_down != 0) {
                     if(actual_time_down > time){
                         actual_time_down = time;
@@ -362,7 +366,7 @@ public class AttendanceManager {
             //上班卡不为空，下班卡为空
 
             if (offsetTime != 0) {
-                long defaultOffsetTime = time_down - schedule.getOffsetTime();
+                long defaultOffsetTime = time_down - StringUtil.nullLong(schedule.getOffsetTime())*60*1000;
                 if(offsetTime < defaultOffsetTime){
                     //旷工信息设置
                     detail.setAbsenteeismTime((defaultOffsetTime - offsetTime) + StringUtil.nullLong(detail.getAbsenteeismTime()));
@@ -390,8 +394,8 @@ public class AttendanceManager {
             detail.setAbsenteeismTime((time_down - time_up) + StringUtil.nullLong(detail.getAbsenteeismTime()));
             detail.setAbsenteeismCount(1);
             detail.setAttendanceType(typeDao.getMissType());
-            ClassUtil.invokeMethod(detail,method_up,Time.class,new Time(0));
-            ClassUtil.invokeMethod(detail,method_down,Time.class,new Time(0));
+            ClassUtil.invokeMethod(detail,method_up,Time.class,null);
+            ClassUtil.invokeMethod(detail,method_down,Time.class,null);
             System.out.println("该员工时段旷工");
         }
         return currentTime;

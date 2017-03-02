@@ -37,54 +37,54 @@ public class AttendanceManager1 {
     /**
      * 正常班次的自动打卡，都是读取昨天的信息
      */
-    public void autoAttendance() {
-        //yyyy-mm-dd格式日期
-        Date date = DateUtil.getYesterday();
-        List<HrmResource> resources = hrmResourceDao.findAllWorking();
-        //遍历在职人员
-        for (HrmResource resource : resources) {
-            List<AttendanceScheduleInfo> temp = attendanceScheduleInfoDao.findOneByNameAndDate(resource, date);
-            //如果没有班次数据
-            if(temp.size() < 1)continue;
-
-            AttendanceSchedule schedule = temp.get(0).getSchedule();
-            //判断班次是否为跨天，是的话就continue
-            if(schedule.getAcrossDay()){
-                continue;
-            }
-            //获取班次类型
-            int scheduleType = schedule.getScheduleType();
-
-            //初始化明细数据
-            AttendanceDetail detail = new AttendanceDetail();
-            detail.setResourceId(resource);
-            detail.setDate(date);
-            detail.setShould_attendance_time(schedule.getAttendanceTime());
-            detail.setShould_attendance_day(1);
-
-            //特殊班次不用进行考勤
-            if (scheduleType == 0) {
-                continue;
-            } else if (scheduleType == 1) {
-                //一天一班制
-//                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-            } else if (scheduleType == 2) {
-                //一天两班制
-//                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-//                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Second");
-            } else if (scheduleType == 3) {
-                //一天三班制
-//                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
-//                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(), "Second");
-//                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Third");
-            }
-            //记录明细实际出勤天数
-            if(detail.getActual_attendance_time() != 0){
-                detail.setActual_attendance_day((int) (detail.getActual_attendance_time() / detail.getShould_attendance_time()));
-            }
-            attendanceDetailDao.save(detail);
-        }
-    }
+//    public void autoAttendance() {
+//        //yyyy-mm-dd格式日期
+//        Date date = DateUtil.getYesterday();
+//        List<HrmResource> resources = hrmResourceDao.findAllWorking();
+//        //遍历在职人员
+//        for (HrmResource resource : resources) {
+//            List<AttendanceScheduleInfo> temp = attendanceScheduleInfoDao.findOneByNameAndDate(resource, date);
+//            //如果没有班次数据
+//            if(temp.size() < 1)continue;
+//
+//            AttendanceSchedule schedule = temp.get(0).getSchedule();
+//            //判断班次是否为跨天，是的话就continue
+//            if(schedule.getAcrossDay()){
+//                continue;
+//            }
+//            //获取班次类型
+//            int scheduleType = schedule.getScheduleType();
+//
+//            //初始化明细数据
+//            AttendanceDetail detail = new AttendanceDetail();
+//            detail.setResourceId(resource);
+//            detail.setDate(date);
+//            detail.setShould_attendance_time(schedule.getAttendanceTime());
+//            detail.setShould_attendance_day(1);
+//
+//            //特殊班次不用进行考勤
+//            if (scheduleType == 0) {
+//                continue;
+//            } else if (scheduleType == 1) {
+//                //一天一班制
+////                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
+//            } else if (scheduleType == 2) {
+//                //一天两班制
+////                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
+////                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Second");
+//            } else if (scheduleType == 3) {
+//                //一天三班制
+////                executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),"First");
+////                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(), "Second");
+////                executeAttendance(detail, schedule, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),"Third");
+//            }
+//            //记录明细实际出勤天数
+//            if(detail.getActual_attendance_time() != 0){
+//                detail.setActual_attendance_day((int) (detail.getActual_attendance_time() / detail.getShould_attendance_time()));
+//            }
+//            attendanceDetailDao.save(detail);
+//        }
+//    }
 
     /**
      * 分班次执行AttendanceDetail的插入数据
