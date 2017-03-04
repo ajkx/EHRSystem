@@ -17,12 +17,12 @@
                        value="${group.groupType == null ? 1 : group.groupType}"/>
                 <input type="hidden" name="isAuto" id="autoRest" value="${group.auto == true ? 1 : 0}"/>
                 <input type="hidden" name="monday" id="monday" value="${group.monday.rest == true ? "" : group.monday.id}"/>
-                <input type="hidden" name="tuesday" id="tuesday" value="${group.tuesday.rest == true ? "" : group.monday.id}"/>
-                <input type="hidden" name="wednesday" id="wednesday" value="${group.wednesday.rest == true ? "" : group.monday.id}"/>
-                <input type="hidden" name="thursday" id="thursday" value="${group.thursday.rest == true ? "" : group.monday.id}"/>
-                <input type="hidden" name="friday" id="friday" value="${group.friday.rest == true ? "" : group.monday.id}"/>
-                <input type="hidden" name="saturday" id="saturday" value="${group.saturday.rest == true ? "" : group.monday.id}"/>
-                <input type="hidden" name="sunday" id="sunday" value="${group.sunday.rest == true ? "" : group.monday.id}"/>
+                <input type="hidden" name="tuesday" id="tuesday" value="${group.tuesday.rest == true ? "" : group.tuesday.id}"/>
+                <input type="hidden" name="wednesday" id="wednesday" value="${group.wednesday.rest == true ? "" : group.wednesday.id}"/>
+                <input type="hidden" name="thursday" id="thursday" value="${group.thursday.rest == true ? "" : group.thursday.id}"/>
+                <input type="hidden" name="friday" id="friday" value="${group.friday.rest == true ? "" : group.friday.id}"/>
+                <input type="hidden" name="saturday" id="saturday" value="${group.saturday.rest == true ? "" : group.saturday.id}"/>
+                <input type="hidden" name="sunday" id="sunday" value="${group.sunday.rest == true ? "" : group.sunday.id}"/>
                 <input type="hidden" name="resources" id="resourceIds" value="<c:forEach items="${group.resources}" var="resource">${resource.id},</c:forEach>"/>
                 <input type="hidden" name="schedules" id="schedules" value="<c:forEach items="${group.schedules}" var="schedule">${schedule.id},</c:forEach>"/>
                 <input type="hidden" id="currentNode" value=""/>

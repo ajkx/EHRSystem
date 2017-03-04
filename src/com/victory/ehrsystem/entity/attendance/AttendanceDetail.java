@@ -26,6 +26,9 @@ public class AttendanceDetail {
     @JoinColumn(name = "resourceId",nullable = false)
     private HrmResource resourceId;
 
+    @ManyToOne(targetEntity = AttendanceSchedule.class)
+    @JoinColumn(name = "scheduleId")
+    private AttendanceSchedule schedule;
     //日期
     @Column
     private Date date;
@@ -434,5 +437,13 @@ public class AttendanceDetail {
 
     public void setAttendanceType(AttendanceType attendanceType) {
         this.attendanceType = attendanceType;
+    }
+
+    public AttendanceSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(AttendanceSchedule schedule) {
+        this.schedule = schedule;
     }
 }

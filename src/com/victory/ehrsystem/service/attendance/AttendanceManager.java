@@ -182,6 +182,7 @@ public class AttendanceManager {
         System.out.println("===========开始初始化detail信息，该班次属性为"+scheduleType+"班制============");
         AttendanceDetail detail = new AttendanceDetail();
         detail.setResourceId(resource);
+        detail.setSchedule(schedule);
         detail.setDate(date);
         detail.setShould_attendance_day(1);
         detail.setShould_attendance_time((float)StringUtil.nullLong(schedule.getAttendanceTime())/60);
