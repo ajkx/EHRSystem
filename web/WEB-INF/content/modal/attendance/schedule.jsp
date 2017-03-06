@@ -223,7 +223,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
     });
 
     first_down.change(function(){
-        checkRepeat(scheduleType.val,this);
+        checkRepeat(scheduleType.val(),this);
     });
     second_down.change(function(){
         console.log("asd");

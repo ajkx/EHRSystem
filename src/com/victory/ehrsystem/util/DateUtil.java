@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.util;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +42,12 @@ public class DateUtil {
         calendar.add(Calendar.DATE,-1);
         Date date1 = new Date(calendar.getTimeInMillis());
         return date1;
+    }
+
+    public static Date getMonthFristDay(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return new Date(calendar.getTimeInMillis());
     }
     /**
      * 获取sql.date格式的前天日期
@@ -87,5 +94,21 @@ public class DateUtil {
             cal1.add(Calendar.DATE,1);
         }
         return dateList;
+    }
+
+    public static Date parseDate(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = new Date(sdf.parse(str).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static long getTimeInterval(Time beginTime, Time endTime) {
+        long time = endTime.getTime() - beginTime.getTime();
+        return time;
     }
 }

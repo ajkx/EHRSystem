@@ -328,3 +328,10 @@ span.error:before{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.detail-line{
+	background-color: #e4e4e4;
+	height: 1px;
+	width: 100%;
+	margin: 16px 0;
+}

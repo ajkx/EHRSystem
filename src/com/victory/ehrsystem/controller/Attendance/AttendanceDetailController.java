@@ -2,6 +2,7 @@ package com.victory.ehrsystem.controller.Attendance;
 
 import com.victory.ehrsystem.entity.attendance.AttendanceDetail;
 import com.victory.ehrsystem.service.attendance.AttendanceDetailService;
+import com.victory.ehrsystem.util.DateUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -31,13 +32,17 @@ public class AttendanceDetailController {
     @RequiresPermissions(value = "AttendanceDetail:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
+        String beginStr = DateUtil.getMonthFristDay().toString();
+        String endStr = DateUtil.getToday().toString();
+        model.addAttribute("beginDate", beginStr);
+        model.addAttribute("endDate", endStr);
         return "attendance/attendanceDetail";
     }
 
     @RequiresPermissions(value = "AttendanceDetail:view")
     @RequestMapping(value = "/list")
     public @ResponseBody PageInfo list(HttpServletRequest request) {
-        PageInfo pageInfo = detailService.findByPage(AttendanceDetail.class, request);
+        PageInfo pageInfo = detailService.findByPageDetail(request);
         return pageInfo;
     }
 }

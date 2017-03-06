@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Attendance;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.service.attendance.AttendanceScheduleService;
+import com.victory.ehrsystem.util.DateUtil;
 import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
@@ -66,25 +67,8 @@ public class AttendanceScheduleController {
     @RequestMapping(value = "/create")
     public @ResponseBody JsonVo create(ScheduleVo scheduleVo){
         AttendanceSchedule schedule = new AttendanceSchedule();
-        schedule.setName(scheduleVo.getName());
-        schedule.setSimplename(scheduleVo.getName().substring(0,1));
-        schedule.setScheduleType(scheduleVo.getScheduleType());
-        schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
-        schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
-        schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
-        if(scheduleVo.getScheduleType() > 1){
-            schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
-            schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
-            if(scheduleVo.getScheduleType() > 2){
-                schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
-                schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
-            }
-        }
-        schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
-        schedule.setAttendanceTime(scheduleVo.getAttendanceTime());
-        schedule.setScope_up(scheduleVo.getScope_up());
-        schedule.setScope_down(scheduleVo.getScope_down());
-        scheduleService.save(schedule);
+        AttendanceSchedule schedule1 = convertAttendanceSchedule(schedule, scheduleVo);
+        scheduleService.save(schedule1);
         JsonVo json = new JsonVo();
         json.setStatus(true).setMsg("新增成功");
         return json;
@@ -104,24 +88,7 @@ public class AttendanceScheduleController {
     @RequestMapping(value = "/update")
     public @ResponseBody JsonVo update(ScheduleVo scheduleVo){
         AttendanceSchedule schedule = scheduleService.findOne(AttendanceSchedule.class, scheduleVo.getId());
-        schedule.setName(scheduleVo.getName());
-        schedule.setSimplename(scheduleVo.getName().substring(0,1));
-        schedule.setScheduleType(scheduleVo.getScheduleType());
-        schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
-        schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
-        schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
-        if(scheduleVo.getScheduleType() > 1){
-            schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
-            schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
-            if(scheduleVo.getScheduleType() > 2){
-                schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
-                schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
-            }
-        }
-        schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
-        schedule.setAttendanceTime(scheduleVo.getAttendanceTime());
-        schedule.setScope_up(scheduleVo.getScope_up());
-        schedule.setScope_down(scheduleVo.getScope_down());
+        convertAttendanceSchedule(schedule, scheduleVo);
         scheduleService.update(AttendanceSchedule.class,schedule);
         JsonVo json = new JsonVo();
         json.setStatus(true).setMsg("修改成功");
@@ -158,5 +125,32 @@ public class AttendanceScheduleController {
             return "modal/attendance/scheduleList";
         }
 
+    }
+
+    private AttendanceSchedule convertAttendanceSchedule(AttendanceSchedule schedule,ScheduleVo scheduleVo){
+        long attendanceTime = 0;
+        schedule.setName(scheduleVo.getName());
+        schedule.setSimplename(scheduleVo.getName().substring(0,1));
+        schedule.setScheduleType(scheduleVo.getScheduleType());
+        schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
+        schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
+        schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
+        attendanceTime = DateUtil.getTimeInterval(schedule.getFirst_time_up(), schedule.getFirst_time_down());
+        if(scheduleVo.getScheduleType() > 1){
+            schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
+            schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
+            attendanceTime += DateUtil.getTimeInterval(schedule.getSecond_time_up(), schedule.getSecond_time_down());
+            if(scheduleVo.getScheduleType() > 2){
+                schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
+                schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
+                attendanceTime += DateUtil.getTimeInterval(schedule.getThird_time_up(), schedule.getThird_time_down());
+            }
+        }
+        schedule.setAttendanceTime(attendanceTime);
+        schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
+        schedule.setAttendanceTime(scheduleVo.getAttendanceTime());
+        schedule.setScope_up(scheduleVo.getScope_up());
+        schedule.setScope_down(scheduleVo.getScope_down());
+        return schedule;
     }
 }

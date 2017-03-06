@@ -28,11 +28,11 @@ public class StringUtil {
         return str == null || "".equals(str);
     }
 
-    public static String nullString(String str) {
-        if (str == null) {
+    public static String nullString(Object obj) {
+        if (obj == null) {
             return "";
         } else {
-            return str;
+            return obj.toString();
         }
     }
 
