@@ -67,8 +67,8 @@ public class AttendanceScheduleController {
     @RequestMapping(value = "/create")
     public @ResponseBody JsonVo create(ScheduleVo scheduleVo){
         AttendanceSchedule schedule = new AttendanceSchedule();
-        AttendanceSchedule schedule1 = convertAttendanceSchedule(schedule, scheduleVo);
-        scheduleService.save(schedule1);
+        convertAttendanceSchedule(schedule, scheduleVo);
+        scheduleService.save(schedule);
         JsonVo json = new JsonVo();
         json.setStatus(true).setMsg("新增成功");
         return json;
@@ -148,7 +148,6 @@ public class AttendanceScheduleController {
         }
         schedule.setAttendanceTime(attendanceTime);
         schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
-        schedule.setAttendanceTime(scheduleVo.getAttendanceTime());
         schedule.setScope_up(scheduleVo.getScope_up());
         schedule.setScope_down(scheduleVo.getScope_down());
         return schedule;

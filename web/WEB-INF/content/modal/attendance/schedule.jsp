@@ -49,7 +49,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                 </div>
                 <div style="margin-top: 15px;">
                     <div class="div-group" id="oneSchedule">
-                        <div style="width: 275px; display: inline-block;">
+                        <div style="width: 285px; display: inline-block;">
                             <span style="width: 200px; margin-right: 20px;">第1次上下班</span>
                             上班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;">
@@ -67,7 +67,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                         </div>
                     </div>
                     <div class="div-group" id="twoSchedule" style="<c:if test="${schedule.scheduleType != 2 && schedule.scheduleType != 3}">display: none;</c:if>">
-                        <div style="width: 275px; display: inline-block;">
+                        <div style="width: 285px; display: inline-block;">
                             <span style="width: 200px; margin-right: 20px;">第2次上下班</span>
                             上班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;">
@@ -85,7 +85,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                         </div>
                     </div>
                     <div class="div-group" id="threeSchedule" style="<c:if test="${schedule.scheduleType != 3}">display: none;</c:if>">
-                        <div style="width: 275px; display: inline-block;">
+                        <div style="width: 285px; display: inline-block;">
                             <span style="width: 200px; margin-right: 20px;">第3次上下班</span>
                             上班:
                             <span class="timepick-group" style="margin-right: 10px; margin-left: 5px;">
@@ -105,7 +105,8 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
                 </div>
                 <div class="div-group">
                     <input type="hidden" name="timecount"/>
-                    合计工作时长9小时0分钟<span style="color: rgb(196, 196, 196);">（考勤统计工作时长，会以此时间为准）</span>
+                    合计工作时长<span id="timeCount">9小时0分钟</span>
+                    <span style="color: rgb(196, 196, 196);">（考勤统计工作时长，会以此时间为准）</span>
                 </div>
 
                 <%--<div class="div-group">--%>
@@ -150,10 +151,22 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
     var third_down = $('#third_down');
 
     var scheduleType = $('#scheduleType');
+
+    var beforeTime;
     //初始化clockPicker
     input.clockpicker({
         autoclose: true
     });
+
+    //初始化时间
+    if(first_up.val() == "")first_up.val("09:00");
+    if(first_down.val() == "")first_down.val("11:00");
+    if(second_up.val() == "")second_up.val("12:00");
+    if(second_down.val() == "")second_down.val("15:00");
+    if(third_up.val() == "")third_up.val("16:00");
+    if(third_down.val() == "")third_down.val("18:00");
+    $('#timeCount').text(getTime());
+
 
     var checkbox = $('.icheckbox');
     checkbox.iCheck({
@@ -171,6 +184,7 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
         }
     });
 
+
     function getNodes(type){
         var array = new Array();
         array[0] = first_up;
@@ -185,68 +199,136 @@ border-bottom-left-radius: 0" onclick="setScheduleType(3,this)">1天3次上下�
         }
         return array;
     }
+    function getTime(){
+        var time;
+        var f1 = getAllTime(first_up);
+        var f2 = getAllTime(first_down);
+        time = f2 - f1;
+        console.log("time1" + time);
+        if(scheduleType.val() > 1){
+            time += getAllTime(second_down) - getAllTime(second_up);
+            console.log("time2" + time);
+        }
+        if(scheduleType.val() > 2){
+            time += getAllTime(third_down) - getAllTime(third_up);
+            console.log("time3" + time);
+        }
+        var hour = Math.round(time/60);
+        var min = time%60;
+        return hour + "小时" + min + "分钟";
+    }
+    function getAllTime(node){
+        var str = node.val();
+        var array = str.split(":");
+        if(array[0] == 0){
+            array[0] == 1;
+        }
+        if(node.attr("data-across") == "1"){
+            return array[0]*60 + parseInt(array[1])+1440;
+        }else{
+            return array[0]*60 + parseInt(array[1]);
+        }
 
+    }
     function checkRepeat(value,node){
         var array = getNodes(value);
         var currentNode = $(node);
         $(array).each(function(index,element){
            if(currentNode.attr("id") != element.attr("id") && currentNode.val() == element.val()){
-               currentNode.val("");
+               currentNode.val(beforeTime);
                toastr.error("选择的时间不可重复！");
                return;
            }
         });
-        console.log(array.length);
-        checkOrder(array);
+        var flag = checkOrder(array);
+        if(!flag){
+            currentNode.val(beforeTime);
+            toastr.error("请按照时间顺序设置！");
+        }else{
+            $('#timeCount').text(getTime());
+        }
     }
 
     function checkOrder(array){
-        //初始化
-        $('.ant-tag-red').remove();
-        $("#acrossDay").val(0);
 
         var lengths = array.length;
+        var acrossArray = new Array();
         for(var i = 0; i < lengths; i++){
+            //判断跨天
             if($(array[i]).val() > $(array[i+1]).val()){
                 for(var j = i+1; j < lengths;j++){
-                    var div = $("<div class='ant-tag ant-tag-red'></div>");
-                    var span = $("<span></span>").text("次日");
-                    div.append(span);
-                    $(array[j]).parent().after(div);
-                    $("#acrossDay").val(1);
+                    //排除二次跨天
+                    if($(array[j]).val() > $(array[j+1]).val()){
+                        return false;
+                    }else{
+                        acrossArray.push($(array[j]));
+                    }
                 }
             }
         }
+
+        //初始化
+        $('.ant-tag-red').remove();
+        $("#acrossDay").val(0);
+        $(".timepick").attr("data-across", "0");
+
+        for(var i = 0; i < acrossArray.length; i++) {
+            var div = $("<div class='ant-tag ant-tag-red'></div>");
+            var span = $("<span></span>").text("次日");
+            div.append(span);
+            acrossArray[i].parent().after(div);
+            acrossArray[i].attr("data-across","1");
+            $("#acrossDay").val(1);
+        }
+        return true;
     }
-    first_up.change(function(){
+
+    function setScheduleType(value,node){
+        var node = $(node);
+        if($('#scheduleType').val() == value)return;
+        $('#scheduleType').val(value);
+        node.siblings().removeClass("scheduletype");
+        var nodes = node.parent().children();
+        switch(value){
+            case 1:
+                nodes.last().css("border-left","1px solid #ccc");
+                $('#twoSchedule').css("display","none");
+                $('#threeSchedule').css("display","none");
+                $('#timeCount').text("合计2小时0分钟");
+                break;
+            case 2:
+                nodes.first().css("border-right","1px solid #2CB7F5");
+                nodes.last().css("border-left","1px solid #2CB7F5");
+                $('#twoSchedule').css("display","block");
+                $('#threeSchedule').css("display","none");
+                $('#timeCount').text("合计5小时0分钟");
+                break;
+            case 3:
+                nodes.first().css("border-right","1px solid #ccc");
+                $('#twoSchedule').css("display","block");
+                $('#threeSchedule').css("display","block");
+                $('#timeCount').text("合计7小时0分钟");
+                break;
+        }
+        node.addClass("scheduletype");
+        first_up.val("09:00");
+        first_down.val("11:00");
+        second_up.val("12:00");
+        second_down.val("15:00");
+        third_up.val("16:00");
+        third_down.val("18:00");
+        $('.ant-tag-red').remove();
+        $("#acrossDay").val(0);
+        $(".timepick").attr("data-across", "0");
+    }
+
+    //判断focu事件，存起改变前的值，用于当有重复的时间还原
+    $(".timepick").focus(function (event) {
+        beforeTime = $(this).val();
+    });
+    $(".timepick").change(function(){
         checkRepeat(scheduleType.val(),this);
     });
-
-    first_down.change(function(){
-        checkRepeat(scheduleType.val(),this);
-    });
-    second_down.change(function(){
-        console.log("asd");
-        if(second_up.val() == ""){
-            console.log("请先选择上班时间!");
-            return;
-        }
-        if(second_down.val() < second_up.val()){
-            console.log("跨天！");
-            return;
-        }
-    });
-    third_down.change(function(){
-        if(third_up.val() == ""){
-            console.log("请先选择上班时间!");
-            return;
-        }
-        if(third_down.val() < third_up.val()){
-            console.log("跨天！");
-            return;
-        }
-    });
-
 
     $(function(){
         $("#modal-form").validate({

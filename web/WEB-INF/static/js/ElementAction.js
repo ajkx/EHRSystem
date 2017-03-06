@@ -185,32 +185,6 @@ function checkStr(main,value){
     }
     return true;
 }
-function setScheduleType(value,node){
-    var node = $(node);
-    if($('#scheduleType').val() == value)return;
-    $('#scheduleType').val(value);
-    node.siblings().removeClass("scheduletype");
-    var nodes = node.parent().children();
-    switch(value){
-        case 1:
-            nodes.last().css("border-left","1px solid #ccc");
-            $('#twoSchedule').css("display","none");
-            $('#threeSchedule').css("display","none");
-            break;
-        case 2:
-            nodes.first().css("border-right","1px solid #2CB7F5");
-            nodes.last().css("border-left","1px solid #2CB7F5");
-            $('#twoSchedule').css("display","block");
-            $('#threeSchedule').css("display","none");
-            break;
-        case 3:
-            nodes.first().css("border-right","1px solid #ccc");
-            $('#twoSchedule').css("display","block");
-            $('#threeSchedule').css("display","block");
-            break;
-    }
-    node.addClass("scheduletype");
-}
 
 function searchData(url){
     var input = $('#searchinput');

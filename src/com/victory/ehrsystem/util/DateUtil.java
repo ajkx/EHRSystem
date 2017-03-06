@@ -108,6 +108,8 @@ public class DateUtil {
     }
 
     public static long getTimeInterval(Time beginTime, Time endTime) {
+        System.out.println(endTime.getTime());
+        System.out.println(beginTime.getTime());
         long time = endTime.getTime() - beginTime.getTime();
         return time;
     }
