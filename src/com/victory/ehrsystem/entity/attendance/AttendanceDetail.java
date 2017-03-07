@@ -95,51 +95,51 @@ public class AttendanceDetail {
 
     //事假
     @Column
-    private Float leave_personal;
+    private Long leave_personal;
 
     //病假
     @Column
-    private Float leave_sick;
+    private Long leave_sick;
 
     //出差
     @Column
-    private Float leave_business;
+    private Long leave_business;
 
     //工伤
     @Column
-    private Float leave_injury;
+    private Long leave_injury;
 
     //产假
     @Column
-    private Float leave_delivery;
+    private Long leave_delivery;
 
     //婚假
     @Column
-    private Float leave_married;
+    private Long leave_married;
 
     //丧假
     @Column
-    private Float leave_funeral;
+    private Long leave_funeral;
 
     //年假
     @Column
-    private Float leave_annual;
+    private Long leave_annual;
 
     //规定出勤小时
     @Column
-    private Float should_attendance_time;
+    private Long should_attendance_time;
 
     //规定出勤天数
     @Column
-    private Integer should_attendance_day = 1;
+    private Integer should_attendance_day;
 
     //实际出勤小时
     @Column
-    private Float actual_attendance_time;
+    private Long actual_attendance_time;
 
     //实际出勤天数
     @Column
-    private Integer actual_attendance_day;
+    private Double actual_attendance_day;
 
     //出勤类别
     @ManyToOne(targetEntity = AttendanceType.class)
@@ -147,40 +147,6 @@ public class AttendanceDetail {
     private AttendanceType attendanceType;
 
     public AttendanceDetail() {
-    }
-
-    public AttendanceDetail(String card, HrmResource resourceid, Date date, Time first_time_up, Time first_time_down, Time second_time_up, Time second_time_down, Time third_time_up, Time third_time_down, long lateTime, int lateCount, long earlyTime, int earlyCount, long absenteeismTime, int absenteeismCount, long overtime_normal, long overtime_weekend, long overtime_festival, float leave_personal, float leave_sick, float leave_business, float leave_injury, float leave_delivery, float leave_married, float leave_funeral, float leave_annual, float should_attendance_time, int should_attendance_day, float actual_attendance_time, int actual_attendance_day, AttendanceType attendanceType) {
-        this.card = card;
-        this.resourceId = resourceid;
-        this.date = date;
-        this.first_time_up = first_time_up;
-        this.first_time_down = first_time_down;
-        this.second_time_up = second_time_up;
-        this.second_time_down = second_time_down;
-        this.third_time_up = third_time_up;
-        this.third_time_down = third_time_down;
-        this.lateTime = lateTime;
-        this.lateCount = lateCount;
-        this.earlyTime = earlyTime;
-        this.earlyCount = earlyCount;
-        this.absenteeismTime = absenteeismTime;
-        this.absenteeismCount = absenteeismCount;
-        this.overtime_normal = overtime_normal;
-        this.overtime_weekend = overtime_weekend;
-        this.overtime_festival = overtime_festival;
-        this.leave_personal = leave_personal;
-        this.leave_sick = leave_sick;
-        this.leave_business = leave_business;
-        this.leave_injury = leave_injury;
-        this.leave_delivery = leave_delivery;
-        this.leave_married = leave_married;
-        this.leave_funeral = leave_funeral;
-        this.leave_annual = leave_annual;
-        this.should_attendance_time = should_attendance_time;
-        this.should_attendance_day = should_attendance_day;
-        this.actual_attendance_time = actual_attendance_time;
-        this.actual_attendance_day = actual_attendance_day;
-        this.attendanceType = attendanceType;
     }
 
     public Integer getId() {
@@ -205,6 +171,14 @@ public class AttendanceDetail {
 
     public void setResourceId(HrmResource resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public AttendanceSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(AttendanceSchedule schedule) {
+        this.schedule = schedule;
     }
 
     public Date getDate() {
@@ -335,75 +309,75 @@ public class AttendanceDetail {
         this.overtime_festival = overtime_festival;
     }
 
-    public Float getLeave_personal() {
+    public Long getLeave_personal() {
         return leave_personal;
     }
 
-    public void setLeave_personal(Float leave_personal) {
+    public void setLeave_personal(Long leave_personal) {
         this.leave_personal = leave_personal;
     }
 
-    public Float getLeave_sick() {
+    public Long getLeave_sick() {
         return leave_sick;
     }
 
-    public void setLeave_sick(Float leave_sick) {
+    public void setLeave_sick(Long leave_sick) {
         this.leave_sick = leave_sick;
     }
 
-    public Float getLeave_business() {
+    public Long getLeave_business() {
         return leave_business;
     }
 
-    public void setLeave_business(Float leave_business) {
+    public void setLeave_business(Long leave_business) {
         this.leave_business = leave_business;
     }
 
-    public Float getLeave_injury() {
+    public Long getLeave_injury() {
         return leave_injury;
     }
 
-    public void setLeave_injury(Float leave_injury) {
+    public void setLeave_injury(Long leave_injury) {
         this.leave_injury = leave_injury;
     }
 
-    public Float getLeave_delivery() {
+    public Long getLeave_delivery() {
         return leave_delivery;
     }
 
-    public void setLeave_delivery(Float leave_delivery) {
+    public void setLeave_delivery(Long leave_delivery) {
         this.leave_delivery = leave_delivery;
     }
 
-    public Float getLeave_married() {
+    public Long getLeave_married() {
         return leave_married;
     }
 
-    public void setLeave_married(Float leave_married) {
+    public void setLeave_married(Long leave_married) {
         this.leave_married = leave_married;
     }
 
-    public Float getLeave_funeral() {
+    public Long getLeave_funeral() {
         return leave_funeral;
     }
 
-    public void setLeave_funeral(Float leave_funeral) {
+    public void setLeave_funeral(Long leave_funeral) {
         this.leave_funeral = leave_funeral;
     }
 
-    public Float getLeave_annual() {
+    public Long getLeave_annual() {
         return leave_annual;
     }
 
-    public void setLeave_annual(Float leave_annual) {
+    public void setLeave_annual(Long leave_annual) {
         this.leave_annual = leave_annual;
     }
 
-    public Float getShould_attendance_time() {
+    public Long getShould_attendance_time() {
         return should_attendance_time;
     }
 
-    public void setShould_attendance_time(Float should_attendance_time) {
+    public void setShould_attendance_time(Long should_attendance_time) {
         this.should_attendance_time = should_attendance_time;
     }
 
@@ -415,19 +389,19 @@ public class AttendanceDetail {
         this.should_attendance_day = should_attendance_day;
     }
 
-    public Float getActual_attendance_time() {
+    public Long getActual_attendance_time() {
         return actual_attendance_time;
     }
 
-    public void setActual_attendance_time(Float actual_attendance_time) {
+    public void setActual_attendance_time(Long actual_attendance_time) {
         this.actual_attendance_time = actual_attendance_time;
     }
 
-    public Integer getActual_attendance_day() {
+    public Double getActual_attendance_day() {
         return actual_attendance_day;
     }
 
-    public void setActual_attendance_day(Integer actual_attendance_day) {
+    public void setActual_attendance_day(Double actual_attendance_day) {
         this.actual_attendance_day = actual_attendance_day;
     }
 
@@ -437,13 +411,5 @@ public class AttendanceDetail {
 
     public void setAttendanceType(AttendanceType attendanceType) {
         this.attendanceType = attendanceType;
-    }
-
-    public AttendanceSchedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(AttendanceSchedule schedule) {
-        this.schedule = schedule;
     }
 }

@@ -185,12 +185,13 @@ public class AttendanceManager {
         detail.setSchedule(schedule);
         detail.setDate(date);
         detail.setShould_attendance_day(1);
-        detail.setShould_attendance_time((float)StringUtil.nullLong(schedule.getAttendanceTime())/60);
+        detail.setShould_attendance_time(StringUtil.nullLong(schedule.getAttendanceTime()));
 
         List<AttendanceRecord> records = recordDao.findByResourceAndDate(resource,date);
         System.out.println("读取考勤原纪录!Records大小为"+records.size());
         if(schedule.getAcrossDay()){
-
+            System.out.println(date.toString());
+            System.out.println(DateUtil.getNextDay(date).toString());
             List<AttendanceRecord> records1 = recordDao.findByResourceAndDate(resource,DateUtil.getNextDay(date));
             records.addAll(records1);
             System.out.println("该班次为跨天，将考勤原纪录的集合加上明天的记录！Records大小为"+records.size());
@@ -202,8 +203,8 @@ public class AttendanceManager {
             detail.setAttendanceType(typeDao.getMissType());
             detail.setAbsenteeismTime(schedule.getAttendanceTime());
             detail.setAbsenteeismCount(schedule.getScheduleType());
-            detail.setActual_attendance_time(0F);
-            detail.setActual_attendance_day(0);
+            detail.setActual_attendance_time(0L);
+            detail.setActual_attendance_day(0D);
         }else{
             switch (scheduleType) {
                 case 0:
@@ -226,12 +227,13 @@ public class AttendanceManager {
                     System.out.println("执行一天三班制");
                     long long2 = executeAttendance(detail, schedule, schedule.getFirst_time_up().getTime() ,schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(),records,"First");
                     long long3 = executeAttendance(detail, schedule, long2 ,schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),records, "Second");
-                    executeAttendance(detail, schedule,long3, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(),records,"Third");
+                    executeAttendance(detail, schedule,long3, schedule.getThird_time_up().getTime(), schedule.getThird_time_down().getTime(),records,"Third");
                     break;
             }
             //记录明细实际出勤天数
             if(detail.getActual_attendance_time() != null && detail.getActual_attendance_time() != 0){
-                detail.setActual_attendance_day((int) (detail.getActual_attendance_time() / detail.getShould_attendance_time()));
+                double temp = (double)detail.getActual_attendance_time() / (double)detail.getShould_attendance_time()*100;
+                detail.setActual_attendance_day((Math.floor(temp)/100));
             }
         }
 
@@ -243,18 +245,18 @@ public class AttendanceManager {
         //如果为跨天班次则将上下班的时间加上一天
         if(currentTime > ONE_DAY_TIME || time_up < currentTime){
             time_up += ONE_DAY_TIME;
-            currentTime = time_up;
             System.out.println("time_up打卡时段为跨天！");
         }
+        currentTime = time_up;
         if(currentTime > ONE_DAY_TIME || time_down < currentTime){
             time_down += ONE_DAY_TIME;
-            currentTime = time_down;
             System.out.println("time_down打卡时段为跨天！");
         }
+        currentTime = time_down;
 
         //打卡范围时间
-        long scope_up = schedule.getScope_up()*60*1000;
-        long scope_down = schedule.getScope_down()*60*1000;
+        long scope_up = schedule.getScope_up();
+        long scope_down = schedule.getScope_down();
 
         //上班开始打卡时间
         long beginTime = time_up - scope_up;
@@ -327,8 +329,8 @@ public class AttendanceManager {
 
         if(actual_time_up != 0 && actual_time_down != 0){
             //正常进行打卡的信息设置
-            detail.setAttendanceType(typeDao.getNormalType());
-            detail.setActual_attendance_time((time_down - time_up)/6000 + StringUtil.nullFloat(detail.getActual_attendance_time()));
+            detail.setAttendanceType(checkType(typeDao.getNormalType(),detail.getAttendanceType()));
+            detail.setActual_attendance_time((time_down - time_up) + StringUtil.nullLong(detail.getActual_attendance_time()));
             ClassUtil.invokeMethod(detail,method_up,Time.class,new Time(actual_time_up));
             ClassUtil.invokeMethod(detail,method_down,Time.class,new Time(actual_time_down));
             System.out.println("该员工时段打卡正常");
@@ -339,26 +341,30 @@ public class AttendanceManager {
 
             //存在偏差时间
             if(offsetTime != 0){
-                long defaultOffsetTime = time_up + schedule.getOffsetTime();
+                //获取设置的迟到早退的容差时间
+                long defaultOffsetTime = time_up + StringUtil.nullLong(schedule.getOffsetTime());
                 if(offsetTime > defaultOffsetTime){
                     //旷工信息设置
-                    detail.setAbsenteeismTime((offsetTime - defaultOffsetTime) + StringUtil.nullLong(detail.getAbsenteeismTime()));
-                    detail.setAbsenteeismCount(1);
-                    detail.setAttendanceType(typeDao.getMissType());
+                    detail.setAbsenteeismTime((offsetTime - time_up) + StringUtil.nullLong(detail.getAbsenteeismTime()));
+                    detail.setActual_attendance_time((time_down - offsetTime) + StringUtil.nullLong(detail.getActual_attendance_time()));
+                    detail.setAbsenteeismCount(1+StringUtil.nullInteger(detail.getAbsenteeismCount()));
+                    detail.setAttendanceType(checkType(typeDao.getMissType(),detail.getAttendanceType()));
                 }else{
                     //迟到信息设置
-                    detail.setAttendanceType(typeDao.getLateType());
+                    detail.setAttendanceType(checkType(typeDao.getLateType(),detail.getAttendanceType()));
                     detail.setLateTime((offsetTime - time_up) + StringUtil.nullLong(detail.getLateTime()));
+                    detail.setActual_attendance_time((time_down - offsetTime) + StringUtil.nullLong(detail.getActual_attendance_time()));
                     detail.setLateCount(1 + StringUtil.nullInteger(detail.getLateCount()));
                 }
             }
             //如果没有偏差时间，记录旷工信息
             else{
                 detail.setAbsenteeismTime((time_down - time_up) + StringUtil.nullLong(detail.getAbsenteeismTime()));
-                detail.setAbsenteeismCount(1);
-                detail.setAttendanceType(typeDao.getMissType());
+                detail.setAbsenteeismCount(1+StringUtil.nullInteger(detail.getAbsenteeismCount()));
+                detail.setAttendanceType(checkType(typeDao.getMissType(),detail.getAttendanceType()));
+                detail.setActual_attendance_time(0 + StringUtil.nullLong(detail.getActual_attendance_time()));
             }
-            ClassUtil.invokeMethod(detail,method_up,Time.class,new Time(offsetTime));
+            ClassUtil.invokeMethod(detail,method_up,Time.class, offsetTime == 0 ? null : new Time(offsetTime));
             ClassUtil.invokeMethod(detail,method_down,Time.class,new Time(actual_time_down));
             System.out.println("该员工时段上班打卡异常");
         }
@@ -367,34 +373,38 @@ public class AttendanceManager {
             //上班卡不为空，下班卡为空
 
             if (offsetTime != 0) {
-                long defaultOffsetTime = time_down - StringUtil.nullLong(schedule.getOffsetTime())*60*1000;
+                long defaultOffsetTime = time_down - StringUtil.nullLong(schedule.getOffsetTime());
                 if(offsetTime < defaultOffsetTime){
                     //旷工信息设置
-                    detail.setAbsenteeismTime((defaultOffsetTime - offsetTime) + StringUtil.nullLong(detail.getAbsenteeismTime()));
-                    detail.setAbsenteeismCount(1);
-                    detail.setAttendanceType(typeDao.getMissType());
+                    detail.setAbsenteeismTime((time_down - offsetTime) + StringUtil.nullLong(detail.getAbsenteeismTime()));
+                    detail.setActual_attendance_time((offsetTime - time_up) + StringUtil.nullLong(detail.getActual_attendance_time()));
+                    detail.setAbsenteeismCount(1+StringUtil.nullInteger(detail.getAbsenteeismCount()));
+                    detail.setAttendanceType(checkType(typeDao.getMissType(),detail.getAttendanceType()));
                 }else{
                     //早退信息设置
-                    detail.setAttendanceType(typeDao.getEarlyType());
+                    detail.setAttendanceType(checkType(typeDao.getEarlyType(),detail.getAttendanceType()));
+                    detail.setActual_attendance_time((offsetTime - time_up) + StringUtil.nullLong(detail.getActual_attendance_time()));
                     detail.setEarlyTime((time_down - offsetTime) + StringUtil.nullLong(detail.getEarlyTime()));
                     detail.setEarlyCount(1 + StringUtil.nullInteger(detail.getEarlyCount()));
                 }
             }else{
                 //旷工信息设置
                 detail.setAbsenteeismTime((time_down - time_up) + StringUtil.nullLong(detail.getAbsenteeismTime()));
-                detail.setAbsenteeismCount(1);
-                detail.setAttendanceType(typeDao.getMissType());
+                detail.setActual_attendance_time(0 + StringUtil.nullLong(detail.getActual_attendance_time()));
+                detail.setAbsenteeismCount(1+StringUtil.nullInteger(detail.getAbsenteeismCount()));
+                detail.setAttendanceType(checkType(typeDao.getMissType(),detail.getAttendanceType()));
             }
             ClassUtil.invokeMethod(detail,method_up,Time.class,new Time(actual_time_up));
-            ClassUtil.invokeMethod(detail,method_down,Time.class,new Time(offsetTime));
+            ClassUtil.invokeMethod(detail,method_down,Time.class,offsetTime == 0 ? null : new Time(offsetTime));
             System.out.println("该员工时段下班打卡异常");
         }
 
         else{
             //如果上下班的卡都没打，记录出勤类型为旷工，旷工时间为班制出勤时间，旷工次数+1
             detail.setAbsenteeismTime((time_down - time_up) + StringUtil.nullLong(detail.getAbsenteeismTime()));
-            detail.setAbsenteeismCount(1);
-            detail.setAttendanceType(typeDao.getMissType());
+            detail.setActual_attendance_time(0 + StringUtil.nullLong(detail.getActual_attendance_time()));
+            detail.setAbsenteeismCount(1+StringUtil.nullInteger(detail.getAbsenteeismCount()));
+            detail.setAttendanceType(checkType(typeDao.getMissType(),detail.getAttendanceType()));
             ClassUtil.invokeMethod(detail,method_up,Time.class,null);
             ClassUtil.invokeMethod(detail,method_down,Time.class,null);
             System.out.println("该员工时段旷工");
@@ -402,10 +412,23 @@ public class AttendanceManager {
         return currentTime;
     }
 
-    public void initDetailByAcross(HrmResource resource,Date date,AttendanceSchedule schedule){
-
-    }
-    private void setDetail(AttendanceDetail detail, List<AttendanceRecord> records) {
-
+    /**
+     * 判断出勤类型优先级显示
+     * @param type1
+     * @param type2
+     * @return
+     */
+    private AttendanceType checkType(AttendanceType type1, AttendanceType type2) {
+        if(type1 == null){
+            return type2;
+        }
+        if(type2 == null){
+            return type1;
+        }
+        if (type1.getPriority() > type2.getPriority()) {
+            return type1;
+        }else{
+            return type2;
+        }
     }
 }

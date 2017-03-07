@@ -62,6 +62,7 @@ public class DateUtil {
 
     public static Date getNextDay(Date date){
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         calendar.add(Calendar.DATE,1);
         Date date1 = new Date(calendar.getTimeInMillis());
         return date1;
@@ -113,4 +114,5 @@ public class DateUtil {
         long time = endTime.getTime() - beginTime.getTime();
         return time;
     }
+
 }

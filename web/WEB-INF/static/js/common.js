@@ -48,14 +48,13 @@ function showDelModal(url) {
 }
 
 function deleteData() {
-    console.log("data");
     $.get($('#del-btn').attr('data-del-url'), function (data) {
         $('#confirmModal').modal("hide");
         if (data.status) {
             $.pjax({url: location.href, container: '#main-content'});
             toastr.success("删除成功");
         } else {
-            toastr.error("删除失败，原因未知");
+            toastr.error(data.msg);
         }
     });
 }

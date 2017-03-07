@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/init.jsp" %>
-
 <div style="margin-top: 15px; width: 1150px; background: rgb(255, 255, 255);">
     <div>
         <div class="" style="margin: 20px 0px 30px; opacity: 1; visibility: visible; transform: translateX(0px);">

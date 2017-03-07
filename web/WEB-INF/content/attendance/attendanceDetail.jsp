@@ -140,48 +140,72 @@
                 text: '迟到时间',
                 remind: '',
                 width: '120px',
+                template:function(lateTime,rowObject){
+                    return Math.round(lateTime/60000);
+                }
             },
             {
                 key: 'earlyTime',
                 text: '早退时间',
                 remind: '',
                 width: '120px',
+                template:function(earlyTime,rowObject){
+                    return Math.round(earlyTime/60000);
+                }
             },
             {
                 key: 'absenteeismTime',
                 text: '旷工时间',
                 remind: '',
                 width: '120px',
+                template:function(absenteeismTime,rowObject){
+                    return Math.round(absenteeismTime/60000);
+                }
             },
             {
                 key: 'ot_normal',
                 text: '平时加班',
                 remind: '',
                 width: '120px',
+                template:function(ot_normal,rowObject){
+                    return Math.round(ot_normal/60000);
+                }
             },
             {
                 key: 'ot_weekend',
                 text: '周末加班',
                 remind: '',
                 width: '120px',
+                template:function(ot_weekend,rowObject){
+                    return Math.round(ot_weekend/60000);
+                }
             },
             {
                 key: 'ot_festival',
                 text: '节日加班',
                 remind: '',
                 width: '120px',
+                template:function(ot_festival,rowObject){
+                    return Math.round(ot_festival/60000);
+                }
             },
             {
                 key: 'setting_time',
                 text: '规定出勤时间',
                 remind: '',
                 width: '120px',
+                template:function(setting_time,rowObject){
+                    return Math.round(setting_time/60000);
+                }
             },
             {
                 key: 'actual_time',
                 text: '实际出勤时间',
                 remind: '',
                 width: '120px',
+                template:function(actual_time,rowObject){
+                    return Math.round(actual_time/60000);
+                }
             }
         ],
         ajax_success: function () {

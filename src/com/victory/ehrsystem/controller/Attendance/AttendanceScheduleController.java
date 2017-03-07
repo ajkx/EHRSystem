@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.controller.Attendance;
 
+import com.victory.ehrsystem.entity.attendance.AttendanceGroup;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.sys.SysRole;
 import com.victory.ehrsystem.service.attendance.AttendanceScheduleService;
@@ -78,6 +79,24 @@ public class AttendanceScheduleController {
     @RequestMapping(value = "/{id}")
     public String modal_edit(@PathVariable int id, Model model) {
         AttendanceSchedule schedule = scheduleService.findOne(AttendanceSchedule.class, id);
+        Set<AttendanceGroup> groups = new HashSet<>();
+        groups.addAll(schedule.getMondays());
+        groups.addAll(schedule.getTuesdays());
+        groups.addAll(schedule.getWednesdays());
+        groups.addAll(schedule.getThursdays());
+        groups.addAll(schedule.getFridays());
+        groups.addAll(schedule.getSaturdays());
+        groups.addAll(schedule.getSundays());
+        StringBuilder sb = new StringBuilder();
+        if(groups.size() > 0){
+            for (AttendanceGroup group : groups) {
+                sb.append(group.getName());
+                sb.append(",");
+            }
+            sb.delete(sb.length() - 1, sb.length());
+            model.addAttribute("size", groups.size());
+            model.addAttribute("group", sb.toString());
+        }
         model.addAttribute("schedule", schedule);
         model.addAttribute("topic","编辑班次");
         model.addAttribute("action","/schedule/update");
@@ -99,9 +118,29 @@ public class AttendanceScheduleController {
     @RequiresPermissions(value = "schedule:delete")
     @RequestMapping(value = "/delete/{id}")
     public @ResponseBody JsonVo delete(@PathVariable int id) {
-        scheduleService.delete(AttendanceSchedule.class, id);
+        AttendanceSchedule schedule = scheduleService.findOne(AttendanceSchedule.class, id);
+        Set<AttendanceGroup> groups = new HashSet<>();
+        groups.addAll(schedule.getMondays());
+        groups.addAll(schedule.getTuesdays());
+        groups.addAll(schedule.getWednesdays());
+        groups.addAll(schedule.getThursdays());
+        groups.addAll(schedule.getFridays());
+        groups.addAll(schedule.getSaturdays());
+        groups.addAll(schedule.getSundays());
+        StringBuilder sb = new StringBuilder();
         JsonVo jsonVo = new JsonVo();
-        jsonVo.setStatus(true).setMsg("删除成功");
+        if(groups.size() > 0){
+            for (AttendanceGroup group : groups) {
+                sb.append(group.getName());
+                sb.append(",");
+            }
+            sb.delete(sb.length() - 1, sb.length());
+            jsonVo.setStatus(false).setMsg("删除失败！该班次关联了考勤组" + sb);
+
+        }else{
+            scheduleService.delete(AttendanceSchedule.class, id);
+            jsonVo.setStatus(true).setMsg("删除成功");
+        }
         return jsonVo;
     }
 
@@ -135,21 +174,23 @@ public class AttendanceScheduleController {
         schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
         schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
         schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
-        attendanceTime = DateUtil.getTimeInterval(schedule.getFirst_time_up(), schedule.getFirst_time_down());
+//        attendanceTime = DateUtil.getTimeInterval(schedule.getFirst_time_up(), schedule.getFirst_time_down());
         if(scheduleVo.getScheduleType() > 1){
             schedule.setSecond_time_up(Time.valueOf(scheduleVo.getSecond_up()));
             schedule.setSecond_time_down(Time.valueOf(scheduleVo.getSecond_down()));
-            attendanceTime += DateUtil.getTimeInterval(schedule.getSecond_time_up(), schedule.getSecond_time_down());
+//            attendanceTime += DateUtil.getTimeInterval(schedule.getSecond_time_up(), schedule.getSecond_time_down());
             if(scheduleVo.getScheduleType() > 2){
                 schedule.setThird_time_up(Time.valueOf(scheduleVo.getThird_up()));
                 schedule.setThird_time_down(Time.valueOf(scheduleVo.getThird_down()));
-                attendanceTime += DateUtil.getTimeInterval(schedule.getThird_time_up(), schedule.getThird_time_down());
+//                attendanceTime += DateUtil.getTimeInterval(schedule.getThird_time_up(), schedule.getThird_time_down());
             }
         }
-        schedule.setAttendanceTime(attendanceTime);
+        schedule.setAttendanceTime(scheduleVo.getAttendanceTime()*1000);
         schedule.setAcrossDay(scheduleVo.getAcrossDay() != null && scheduleVo.getAcrossDay() == 1 ? true : false);
-        schedule.setScope_up(scheduleVo.getScope_up());
-        schedule.setScope_down(scheduleVo.getScope_down());
+        schedule.setScope_up(scheduleVo.getScope_up()*60*1000);
+        schedule.setScope_down(scheduleVo.getScope_down()*60*1000);
+        schedule.setOffsetTime(scheduleVo.getOffsetTime()*60*1000);
+        schedule.setDescription(scheduleVo.getDescription());
         return schedule;
     }
 }

@@ -136,8 +136,8 @@ public class AttendanceDetailService extends BaseService<AttendanceDetail>{
             map.put("ot_normal", StringUtil.nullLong(detail.getOvertime_normal()));
             map.put("ot_weekend", StringUtil.nullLong(detail.getOvertime_weekend()));
             map.put("ot_festival", StringUtil.nullLong(detail.getOvertime_festival()));
-            map.put("setting_time", StringUtil.nullFloat(detail.getShould_attendance_time()));
-            map.put("actual_time", StringUtil.nullFloat(detail.getActual_attendance_time()));
+            map.put("setting_time", StringUtil.nullLong(detail.getShould_attendance_time()));
+            map.put("actual_time", StringUtil.nullLong(detail.getActual_attendance_time()));
             mapList.add(map);
         }
         info.setData(mapList);
