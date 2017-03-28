@@ -37,10 +37,10 @@
                     </div>
                     <div class="control-wrapper">
                         <label for="name">所属员工</label>
-                        <input type="hidden" class="form-control mainid" name="resourceId.id" value="${map.resourceId.id}">
+                        <input type="hidden" class="form-control mainid" name="resource.id" value="${map.resource.id}">
                         <div class="create_input_div" onclick="">
                             <%--showSelectList(this,'resource',event)--%>
-                            <span style="margin-left: 7px">${map.resourceId.name}</span>
+                            <span style="margin-left: 7px">${map.resource.name}</span>
                             <i class="fa fa-times" style="float: right;margin-top: 4px;display:none" title="取消"
                                onclick="clearSelectList(this,event)"></i>
                         </div>

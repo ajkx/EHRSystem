@@ -21,6 +21,10 @@ public class DateUtil {
      */
     public static Date getToday(){
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,999);
         Date date = new Date(calendar.getTimeInMillis());
         return date;
     }
@@ -47,6 +51,19 @@ public class DateUtil {
     public static Date getMonthFristDay(){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return new Date(calendar.getTimeInMillis());
+    }
+
+    public static Date getMonthLastDay(Date date){
+        Calendar calendar = Calendar.getInstance();
+        if(date != null){
+            calendar.setTime(date);
+        }
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,999);
         return new Date(calendar.getTimeInMillis());
     }
     /**
@@ -97,8 +114,49 @@ public class DateUtil {
         return dateList;
     }
 
-    public static Date parseDate(String str) {
+    public static List<Date> getDateList(long begin,long end){
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTimeInMillis(begin);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTimeInMillis(end);
+        List<Date> dateList = new ArrayList<>();
+        while(cal1.compareTo(cal2) <= 0){
+            dateList.add(new Date(cal1.getTimeInMillis()));
+            cal1.add(Calendar.DATE,1);
+        }
+        return dateList;
+    }
+
+
+    public static Date parseDateByDay(String str) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sdf.parse(str));
+            calendar.set(Calendar.HOUR,23);
+            calendar.set(Calendar.MINUTE,59);
+            calendar.set(Calendar.SECOND,59);
+            calendar.set(Calendar.MILLISECOND,999);
+            date = new Date(calendar.getTimeInMillis());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static java.util.Date parseUtilDate(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        java.util.Date date = null;
+        try{
+            date = sdf.parse(str);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return date;
+    }
+    public static Date parseDateByMonth(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Date date = null;
         try {
             date = new Date(sdf.parse(str).getTime());
@@ -108,6 +166,21 @@ public class DateUtil {
         return date;
     }
 
+    public static long parseSqlDateAndTime(String date, String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        java.util.Date date1 = null;
+        try {
+            date1 = sdf.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date1.getTime();
+    }
+    public static Time parseTime(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        return null;
+    }
+
     public static long getTimeInterval(Time beginTime, Time endTime) {
         System.out.println(endTime.getTime());
         System.out.println(beginTime.getTime());
@@ -115,4 +188,20 @@ public class DateUtil {
         return time;
     }
 
+    public static long getTimeInterval(java.util.Date beginDate, java.util.Date endDate) {
+        long time = endDate.getTime() - beginDate.getTime();
+        return time;
+    }
+
+    public static java.util.Date getLastTimeInDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Date lastDate = null;
+        calendar.set(Calendar.HOUR,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,999);
+        lastDate = new Date(calendar.getTimeInMillis());
+        return lastDate;
+    }
 }

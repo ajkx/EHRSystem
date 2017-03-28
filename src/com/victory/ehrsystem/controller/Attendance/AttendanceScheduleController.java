@@ -171,7 +171,10 @@ public class AttendanceScheduleController {
         schedule.setName(scheduleVo.getName());
         schedule.setSimplename(scheduleVo.getName().substring(0,1));
         schedule.setScheduleType(scheduleVo.getScheduleType());
+        schedule.setRest(false);
         schedule.setPunch(scheduleVo.getIsPunch() == 1 ? true : false);
+        System.out.println(scheduleVo.getFirst_up());
+
         schedule.setFirst_time_up(Time.valueOf(scheduleVo.getFirst_up()));
         schedule.setFirst_time_down(Time.valueOf(scheduleVo.getFirst_down()));
 //        attendanceTime = DateUtil.getTimeInterval(schedule.getFirst_time_up(), schedule.getFirst_time_down());

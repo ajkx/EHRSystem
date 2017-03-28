@@ -12,10 +12,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>主页</title>
+    <link rel="stylesheet" href="${ctx}/static/css/GridManager.css" />
     <link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/static/css/font-awesome.min.css" />
     <link rel="stylesheet" href="${ctx}/static/css/antd.css" />
-    <link rel="stylesheet" href="${ctx}/static/css/GridManager.css" />
+
     <link rel="stylesheet" href="${ctx}/static/css/base.css" />
     <link rel="stylesheet" href="${ctx}/static/css/menu.css" />
 

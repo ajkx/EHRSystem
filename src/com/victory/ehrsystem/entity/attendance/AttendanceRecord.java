@@ -25,26 +25,33 @@ public class AttendanceRecord {
     private Card card;
 
     @ManyToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "resourceId",nullable = false)
-    private HrmResource resourceId;
+    @JoinColumn(name = "resource",nullable = false)
+    private HrmResource resource;
 
     @Column(name = "machineNo")
     private String machineNo;
 
-    @Column(name = "punchDate")
-    private Date punchDate;
+    @Column(name = "date")
+    private Date date;
 
     @Column(name = "punchTime")
     private Time punchTime;
+
+    //1为从考勤机读取，2为签卡类型
+    @Column(name = "type")
+    private Integer type;
+
+    @Column
+    private String reason;
 
     public AttendanceRecord() {
     }
 
     public AttendanceRecord(Card card, HrmResource resourceId, String machineNo, Date punchDate, Time punchTime) {
         this.card = card;
-        this.resourceId = resourceId;
+        this.resource = resourceId;
         this.machineNo = machineNo;
-        this.punchDate = punchDate;
+        this.date = punchDate;
         this.punchTime = punchTime;
     }
 
@@ -64,12 +71,12 @@ public class AttendanceRecord {
         this.card = card;
     }
 
-    public HrmResource getResourceId() {
-        return resourceId;
+    public HrmResource getResource() {
+        return resource;
     }
 
-    public void setResourceId(HrmResource resourceId) {
-        this.resourceId = resourceId;
+    public void setResource(HrmResource resource) {
+        this.resource = resource;
     }
 
     public String getMachineNo() {
@@ -80,12 +87,12 @@ public class AttendanceRecord {
         this.machineNo = machineNo;
     }
 
-    public Date getPunchDate() {
-        return punchDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setPunchDate(Date punchDate) {
-        this.punchDate = punchDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Time getPunchTime() {
@@ -94,5 +101,21 @@ public class AttendanceRecord {
 
     public void setPunchTime(Time punchTime) {
         this.punchTime = punchTime;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

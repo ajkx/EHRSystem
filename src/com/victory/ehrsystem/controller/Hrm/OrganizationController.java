@@ -46,6 +46,10 @@ public class OrganizationController {
 
     }
 
+    @RequestMapping(value = "modal/list")
+    public String modal_list(){
+        return "modal/hrm/HrmOrganizationAndResource";
+    }
     /**
      * 返回组织机构树的json数据
      * @return

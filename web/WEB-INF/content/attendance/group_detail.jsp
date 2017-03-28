@@ -26,6 +26,10 @@
                 <input type="hidden" name="schedules" id="schedules" value="<c:forEach items="${group.schedules}" var="schedule">${schedule.id},</c:forEach>"/>
                 <input type="hidden" id="currentNode" value=""/>
 
+                <div>
+                    <a href="/group.html" data-pjax="#main-content" class="returnLink">< 返回</a>
+                </div>
+
                 <div class="ant-row ant-form-item">
                     <div class="ant-col-2 ant-form-item-label"><label class="">考勤组名称</label></div>
                     <div class="ant-col-8">
@@ -38,7 +42,7 @@
                     <div class="ant-col-2 ant-form-item-label"><label class="">考勤人员</label></div>
                     <div class="ant-col-8">
                         <div class="ant-form-item-control ">
-                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg" onclick="chooseModal(this,'/resource/modal/list')" data-index="resourceIds">
+                            <button type="button" class="ant-btn ant-btn-ghost ant-btn-lg" onclick="chooseModal(this,'/resource/modal/list')" data-index="resourceIds" id="resourceBtn">
                                  <span>
                                     <c:choose>
                                         <c:when test="${group.resources.size() > 0}">
@@ -128,7 +132,8 @@
                                                                             <input type="checkbox"
                                                                                    class="ant-checkbox-input"
                                                                                    data-input="monday" data-check="true"
-                                                                                   value="off"></span>
+                                                                                   value="<c:choose><c:when test="${group.monday != null && group.monday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>">
+                                                                            </span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -161,7 +166,7 @@
                                                                                        class="ant-checkbox-input"
                                                                                        data-input="tuesday"
                                                                                        data-check="true"
-                                                                                       value="off"></span>
+                                                                                       value="<c:choose><c:when test="${group.tuesday != null && group.tuesday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>"></span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -195,7 +200,7 @@
                                                                                        class="ant-checkbox-input"
                                                                                        data-input="wednesday"
                                                                                        data-check="true"
-                                                                                       value="off"></span>
+                                                                                       value="<c:choose><c:when test="${group.wednesday != null && group.wednesday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>"></span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -229,7 +234,7 @@
                                                                                        class="ant-checkbox-input"
                                                                                        data-input="thursday"
                                                                                        data-check="true"
-                                                                                       value="off"></span>
+                                                                                       value="<c:choose><c:when test="${group.thursday != null && group.thursday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>"></span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -263,7 +268,7 @@
                                                                                        class="ant-checkbox-input"
                                                                                        data-input="friday"
                                                                                        data-check="true"
-                                                                                       value="off"></span>
+                                                                                       value="<c:choose><c:when test="${group.friday != null && group.friday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>"></span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -297,7 +302,7 @@
                                                                                        class="ant-checkbox-input"
                                                                                        data-input="saturday"
                                                                                        data-check="true"
-                                                                                       value="off"></span>
+                                                                                       value="<c:choose><c:when test="${group.saturday != null && group.saturday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>"></span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -331,7 +336,7 @@
                                                                                        class="ant-checkbox-input"
                                                                                        data-input="sunday"
                                                                                        data-check="true"
-                                                                                       value="off"></span>
+                                                                                       value="<c:choose><c:when test="${group.sunday != null && group.sunday.rest != true}">on</c:when><c:otherwise>off</c:otherwise></c:choose>"></span>
                                                                             </label>
                                                                             </span>
                                                                         </td>
@@ -517,4 +522,11 @@
         });
 
     });
+
+
+    //选择人员的回调清空方法
+    function resourceClearCallBack(){
+        $('#resourceBtn').text('请选择');
+        $('#resourceIds').val('');
+    }
 </script>

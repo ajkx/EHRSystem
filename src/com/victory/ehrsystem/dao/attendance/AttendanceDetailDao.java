@@ -21,5 +21,9 @@ public interface AttendanceDetailDao extends BaseDao<AttendanceDetail>{
 
     List<AttendanceDetail> findByDate(Date date);
 
-    PageInfo findByPage(Date beginDate, Date endDate, List<HrmResource> resources,int pageNo, int pageSize);
+    List<AttendanceDetail> findByHrmResourceAndDate(HrmResource resource, Date date);
+
+    PageInfo findDetail(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize);
+
+    PageInfo findCollect(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize);
 }

@@ -61,6 +61,9 @@ public class AttendanceGroup {
             inverseJoinColumns = @JoinColumn(name = "resource_id",referencedColumnName = "id",unique = true))
     private Set<HrmResource> resources;
 
+    @Column(name = "resourceStr")
+    private String resourceStr;
+
     //自由排班相关的班次
     @ManyToMany(targetEntity = AttendanceSchedule.class)
     @JoinTable(name = "attendanceGroup_Schedule",
@@ -206,5 +209,13 @@ public class AttendanceGroup {
 
     public void setNoNeedPunchDate(Set<Date> noNeedPunchDate) {
         this.noNeedPunchDate = noNeedPunchDate;
+    }
+
+    public String getResourceStr() {
+        return resourceStr;
+    }
+
+    public void setResourceStr(String resourceStr) {
+        this.resourceStr = resourceStr;
     }
 }

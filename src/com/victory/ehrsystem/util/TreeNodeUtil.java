@@ -4,6 +4,7 @@ import com.victory.ehrsystem.entity.hrm.HrmDepartment;
 import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.hrm.OrganizationService;
 import com.victory.ehrsystem.vo.JsonTreeData;
+import com.victory.ehrsystem.vo.JsonTreeState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,18 @@ public class TreeNodeUtil {
                 List<JsonTreeData> deplist = convertDepTreeList(organizationService.findRootDepartmentBySubcompany(subCompany),organizationService,type);
                 deplist.addAll(sublist);
                 temp.setIcon("fa fa-home");
+                if(subCompany.getParent() == null){
+                    JsonTreeState state = new JsonTreeState();
+                    state.setExpanded(true);
+                    temp.setState(state);
+                }
                 String link = "";
                 if(type.equals("organization")){
                     link = "/organization/subcompany/" + subCompany.getId() + ".html";
                 }else if(type.equals("resource")){
+                    link = "/resource/subcompany/" + subCompany.getId();
+                }else if(type.equals("checked")){
+                   // temp.setSelectable(false);
                     link = "/resource/subcompany/" + subCompany.getId();
                 }
                 temp.setHref(link);
@@ -62,6 +71,8 @@ public class TreeNodeUtil {
             if(type.equals("organization")){
                 link = "/organization/department/" + department.getId() + ".html";
             }else if(type.equals("resource")){
+                link = "/resource/department/" + department.getId();
+            } else if (type.equals("checked")) {
                 link = "/resource/department/" + department.getId();
             }
             temp.setHref(link);

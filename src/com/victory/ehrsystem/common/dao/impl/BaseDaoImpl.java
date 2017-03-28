@@ -1,6 +1,8 @@
 package com.victory.ehrsystem.common.dao.impl;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import com.victory.ehrsystem.entity.attendance.AttendanceDetail;
+import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.entity.sys.SysResource;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.aspectj.weaver.ast.Or;
@@ -9,6 +11,7 @@ import org.hibernate.criterion.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -222,8 +225,35 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 //        HashSet h = new HashSet(criteria.list());
 //        List list = new ArrayList(h);
         //获取分页前查询的总数
+        List list = criteria.list();
         Long totals = (Long) criteria1.setProjection(Projections.rowCount()).uniqueResult();
-        PageInfo pageInfo = new PageInfo(totals, criteria.list());
+        PageInfo pageInfo = new PageInfo(totals, list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo list(Class<T> entityClazz,Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria1 = session.createCriteria(entityClazz);
+        Criteria criteria2 = session.createCriteria(entityClazz);
+
+        criteria1.add(Restrictions.between("date", beginDate, endDate));
+        if(resources != null && resources.size() != 0){
+            criteria1.add(Restrictions.in("resource", resources));
+        }
+
+
+        criteria2.add(Restrictions.between("date", beginDate, endDate));
+        if(resources != null && resources.size() != 0) {
+            criteria2.add(Restrictions.in("resource", resources));
+        }
+
+        criteria1.setFirstResult((pageNo - 1) * pageSize);
+        criteria1.setMaxResults(pageSize);
+        criteria1.addOrder(Order.desc("id"));
+        List list = criteria1.list();
+        Long totals = (Long) criteria2.setProjection(Projections.rowCount()).uniqueResult();
+        PageInfo pageInfo = new PageInfo(totals, list);
         return pageInfo;
     }
 }

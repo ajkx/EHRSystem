@@ -1,8 +1,10 @@
 package com.victory.ehrsystem.common.dao;
 
+import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.vo.PageInfo;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +77,5 @@ public interface BaseDao<T> {
      */
     PageInfo findByPage(Class<T> entityClazz, Map<String, String> map, int pageNo, int pageSize);
 
-
+    PageInfo list(Class<T> entityClazz,Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize);
 }

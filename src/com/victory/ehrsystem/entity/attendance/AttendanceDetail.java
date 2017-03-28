@@ -23,8 +23,8 @@ public class AttendanceDetail {
     private String card;
 
     @ManyToOne(targetEntity = HrmResource.class)
-    @JoinColumn(name = "resourceId",nullable = false)
-    private HrmResource resourceId;
+    @JoinColumn(name = "resource",nullable = false)
+    private HrmResource resource;
 
     @ManyToOne(targetEntity = AttendanceSchedule.class)
     @JoinColumn(name = "scheduleId")
@@ -37,25 +37,51 @@ public class AttendanceDetail {
     @Column
     private Time first_time_up;
 
+    //第一次上班打卡结果
+    //出勤类别
+    @ManyToOne(targetEntity = AttendanceType.class)
+    @JoinColumn(name="firstUpType")
+    private AttendanceType firstUpType;
+
     //第一次下班打卡时间
     @Column
     private Time first_time_down;
+
+    @ManyToOne(targetEntity = AttendanceType.class)
+    @JoinColumn(name="firstDownType")
+    private AttendanceType firstDownType;
 
     //第二次上班打卡时间
     @Column
     private Time second_time_up;
 
+    @ManyToOne(targetEntity = AttendanceType.class)
+    @JoinColumn(name="SecondUpType")
+    private AttendanceType secondUpType;
+
     //第二次下班打卡时间
     @Column
     private Time second_time_down;
+
+    @ManyToOne(targetEntity = AttendanceType.class)
+    @JoinColumn(name="SecordDownType")
+    private AttendanceType secondDownType;
 
     //第三次上班打卡时间
     @Column
     private Time third_time_up;
 
+    @ManyToOne(targetEntity = AttendanceType.class)
+    @JoinColumn(name="ThirdUpType")
+    private AttendanceType thirdUpType;
+
     //第三次下班打卡时间
     @Column
     private Time third_time_down;
+
+    @ManyToOne(targetEntity = AttendanceType.class)
+    @JoinColumn(name="ThirdDownType")
+    private AttendanceType thirdDownType;
 
     //迟到时间
     @Column
@@ -96,6 +122,10 @@ public class AttendanceDetail {
     //事假
     @Column
     private Long leave_personal;
+
+    //调休
+    @Column
+    private Long leave_rest;
 
     //病假
     @Column
@@ -165,12 +195,12 @@ public class AttendanceDetail {
         this.card = card;
     }
 
-    public HrmResource getResourceId() {
-        return resourceId;
+    public HrmResource getResource() {
+        return resource;
     }
 
-    public void setResourceId(HrmResource resourceId) {
-        this.resourceId = resourceId;
+    public void setResource(HrmResource resource) {
+        this.resource = resource;
     }
 
     public AttendanceSchedule getSchedule() {
@@ -411,5 +441,61 @@ public class AttendanceDetail {
 
     public void setAttendanceType(AttendanceType attendanceType) {
         this.attendanceType = attendanceType;
+    }
+
+    public Long getLeave_rest() {
+        return leave_rest;
+    }
+
+    public void setLeave_rest(Long leave_rest) {
+        this.leave_rest = leave_rest;
+    }
+
+    public AttendanceType getFirstUpType() {
+        return firstUpType;
+    }
+
+    public void setFirstUpType(AttendanceType firstUpType) {
+        this.firstUpType = firstUpType;
+    }
+
+    public AttendanceType getFirstDownType() {
+        return firstDownType;
+    }
+
+    public void setFirstDownType(AttendanceType firstDownType) {
+        this.firstDownType = firstDownType;
+    }
+
+    public AttendanceType getSecondUpType() {
+        return secondUpType;
+    }
+
+    public void setSecondUpType(AttendanceType secondUpType) {
+        this.secondUpType = secondUpType;
+    }
+
+    public AttendanceType getSecondDownType() {
+        return secondDownType;
+    }
+
+    public void setSecondDownType(AttendanceType secondDownType) {
+        this.secondDownType = secondDownType;
+    }
+
+    public AttendanceType getThirdUpType() {
+        return thirdUpType;
+    }
+
+    public void setThirdUpType(AttendanceType thirdUpType) {
+        this.thirdUpType = thirdUpType;
+    }
+
+    public AttendanceType getThirdDownType() {
+        return thirdDownType;
+    }
+
+    public void setThirdDownType(AttendanceType thirdDownType) {
+        this.thirdDownType = thirdDownType;
     }
 }

@@ -34,7 +34,15 @@ toastr.options = {
     showMethod: "fadeIn",
     hideMethod: "fadeOut"
 };
-
+var currentPage;
+function chooseResource(url,page){
+    if(currentPage == page) {
+        $('#edit-modal').modal("show");
+    }else {
+        showEditModal(url);
+        currentPage = page;
+    }
+}
 //弹出修改的模态框
 function showEditModal(url) {
     $('#edit-modal').load(url, function (resp) {
@@ -119,6 +127,35 @@ function ajaxSubmit(node) {
     })
 }
 
+function ajaxSubmitGet(url,successFn){
+    $.ajax({
+        url:url,
+        type:"GET",
+        dataType:"json",
+
+        success:function (result) {
+            successFn(result);
+        },
+        error:function(e){
+            toastr.error("error!");
+        }
+    })
+}
+function ajaxSubmitPost(node,successFn){
+    var form = $(node);
+    $.ajax({
+        url:form.attr("action"),
+        type:"POST",
+        dataType:"json",
+        data: form.serialize(),
+        success:function (result) {
+            successFn(result);
+        },
+        error:function(e){
+            toastr.error("error!");
+        }
+    })
+}
 // 日期格式化,不是插件的代码,只用于处理时间格式化
 Date.prototype.format = function (fmt) {
     var o = {
@@ -156,4 +193,10 @@ function CastChar(str){
     var result;
     result = str.replace(/，/g, ",");
     return result;
+}
+
+function CastStringToDate(str){
+    var dateStr;
+    dateStr = str.replace(/-/g, "/");
+    return new Date(dateStr);
 }

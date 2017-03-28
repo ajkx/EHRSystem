@@ -851,6 +851,9 @@
         maxView: 3,
         language: 'zh-CN',
         todayBtn: true,
-        timezone: "中国标准时间"
+        timezone: "中国标准时间",
+    }).on("changeDate",function(){
+        console.log($(this).val());
     });
+
 </script>

@@ -6,6 +6,7 @@ import com.victory.ehrsystem.entity.hrm.HrmDepartment;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 import com.victory.ehrsystem.service.BaseService;
+import com.victory.ehrsystem.service.hrm.OrganizationService;
 import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class HrmResourceService extends BaseService<HrmResource>{
 
     @Autowired
     private HrmResourceDao hrmResourceDao;
+
+    @Autowired
+    private OrganizationService organizationService;
 
     public List<HrmResource> findBySchedule(AttendanceSchedule schedule){
         return null;
@@ -72,4 +76,33 @@ public class HrmResourceService extends BaseService<HrmResource>{
         return hrmResourceDao.findByName(names);
     }
 
+    public List<HrmResource> splitForHrmResource(String str) {
+        String[] array = str.split(",");
+        List<HrmResource> resources = new ArrayList<>();
+        for (String temp : array) {
+            if(temp.equals("")) continue;
+            //员工ID
+            if(temp.contains("r")){
+                int id = Integer.parseInt(temp.substring(1, temp.length()));
+                HrmResource resource = findOne(HrmResource.class, id);
+                resources.add(resource);
+            }
+            //分部ID
+            else if(temp.contains("s")){
+                int id = Integer.parseInt(temp.substring(1, temp.length()));
+                List<HrmResource> list = findBySubCompany(organizationService.findOne_SubCompany(id));
+                resources.addAll(list);
+            }
+            //部门ID
+            else if(temp.contains("d")){
+                int id = Integer.parseInt(temp.substring(1, temp.length()));
+                List<HrmResource> list = findByDepartment(organizationService.findOne_Department(id));
+                resources.addAll(list);
+            }else{
+                HrmResource resource = findOne(HrmResource.class, Integer.parseInt(temp));
+                resources.add(resource);
+            }
+        }
+        return resources;
+    }
 }

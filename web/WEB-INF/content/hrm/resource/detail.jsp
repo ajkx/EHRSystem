@@ -18,7 +18,7 @@
             </div>
             <div class="col-xs-12">
                 <c:choose>
-                    <c:when test="${resource.status == '离职'}">
+                    <c:when test="${resource.status == '2'}">
                         <a class="ant-btn w100 float-right">返聘</a>
                     </c:when>
                     <c:otherwise>

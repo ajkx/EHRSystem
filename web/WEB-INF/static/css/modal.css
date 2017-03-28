@@ -299,7 +299,9 @@
     border: solid 0px #e0e0e0;
     width: 100%;
     font-size: 14px;
+
 }
+
 
 .select-menu .fa-search{
     line-height: 38px;
@@ -400,3 +402,5 @@
     top: 0;
     left: 40%;
 }
+
+

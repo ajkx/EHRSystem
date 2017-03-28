@@ -63,6 +63,7 @@
                     var i = $(element).find('i');
                     var id = $(element).attr("data-id");
                     var name = $(element).attr("data-name");
+                    //排除已选的
                     if (!i.hasClass('fa-check-square')) {
                         i.addClass("fa-check-square");
                         addTag(id, name);
@@ -99,6 +100,9 @@
         //拼接搜索表达式
         var pattern = "";
         for(var i = 0; i < values.length; i++) {
+            if(values[i] == ""){
+                continue;
+            }
             pattern += values[i] + "|";
         }
         pattern = pattern.substring(0, pattern.length - 1);
@@ -125,6 +129,23 @@
         $("#" + nodeStr).val(value);
         $('button[data-index="'+nodeStr+'"]').children("span").text(count+"人");
     }
+
+    //执行清除操作
+    function clearData(){
+        //清空组织架构树的清理
+       // $('#organization-tree').treeview('uncheckAll', { silent: true });
+        //清空待选列表
+        $("#resource-list-choose").empty();
+        //清空已选列表
+        $('#resource-list').empty();
+        $('.checkAll').children('i').removeClass('fa-check-square');
+
+        $("#" + nodeStr).val('');
+        $('button[data-index="'+nodeStr+'"]').children("span").text("请选择");
+//        resourceClearCallBack();
+    }
+
+
     function searchResource(url,value) {
 
         $.get(url,{name:value}, function (result) {
@@ -136,11 +157,18 @@
                 var i = $(".checkAll").children("i");
                 i.removeClass("fa-check-square");
 
+                var index1 = 0;
                 //遍历返回的数据
                 $(result.data).each(function (index, element) {
                     //添加员工待选列表
-                    addResourceList(ul, element);
+                    index1 = addResourceList(ul, element,index1);
                 });
+
+                //如果新搜索的人员都是已选的，即checkAll为true
+                if(index1 == result.data.length && index1 != 0){
+                    i.addClass("fa-check-square");
+                }
+
                 //绑定checkDiv点击事件
                 bindCheckDiv();
             } else {
@@ -184,7 +212,7 @@
             }
         });
     }
-    function addResourceList(ul, element) {
+    function addResourceList(ul, element,index) {
         var li = $("<li></li>").attr("data-id", element.id).attr("data-name", element.name);
         var span = $("<span></span>").text(element.name);
         var span2 = $("<span class='span-name'></span>").text(element.department);
@@ -194,12 +222,14 @@
         var currentLi = $('#resource-list li[data-id="' + element.id + '"]');
         if (currentLi.length > 0) {
             i.addClass("fa-check-square");
+            index++;
         }
         div.append(i);
         li.append(span);
         li.append(span2);
         li.append(div);
         ul.append(li);
+        return index;
     }
     function addTag(id, name) {
         var ul = $("#resource-list");
@@ -260,6 +290,7 @@
             </div>
         </div>
         <div class="modal-footer">
+            <button class="u-btn u-btn-lg" data-dismiss="modal" type="button" onclick="clearData()">清 除</button>
             <button class="u-btn u-btn-lg" data-dismiss="modal" type="button">取 消</button>
             <button class="u-btn u-btn-primary u-btn-lg" style="margin-left: 8px" onclick="setResources()">确 定</button>
         </div>

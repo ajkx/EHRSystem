@@ -2,15 +2,17 @@ package com.victory.ehrsystem.service;
 
 
 import com.victory.ehrsystem.common.dao.BaseDao;
+import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
+import com.victory.ehrsystem.util.DateUtil;
+import com.victory.ehrsystem.util.StringUtil;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * 抽象service基类，提供通用方法
@@ -107,7 +109,7 @@ public abstract class BaseService<T> {
         return baseDao.findAll(entityClazz);
     }
 
-    public PageInfo findByPage(Class<T> entityClazz, HttpServletRequest request){
+    public PageInfo     findByPage(Class<T> entityClazz, HttpServletRequest request){
         Map<String, String> map = new HashMap<>();
         int pageNo = Integer.parseInt(request.getParameter("cPage"));
         int pageSize = Integer.parseInt(request.getParameter("pSize"));
@@ -133,4 +135,32 @@ public abstract class BaseService<T> {
         return baseDao.findCount(entityClazz);
     }
 
+
+    public PageInfo list(Class entityClazz,HttpServletRequest request, HrmResourceService resourceService) {
+        int pageNo = Integer.parseInt(request.getParameter("cPage"));
+        int pageSize = Integer.parseInt(request.getParameter("pSize"));
+        String beginStr = StringUtil.nullString(request.getParameter("beginDate"));
+        String endStr = StringUtil.nullString(request.getParameter("endDate"));
+        String resources = StringUtil.nullString(request.getParameter("resources"));
+        Date beginDate = null;
+        Date endDate = null;
+        List<HrmResource> resourceList = null;
+        //如果开始或结束日期为空，则取当前月的第一天和今天
+        if ("".equals(beginStr) || "".equals(endStr)) {
+            endDate = DateUtil.getToday();
+            beginDate = DateUtil.getMonthFristDay();
+        }else{
+            beginDate = DateUtil.parseDateByDay(beginStr);
+            endDate = DateUtil.parseDateByDay(endStr);
+        }
+        //如果人员条件不为空，则解析前台传来的resources字段为Hrmresource集合
+        if(!"".equals(resources)){
+            resourceList = resourceService.splitForHrmResource(resources);
+            //排除重复的数据
+            Set<HrmResource> resourceSet = new HashSet<>(resourceList);
+            resourceList.clear();
+            resourceList.addAll(resourceSet);
+        }
+        return baseDao.list(entityClazz, beginDate, endDate, resourceList, pageNo, pageSize);
+    }
 }

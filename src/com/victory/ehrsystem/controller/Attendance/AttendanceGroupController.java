@@ -12,7 +12,6 @@ import com.victory.ehrsystem.vo.ColInfo;
 import com.victory.ehrsystem.vo.JsonVo;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.management.AttributeNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -180,7 +178,7 @@ public class AttendanceGroupController {
             group = groupService.findOne(AttendanceGroup.class, Integer.parseInt(id));
             msg = "更新成功";
         }
-        List<HrmResource> list = StringUtil.splitForList(groupService,resourceStr,HrmResource.class);
+        List<HrmResource> list = resourceService.splitForHrmResource(resourceStr);
         Set<HrmResource> set = new HashSet<>();
         set.addAll(list);
         group.setResources(set);

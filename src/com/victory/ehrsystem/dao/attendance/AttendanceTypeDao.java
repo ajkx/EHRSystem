@@ -41,4 +41,9 @@ public interface AttendanceTypeDao extends BaseDao<AttendanceType>{
      */
     AttendanceType getMissType();
 
+    /**
+     * 异常考勤
+     * @return
+     */
+    AttendanceType getAbnormalType();
 }

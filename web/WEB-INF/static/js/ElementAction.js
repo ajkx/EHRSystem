@@ -197,7 +197,7 @@ function searchData(url){
             if(result.count > 1){
                 console.log("无数据");
             }else{
-                console.log
+                console.log("");
             }
         }
     });
@@ -205,6 +205,7 @@ function searchData(url){
 
 //用于辨识打开的浏览按钮的返回值作用在哪些字段里，页面必须有currentNode这个input
 function chooseModal(node,url) {
+    currentPage = "";
     $('#currentNode').val($(node).attr("data-index"));
     showEditModal(url);
 }

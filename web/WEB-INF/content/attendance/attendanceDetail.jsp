@@ -22,7 +22,7 @@
         supportAdjust: false,
         supportSorting: true,
         isCombSorting: true,
-        ajax_url: '/detail/list',
+        ajax_url: '/detail/list/detail',
         ajax_type: 'GET',
         pageSize: 10,
         height: "auto",
@@ -221,15 +221,6 @@
 
 
         var tr = $("<tr></tr>");
-//        for(var i = 0; i < 26; i++) {
-//            if(i > 5 && i < 17){
-//                tr.append($("<th></th>").text("打卡时间"));
-//                tr.append($("<th></th>").text("打卡结果"));
-//                i++;
-//            }else{
-//                tr.append($("<th></th>"));
-//            }
-//        }
         for (var i = 0; i < 12; i++) {
             tr.append($("<th></th>").text("打卡时间"));
             tr.append($("<th></th>").text("打卡结果"));
@@ -256,8 +247,52 @@
                 $(tds[i]).attr("rowspan", "2");
             }
         }
+
+        //初始化日期选择器
+        var datePicker = $('.datetimepicker');
+        datePicker.datetimepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            startView: 2,
+            minView: 2,
+            maxView: 4,
+            language: 'zh-CN',
+            todayBtn: true,
+            clearBtn:false,
+            timezone: "中国标准时间",
+        }).on('changeDate',function(e){
+            searchData();
+        });
     });
 
+    function resourceCallBack(value,text){
+        if(text.length > 10){
+            text = text.substring(0, 9) + "....";
+        }
+        $('#resourceBtn').text(text);
+        $('#resourceStr').val(value);
+        searchData();
+
+    }
+
+    //选择人员的回调清空方法
+    function resourceClearCallBack(){
+        $('#resourceBtn').text('全公司');
+        $('#resourceStr').val('');
+        searchData();
+    }
+
+    //搜索
+    function searchData(){
+        var query = {
+            beginDate: document.querySelector('[name="beginDate"]').value,
+            endDate: document.querySelector('[name="endDate"]').value,
+            resources: document.querySelector('[name="resources"]').value,
+        }
+        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', function () {
+            console.log('搜索成功...');
+        });
+    }
 </script>
 <div class="topic-toolbar">
 </div>
@@ -269,19 +304,20 @@
                     <span>时间：</span>
                      <span class="ant-calendar-picker" style="width: 110px; margin-top: 0px;">
                             <span>
-                            <input readonly="" value="${beginDate}" placeholder="请选择开始日期"
+                            <input readonly="" value="${beginDate}" name="beginDate" placeholder="请选择开始日期"
                                    class="ant-input datetimepicker">
                             </span>
                     </span>
                     <span style="margin:0 8px">至</span>
                      <span class="ant-calendar-picker" style="width: 110px; margin-top: 0px;">
                             <span>
-                            <input readonly="" value="${endDate}" placeholder="请选择结束日期"
+                            <input readonly="" value="${endDate}" name="endDate" placeholder="请选择结束日期"
                                    class="ant-input datetimepicker">
                             </span>
                     </span>
+                    <input type="hidden" value="" name="resources" id="resourceStr">
                     <span style="margin-left: 50px;">部门/人员：</span>
-                    <button type="button" class="ant-btn">
+                    <button type="button" id="resourceBtn" class="ant-btn" onclick="chooseResource('/organization/modal/list','attendanceDetail');">
                         <span>全公司</span>
                     </button>
                     <div class="detail-line"></div>
@@ -296,17 +332,3 @@
     </div>
     <table grid-manager="main"></table>
 </div>
-<script>
-    var datePicker = $('.datetimepicker');
-    datePicker.datetimepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true,
-        startView: 2,
-        minView: 2,
-        maxView: 4,
-        language: 'zh-CN',
-        todayBtn: true,
-        clearBtn:false,
-        timezone: "中国标准时间"
-    });
-</script>

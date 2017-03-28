@@ -36,35 +36,42 @@ public class StringUtil {
         }
     }
 
-    public static long nullLong(Long num){
+    public static long nullLong(Object num){
         if (num == null) {
             return 0;
         } else {
-            return num;
+            return (long)num;
         }
     }
 
-    public static int nullInteger(Integer num){
+    public static int nullInteger(Object num){
         if (num == null) {
             return 0;
         } else {
-            return num;
+            return (int)num;
         }
     }
-
-    public static float nullFloat(Float num){
+    public static float nullFloat(Object num){
         if (num == null) {
             return 0;
         } else {
-            return num;
+            return (float)num;
         }
     }
 
-    public static boolean nullBoolean(Boolean num){
+    public static Double nullDouble(Object num){
+        if (num == null) {
+            return 0D;
+        } else {
+            return (Double)num;
+        }
+    }
+
+    public static boolean nullBoolean(Object num){
         if (num == null) {
             return false;
         } else {
-            return num;
+            return (boolean)num;
         }
     }
 
@@ -153,5 +160,6 @@ public class StringUtil {
         }
         return list;
     }
+
 
 }

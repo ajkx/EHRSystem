@@ -73,6 +73,10 @@
                 <value>com.victory.ehrsystem.entity.attendance.AttendanceGroup</value>
                 <value>com.victory.ehrsystem.entity.attendance.DateRecord</value>
                 <value>com.victory.ehrsystem.entity.attendance.AcrossDaySchedule</value>
+                <value>com.victory.ehrsystem.entity.attendance.OverTimeRecord</value>
+                <value>com.victory.ehrsystem.entity.attendance.OverTimeSetting</value>
+                <value>com.victory.ehrsystem.entity.attendance.LevelRecord</value>
+                <value>com.victory.ehrsystem.entity.attendance.LevelType</value>
                 <!--消费信息表-->
                 <value>com.victory.ehrsystem.entity.consume.Card</value>
             </list>
@@ -116,6 +120,10 @@
     <bean id="attendanceGroupDao" class="com.victory.ehrsystem.dao.attendance.impl.AttendanceGroupDaoImpl" parent="daoTemplate"/>
     <bean id="dateRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.DateRecordDaoImpl" parent="daoTemplate"/>
     <bean id="acrossDaySchedule" class="com.victory.ehrsystem.dao.attendance.impl.AcrossDayScheduleDaoImpl" parent="daoTemplate"/>
+    <bean id="overTimeDao" class="com.victory.ehrsystem.dao.attendance.impl.OverTimeDaoImpl" parent="daoTemplate"/>
+    <bean id="overTimeSettingDao" class="com.victory.ehrsystem.dao.attendance.impl.OverTimeSettingDaoImpl" parent="daoTemplate"/>
+    <bean id="levelRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.LevelRecordDaoImpl" parent="daoTemplate"/>
+    <bean id="levelTypeDao" class="com.victory.ehrsystem.dao.attendance.impl.LevelTypeDaoImpl" parent="daoTemplate"/>
     <!--配置hibernate结束-->
 
     <!--配置hibernate事务-->

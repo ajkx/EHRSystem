@@ -22,7 +22,7 @@ import java.util.List;
 public class AttendanceDetailDaoImpl extends BaseDaoImpl<AttendanceDetail> implements AttendanceDetailDao{
     @Override
     public List<AttendanceDetail> findByHrmResource(HrmResource resource) {
-        return find("select a from AttendanceDetail where resourceId = ?0",resource);
+        return find("select a from AttendanceDetail where resource = ?0",resource);
     }
 
     @Override
@@ -31,27 +31,70 @@ public class AttendanceDetailDaoImpl extends BaseDaoImpl<AttendanceDetail> imple
     }
 
     @Override
-    public PageInfo findByPage(Date beginDate, Date endDate, List<HrmResource> resources,int pageNo,int pageSize) {
+    public List<AttendanceDetail> findByHrmResourceAndDate(HrmResource resource, Date date) {
+        return find("select a from AttendanceDetail a where resource = ?0 and date = ?1",resource,date);
+    }
+
+    @Override
+    public PageInfo findDetail(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize) {
+//        Session session = getSessionFactory().getCurrentSession();
+//        Criteria criteria = session.createCriteria(AttendanceDetail.class);
+//        Criteria criteria2 = session.createCriteria(AttendanceDetail.class);
+//
+//        criteria.add(Restrictions.between("date", beginDate, endDate));
+//        if(resources != null && resources.size() != 0){
+//            criteria.add(Restrictions.in("resourceId", resources));
+//        }
+//
+//
+//        criteria2.add(Restrictions.between("date", beginDate, endDate));
+//        if(resources != null && resources.size() != 0) {
+//            criteria2.add(Restrictions.in("resourceId", resources));
+//        }
+//
+//        criteria.setFirstResult((pageNo - 1) * pageSize);
+//        criteria.setMaxResults(pageSize);
+//        List list = criteria.list();
+//        Long totals = (Long) criteria2.setProjection(Projections.rowCount()).uniqueResult();
+//        PageInfo pageInfo = new PageInfo(totals, list);
+//        return pageInfo;
+//        return findByList(AttendanceDetail.class, beginDate, endDate, resources, pageNo, pageSize);
+        return null;
+    }
+
+    @Override
+    public PageInfo findCollect(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize) {
         Session session = getSessionFactory().getCurrentSession();
-        Criteria criteria1 = session.createCriteria(AttendanceDetail.class);
-        Criteria criteria2 = session.createCriteria(AttendanceDetail.class);
+        Criteria criteria = session.createCriteria(AttendanceDetail.class);
 
-        criteria1.add(Restrictions.between("date", beginDate, endDate));
+        criteria.add(Restrictions.between("date", beginDate, endDate));
         if(resources != null && resources.size() != 0){
-            criteria1.add(Restrictions.in("resourceId", resources));
+            criteria.add(Restrictions.in("resource", resources));
         }
+        //获取总数
+        criteria.setProjection(Projections.projectionList().add(Projections.countDistinct("resource")));
+        long totals = (long) criteria.uniqueResult();
 
-
-        criteria2.add(Restrictions.between("date", beginDate, endDate));
-        if(resources != null && resources.size() != 0) {
-            criteria2.add(Restrictions.in("resourceId", resources));
-        }
-
-        criteria1.setFirstResult((pageNo - 1) * pageSize);
-        criteria1.setMaxResults(pageSize);
-
-        Long totals = (Long) criteria2.setProjection(Projections.rowCount()).uniqueResult();
-        PageInfo pageInfo = new PageInfo(totals, criteria1.list());
+        criteria.setProjection(Projections.projectionList()
+                .add(Projections.sum("should_attendance_day"))
+                .add(Projections.sum("actual_attendance_day"))
+                .add(Projections.sum("should_attendance_time"))
+                .add(Projections.sum("actual_attendance_time"))
+                .add(Projections.sum("lateCount"))
+                .add(Projections.sum("lateTime"))
+                .add(Projections.sum("earlyCount"))
+                .add(Projections.sum("earlyTime"))
+                .add(Projections.sum("absenteeismCount"))
+                .add(Projections.sum("absenteeismTime"))
+                .add(Projections.sum("overtime_normal"))
+                .add(Projections.sum("overtime_weekend"))
+                .add(Projections.sum("overtime_festival"))
+                .add(Projections.sum("leave_personal"))
+                .add(Projections.sum("leave_rest"))
+                .add(Projections.sum("leave_business"))
+                .add(Projections.groupProperty("resource"))
+        );
+        PageInfo pageInfo = new PageInfo(totals, criteria.list());
         return pageInfo;
     }
 }

@@ -7,43 +7,28 @@ import java.util.List;
  * @create 2016-11-23 16:43
  */
 public class JsonTreeData {
-    //private String id;
-    //private String type;
-    //public String pid;      //
-    private String text;     //json 显示文本
+
+    //显示文本
+    private String text;
+    //显示图标
     private String icon;
+    //链接
     private String href;
-    //public String state;    //json 'open','closed'
+    //下级元素
     private List<JsonTreeData> nodes;
-    //public List<JsonTreeData> subchildren;
-    //private List<JsonTreeData> depchildren;
+
+    //状态信息
+    private JsonTreeState state;
+
+    //右边标记
+    private List<String> tags;
+
+    //是否可选择
+    private boolean selectable = true;
 
     public JsonTreeData() {
     }
 
-    //public String getType() {
-    //    return type;
-    //}
-    //
-    //public void setType(String type) {
-    //    this.type = type;
-    //}
-    //
-    //public String getId() {
-    //    return id;
-    //}
-    //
-    //public void setId(String id) {
-    //    this.id = id;
-    //}
-    //
-    //public String getPid() {
-    //    return pid;
-    //}
-    //
-    //public void setPid(String pid) {
-    //    this.pid = pid;
-    //}
 
     public String getText() {
         return text;
@@ -76,27 +61,28 @@ public class JsonTreeData {
     public void setNodes(List<JsonTreeData> nodes) {
         this.nodes = nodes;
     }
-    //public String getState() {
-    //    return state;
-    //}
-    //
-    //public void setState(String state) {
-    //    this.state = state;
-    //}
-    //
-    //public List<JsonTreeData> getSubchildren() {
-    //    return subchildren;
-    //}
-    //
-    //public void setSubchildren(List<JsonTreeData> subchildren) {
-    //    this.subchildren = subchildren;
-    //}
-    //
-    //public List<JsonTreeData> getDepchildren() {
-    //    return depchildren;
-    //}
-    //
-    //public void setDepchildren(List<JsonTreeData> depchildren) {
-    //    this.depchildren = depchildren;
-    //}
+
+    public JsonTreeState getState() {
+        return state;
+    }
+
+    public void setState(JsonTreeState state) {
+        this.state = state;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public boolean isSelectable() {
+        return selectable;
+    }
+
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
 }

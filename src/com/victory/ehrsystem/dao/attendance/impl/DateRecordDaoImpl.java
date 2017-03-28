@@ -10,6 +10,6 @@ import com.victory.ehrsystem.entity.attendance.DateRecord;
 public class DateRecordDaoImpl extends BaseDaoImpl<DateRecord> implements DateRecordDao{
     @Override
     public DateRecord getTopRecord() {
-        return get(DateRecord.class,1);
+        return find("from DateRecord order by id desc").get(0);
     }
 }

@@ -80,10 +80,26 @@ public class HrmResourceController {
         return list;
     }
 
+    /**
+     * 多选人员模态框
+     * @param model
+     * @return
+     */
     @RequiresPermissions(value = "resource:view")
     @RequestMapping("modal/list")
     public String modal_list(Model model) {
         return "modal/hrm/HrmResource";
+    }
+
+    /**
+     * 单选人员模态框
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "resource:view")
+    @RequestMapping("modal/list/single")
+    public String modal_list_single(Model model) {
+        return "modal/hrm/HrmResource_single";
     }
 
     @RequiresPermissions(value = "resource:view")
@@ -122,18 +138,23 @@ public class HrmResourceController {
     @RequiresPermissions(value = "resource:view")
     @RequestMapping("list/array")
     public @ResponseBody JsonVo listByArray(String resourceStr) {
-        String[] resources = resourceStr.split(",");
-        List<HrmResource> resourceList = new ArrayList<>();
         JsonVo jsonVo = new JsonVo();
-        for (String temp : resources) {
-            if(temp.equals("")) continue;
-            HrmResource resource = hrmResourceService.findOne(HrmResource.class, Integer.parseInt(temp));
-            if(resource != null){
-                resourceList.add(resource);
+        if(resourceStr == null){
+            jsonVo.setStatus(false);
+        }else{
+            String[] resources = resourceStr.split(",");
+            List<HrmResource> resourceList = new ArrayList<>();
+
+            for (String temp : resources) {
+                if(temp.equals("")) continue;
+                HrmResource resource = hrmResourceService.findOne(HrmResource.class, Integer.parseInt(temp));
+                if(resource != null){
+                    resourceList.add(resource);
+                }
             }
+            jsonVo.setStatus(true);
+            jsonVo.put("data", getResourceList(resourceList));
         }
-        jsonVo.setStatus(true);
-        jsonVo.put("data", getResourceList(resourceList));
         return jsonVo;
     }
 

@@ -3,6 +3,7 @@ package com.victory.ehrsystem.dao.attendance;
 import com.victory.ehrsystem.common.dao.BaseDao;
 import com.victory.ehrsystem.entity.attendance.AttendanceRecord;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.vo.PageInfo;
 
 import java.sql.Date;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface AttendanceRecordDao extends BaseDao<AttendanceRecord>{
     List<AttendanceRecord> findByDate(Date date);
 
     List<AttendanceRecord> findByResourceAndDate(HrmResource resource, Date date);
+
+    PageInfo listByMachine(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize, int type);
 }
