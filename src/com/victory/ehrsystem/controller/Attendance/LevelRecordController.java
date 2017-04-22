@@ -93,7 +93,7 @@ public class LevelRecordController {
     public String modal_edit(@PathVariable int id, Model model) {
         LevelRecord record = recordService.findOne(LevelRecord.class, id);
         model.addAttribute("record", record);
-        model.addAttribute("action","/overtime/edit");
+        model.addAttribute("action","/levelrecord/edit");
         model.addAttribute("resourceUrl","/resource/modal/list/single");
         model.addAttribute("returnUrl","/levelrecord.html");
         return "attendance/levelRecord_detail";

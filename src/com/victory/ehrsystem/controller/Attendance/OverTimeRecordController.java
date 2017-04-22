@@ -143,16 +143,16 @@ public class OverTimeRecordController {
         return jsonVo;
     }
 
-    /**
-     * 修改异常
-     * @param id
-     * @return
-     */
-    @RequiresPermissions(value = "OverTIme:update")
-    @RequestMapping(value = "update/{id}")
-    public @ResponseBody JsonVo updateDetail(@PathVariable int id){
-        return recordService.updateRecord(id);
-    }
+//    /**
+//     * 修改异常
+//     * @param id
+//     * @return
+//     */
+//    @RequiresPermissions(value = "OverTime:update")
+//    @RequestMapping(value = "update/{id}")
+//    public @ResponseBody JsonVo updateDetail(@PathVariable int id){
+//        return recordService.updateRecord(id);
+//    }
 
     public JsonVo packagingByRequest(HttpServletRequest request,boolean isBatch) {
         String id = StringUtil.nullString(request.getParameter("id"));

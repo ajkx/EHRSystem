@@ -188,7 +188,7 @@
         ajaxSubmitGet(url,function(result){
             $(node).popover('hide');
             if(result.status){
-                document.querySelector('table').GM('refreshGrid', function () {
+                document.querySelector('table').GM('refreshGrid', true,function () {
                     console.log('更新...');
                 });
                 toastr.success("更改成功!");

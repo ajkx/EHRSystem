@@ -4,8 +4,8 @@ import com.victory.ehrsystem.entity.consume.Card;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * 打卡原记录表
@@ -34,9 +34,6 @@ public class AttendanceRecord {
     @Column(name = "date")
     private Date date;
 
-    @Column(name = "punchTime")
-    private Time punchTime;
-
     //1为从考勤机读取，2为签卡类型
     @Column(name = "type")
     private Integer type;
@@ -45,14 +42,6 @@ public class AttendanceRecord {
     private String reason;
 
     public AttendanceRecord() {
-    }
-
-    public AttendanceRecord(Card card, HrmResource resourceId, String machineNo, Date punchDate, Time punchTime) {
-        this.card = card;
-        this.resource = resourceId;
-        this.machineNo = machineNo;
-        this.date = punchDate;
-        this.punchTime = punchTime;
     }
 
     public Integer getId() {
@@ -93,14 +82,6 @@ public class AttendanceRecord {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Time getPunchTime() {
-        return punchTime;
-    }
-
-    public void setPunchTime(Time punchTime) {
-        this.punchTime = punchTime;
     }
 
     public Integer getType() {

@@ -336,4 +336,19 @@ public class AttendanceSchedule {
     public void setRest(Boolean rest) {
         isRest = rest;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)return true;
+
+        if(obj != null && obj.getClass() == AttendanceSchedule.class){
+            return this.id == ((AttendanceSchedule) obj).getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 }

@@ -41,4 +41,24 @@ public class AttendanceTypeDaoImpl extends BaseDaoImpl<AttendanceType> implement
     public AttendanceType getAbnormalType() {
         return get(AttendanceType.class,5);
     }
+
+    @Override
+    public AttendanceType getLevelType() {
+        return get(AttendanceType.class,14);
+    }
+
+    @Override
+    public AttendanceType getNotGroupType() {
+        return get(AttendanceType.class,15);
+    }
+
+    @Override
+    public AttendanceType getRestType() {
+        return get(AttendanceType.class,16);
+    }
+
+    @Override
+    public AttendanceType getAcrossDayType() {
+        return get(AttendanceType.class,17);
+    }
 }

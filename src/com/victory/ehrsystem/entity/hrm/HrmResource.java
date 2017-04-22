@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.entity.hrm;
 
+import com.victory.ehrsystem.entity.attendance.AttendanceDetail;
 import com.victory.ehrsystem.entity.attendance.AttendanceGroup;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.consume.Card;
@@ -588,6 +589,21 @@ public class HrmResource {
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)return true;
+
+        if(obj != null && obj.getClass() == HrmResource.class){
+            return this.id == ((HrmResource) obj).getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
     }
 }
 

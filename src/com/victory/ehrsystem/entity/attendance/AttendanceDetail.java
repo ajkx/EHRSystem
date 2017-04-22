@@ -5,6 +5,7 @@ import com.victory.ehrsystem.entity.hrm.HrmResource;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Set;
 
 /**
  * 每人每天的打卡明细表
@@ -33,6 +34,9 @@ public class AttendanceDetail {
     @Column
     private Date date;
 
+    //第一次规定打卡时间
+    private Time should_first_time_up;
+
     //第一次上班打卡时间
     @Column
     private Time first_time_up;
@@ -43,6 +47,9 @@ public class AttendanceDetail {
     @JoinColumn(name="firstUpType")
     private AttendanceType firstUpType;
 
+    //第一次规定打卡时间
+    private Time should_first_time_down;
+
     //第一次下班打卡时间
     @Column
     private Time first_time_down;
@@ -50,6 +57,8 @@ public class AttendanceDetail {
     @ManyToOne(targetEntity = AttendanceType.class)
     @JoinColumn(name="firstDownType")
     private AttendanceType firstDownType;
+
+    private Time should_second_time_up;
 
     //第二次上班打卡时间
     @Column
@@ -59,6 +68,8 @@ public class AttendanceDetail {
     @JoinColumn(name="SecondUpType")
     private AttendanceType secondUpType;
 
+    private Time should_second_time_down;
+
     //第二次下班打卡时间
     @Column
     private Time second_time_down;
@@ -67,6 +78,8 @@ public class AttendanceDetail {
     @JoinColumn(name="SecordDownType")
     private AttendanceType secondDownType;
 
+    private Time should_third_time_up;
+
     //第三次上班打卡时间
     @Column
     private Time third_time_up;
@@ -74,6 +87,8 @@ public class AttendanceDetail {
     @ManyToOne(targetEntity = AttendanceType.class)
     @JoinColumn(name="ThirdUpType")
     private AttendanceType thirdUpType;
+
+    private Time should_third_time_down;
 
     //第三次下班打卡时间
     @Column
@@ -175,6 +190,17 @@ public class AttendanceDetail {
     @ManyToOne(targetEntity = AttendanceType.class)
     @JoinColumn(name="typeId")
     private AttendanceType attendanceType;
+
+    //请假关联
+    @ManyToMany(targetEntity = LevelRecord.class)
+    @JoinTable(name = "detail_levelRecord",
+            joinColumns = @JoinColumn(name = "detail_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "record_id",referencedColumnName = "id"))
+    private Set<LevelRecord> levelRecords;
+
+    //加班关联
+    @OneToMany(targetEntity = OverTimeRecord.class,mappedBy = "detail")
+    private Set<OverTimeRecord> overTimeRecords;
 
     public AttendanceDetail() {
     }
@@ -497,5 +523,84 @@ public class AttendanceDetail {
 
     public void setThirdDownType(AttendanceType thirdDownType) {
         this.thirdDownType = thirdDownType;
+    }
+
+    public Time getShould_first_time_up() {
+        return should_first_time_up;
+    }
+
+    public void setShould_first_time_up(Time should_first_time_up) {
+        this.should_first_time_up = should_first_time_up;
+    }
+
+    public Time getShould_first_time_down() {
+        return should_first_time_down;
+    }
+
+    public void setShould_first_time_down(Time should_first_time_down) {
+        this.should_first_time_down = should_first_time_down;
+    }
+
+    public Time getShould_second_time_up() {
+        return should_second_time_up;
+    }
+
+    public void setShould_second_time_up(Time should_second_time_up) {
+        this.should_second_time_up = should_second_time_up;
+    }
+
+    public Time getShould_second_time_down() {
+        return should_second_time_down;
+    }
+
+    public void setShould_second_time_down(Time should_second_time_down) {
+        this.should_second_time_down = should_second_time_down;
+    }
+
+    public Time getShould_third_time_up() {
+        return should_third_time_up;
+    }
+
+    public void setShould_third_time_up(Time should_third_time_up) {
+        this.should_third_time_up = should_third_time_up;
+    }
+
+    public Time getShould_third_time_down() {
+        return should_third_time_down;
+    }
+
+    public void setShould_third_time_down(Time should_third_time_down) {
+        this.should_third_time_down = should_third_time_down;
+    }
+
+    public Set<LevelRecord> getLevelRecords() {
+        return levelRecords;
+    }
+
+    public void setLevelRecords(Set<LevelRecord> levelRecords) {
+        this.levelRecords = levelRecords;
+    }
+
+    public Set<OverTimeRecord> getOverTimeRecords() {
+        return overTimeRecords;
+    }
+
+    public void setOverTimeRecords(Set<OverTimeRecord> overTimeRecords) {
+        this.overTimeRecords = overTimeRecords;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)return true;
+
+        if(obj != null && obj.getClass() == AttendanceDetail.class){
+            return this.id == ((AttendanceDetail) obj).getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
     }
 }

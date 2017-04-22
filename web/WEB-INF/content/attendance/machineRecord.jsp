@@ -113,7 +113,7 @@
             endDate: document.querySelector('[name="endDate"]').value,
             resources: document.querySelector('[name="resources"]').value,
         }
-        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', function () {
+        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', true,function () {
             console.log('搜索成功...');
         });
     }

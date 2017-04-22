@@ -68,6 +68,9 @@
                 text: '上班1',
                 width: '160px',
                 remind: '',
+                template:function(actual_first_up,rowObject) {
+                    return actual_first_up == '' ? '' : actual_first_up.substring(0, 5);
+                }
             },
             {
                 key: 'first_up_type',
@@ -75,7 +78,7 @@
                 width: '80px',
                 remind: '',
                 template:function(first_up_type,rowObject){
-                    if(first_up_type == "正常"){
+                    if(first_up_type == "正常" || first_up_type == "请假"){
                         return first_up_type;
                     }else{
                         return "<span class='updateButton'" +
@@ -92,6 +95,9 @@
                 text: '下班1',
                 width: '160px',
                 remind: '',
+                template:function(actual_first_down,rowObject) {
+                    return actual_first_down == '' ? '' : actual_first_down.substring(0, 5);
+                }
             },
             {
                 key: 'first_down_type',
@@ -99,7 +105,7 @@
                 remind: '',
                 width: '80px',
                 template:function(first_down_type,rowObject){
-                    if(first_down_type == "正常"){
+                    if(first_down_type == "正常" || first_down_type == "请假"){
                         return first_down_type;
                     }else{
                         return "<span class='updateButton'" +
@@ -114,6 +120,9 @@
                 text: '上班2',
                 remind: '',
                 width: '160px',
+                template:function(actual_second_up,rowObject) {
+                    return actual_second_up == '' ? '' : actual_second_up.substring(0, 5);
+                }
             },
             {
                 key: 'second_up_type',
@@ -121,7 +130,7 @@
                 remind: '',
                 width: '80px',
                 template:function(second_up_type,rowObject){
-                    if(second_up_type == "正常"){
+                    if(second_up_type == "正常" || second_up_type == "请假"){
                         return second_up_type;
                     }else{
                         return "<span class='updateButton'" +
@@ -137,6 +146,9 @@
                 text: '下班2',
                 remind: '',
                 width: '160px',
+                template:function(actual_second_down,rowObject) {
+                    return actual_second_down == '' ? '' : actual_second_down.substring(0, 5);
+                }
             },
             {
                 key: 'second_down_type',
@@ -144,7 +156,7 @@
                 remind: '',
                 width: '80px',
                 template:function(second_down_type,rowObject){
-                    if(second_down_type == "正常"){
+                    if(second_down_type == "正常" || second_down_type == "请假"){
                         return second_down_type;
                     }else{
                         return "<span class='updateButton'" +
@@ -159,6 +171,9 @@
                 text: '上班3',
                 remind: '',
                 width: '160px',
+                template:function(actual_third_up,rowObject) {
+                    return actual_third_up == '' ? '' : actual_third_up.substring(0, 5);
+                }
             },
             {
                 key: 'third_up_type',
@@ -166,7 +181,7 @@
                 remind: '',
                 width: '80px',
                 template:function(third_up_type,rowObject){
-                    if(third_up_type == "正常"){
+                    if(third_up_type == "正常" || third_up_type == "请假"){
                         return third_up_type;
                     }else{
                         return "<span class='updateButton'" +
@@ -181,6 +196,9 @@
                 text: '下班3',
                 remind: '',
                 width: '160px',
+                template:function(actual_third_down,rowObject) {
+                    return actual_third_down == '' ? '' : actual_third_down.substring(0, 5);
+                }
             },
             {
                 key: 'third_down_type',
@@ -188,7 +206,7 @@
                 remind: '',
                 width: '80px',
                 template:function(third_down_type,rowObject){
-                    if(third_down_type == "正常"){
+                    if(third_down_type == "正常" || third_down_type == "请假"){
                         return third_down_type;
                     }else{
                         return "<span class='updateButton'" +
@@ -362,7 +380,7 @@
             endDate: document.querySelector('[name="endDate"]').value,
             resources: document.querySelector('[name="resources"]').value,
         }
-        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', function () {
+        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', true,function () {
             console.log('搜索成功...');
         });
     }

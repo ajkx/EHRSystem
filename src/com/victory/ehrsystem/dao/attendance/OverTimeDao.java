@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface OverTimeDao extends BaseDao<OverTimeRecord>{
 
-    List<OverTimeRecord> findByDate(java.util.Date beginDate, java.util.Date endDate);
+    List<OverTimeRecord> findByDateAndResource(java.util.Date beginDate, java.util.Date endDate,HrmResource resource);
 
     List<OverTimeRecord> findByDateForRepeat(java.util.Date beginDate, java.util.Date endDate,HrmResource resource);
 

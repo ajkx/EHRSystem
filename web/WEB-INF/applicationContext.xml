@@ -77,6 +77,7 @@
                 <value>com.victory.ehrsystem.entity.attendance.OverTimeSetting</value>
                 <value>com.victory.ehrsystem.entity.attendance.LevelRecord</value>
                 <value>com.victory.ehrsystem.entity.attendance.LevelType</value>
+                <value>com.victory.ehrsystem.entity.attendance.CustomHoliday</value>
                 <!--消费信息表-->
                 <value>com.victory.ehrsystem.entity.consume.Card</value>
             </list>
@@ -124,6 +125,7 @@
     <bean id="overTimeSettingDao" class="com.victory.ehrsystem.dao.attendance.impl.OverTimeSettingDaoImpl" parent="daoTemplate"/>
     <bean id="levelRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.LevelRecordDaoImpl" parent="daoTemplate"/>
     <bean id="levelTypeDao" class="com.victory.ehrsystem.dao.attendance.impl.LevelTypeDaoImpl" parent="daoTemplate"/>
+    <bean id="customHolidayDao" class="com.victory.ehrsystem.dao.attendance.impl.CustomHolidayDaoImpl"/>
     <!--配置hibernate结束-->
 
     <!--配置hibernate事务-->

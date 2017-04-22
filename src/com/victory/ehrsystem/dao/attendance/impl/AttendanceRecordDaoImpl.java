@@ -31,8 +31,8 @@ public class AttendanceRecordDaoImpl extends BaseDaoImpl<AttendanceRecord> imple
     }
 
     @Override
-    public List<AttendanceRecord> findByResourceAndDate(HrmResource resource, Date date) {
-        return find("select a from AttendanceRecord a where resource = ?0 and date = ?1", resource, date);
+    public List<AttendanceRecord> findByResourceAndDate(HrmResource resource, java.util.Date beginDate,java.util.Date endDate) {
+        return find("select a from AttendanceRecord a where resource = ?0 and date between ?1 and ?2", resource, beginDate,endDate);
     }
 
     @Override

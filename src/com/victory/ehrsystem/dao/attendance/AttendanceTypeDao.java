@@ -46,4 +46,27 @@ public interface AttendanceTypeDao extends BaseDao<AttendanceType>{
      * @return
      */
     AttendanceType getAbnormalType();
+
+    /**
+     * 请假
+     */
+    AttendanceType getLevelType();
+
+    /**
+     * 不在考勤组
+     * @return
+     */
+    AttendanceType getNotGroupType();
+
+    /**
+     * 休息类型
+     * @return
+     */
+    AttendanceType getRestType();
+
+    /**
+     * 跨天待计算类型
+     * @return
+     */
+    AttendanceType getAcrossDayType();
 }

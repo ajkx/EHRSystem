@@ -51,4 +51,5 @@ public class AttendanceType {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
 }

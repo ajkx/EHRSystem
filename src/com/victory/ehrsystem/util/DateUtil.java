@@ -155,6 +155,17 @@ public class DateUtil {
         }
         return date;
     }
+
+    public static java.util.Date parseUtilDate1(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        java.util.Date date = null;
+        try{
+            date = sdf.parse(str);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return date;
+    }
     public static Date parseDateByMonth(String str) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Date date = null;
@@ -167,7 +178,7 @@ public class DateUtil {
     }
 
     public static long parseSqlDateAndTime(String date, String time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date1 = null;
         try {
             date1 = sdf.parse(date + " " + time);
@@ -175,6 +186,10 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date1.getTime();
+    }
+
+    public static java.util.Date parseStrToDate(Date beginDate,long time){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     }
     public static Time parseTime(String str){
         SimpleDateFormat sdf = new SimpleDateFormat();
@@ -193,7 +208,7 @@ public class DateUtil {
         return time;
     }
 
-    public static java.util.Date getLastTimeInDay(Date date) {
+    public static java.util.Date getLastTimeInDay(java.util.Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         Date lastDate = null;
@@ -203,5 +218,23 @@ public class DateUtil {
         calendar.set(Calendar.MILLISECOND,999);
         lastDate = new Date(calendar.getTimeInMillis());
         return lastDate;
+    }
+
+    public static Long clearDate(java.util.Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.YEAR,1970);
+        calendar.set(Calendar.MONTH,0);
+        calendar.set(Calendar.DATE,1);
+        return calendar.getTimeInMillis();
+    }
+
+    public static Long clearDate(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.YEAR,1970);
+        calendar.set(Calendar.MONTH,0);
+        calendar.set(Calendar.DATE,1);
+        return calendar.getTimeInMillis();
     }
 }

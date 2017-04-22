@@ -4,6 +4,7 @@ import com.victory.ehrsystem.entity.hrm.HrmResource;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by ajkx
@@ -46,6 +47,12 @@ public class LevelRecord {
     //备注
     @Column
     private String remark;
+
+    @ManyToMany(targetEntity = AttendanceDetail.class)
+    @JoinTable(name = "detail_levelRecord",
+            joinColumns = @JoinColumn(name = "record_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "detail_id",referencedColumnName = "id"))
+    private Set<AttendanceDetail> details;
 
     public Integer getId() {
         return id;
@@ -117,5 +124,28 @@ public class LevelRecord {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Set<AttendanceDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Set<AttendanceDetail> details) {
+        this.details = details;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)return true;
+
+        if(obj != null && obj.getClass() == LevelRecord.class){
+            return this.id == ((LevelRecord) obj).getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
     }
 }

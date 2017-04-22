@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class OverTimeDaoImpl extends BaseDaoImpl<OverTimeRecord> implements OverTimeDao{
 
+//    获取加班结束日期小于等于endDate并且为待计算的数据，防止跨天加班计算错误，保证结束日期有打卡数据
     @Override
-    public List<OverTimeRecord> findByDate(java.util.Date beginDate, java.util.Date endDate) {
-//        return find("select r from OverTimeRecord r where date between ?0 and ?1 and status = ?2",beginDate,endDate, OverTimeRecord.Status.normal);
-        return find("select r from OverTimeRecord r where date <= ?0 and status = ?1",endDate, OverTimeRecord.Status.normal);
+    public List<OverTimeRecord> findByDateAndResource(java.util.Date beginDate, java.util.Date endDate,HrmResource resource) {
+        return find("select r from OverTimeRecord r where date between ?0 and ?1 and resource = ?2",beginDate, endDate, resource);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.victory.ehrsystem.dao.attendance;
 
 import com.victory.ehrsystem.common.dao.BaseDao;
 import com.victory.ehrsystem.entity.attendance.AttendanceDetail;
+import com.victory.ehrsystem.entity.attendance.AttendanceType;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.vo.PageInfo;
 
@@ -22,6 +23,8 @@ public interface AttendanceDetailDao extends BaseDao<AttendanceDetail>{
     List<AttendanceDetail> findByDate(Date date);
 
     List<AttendanceDetail> findByHrmResourceAndDate(HrmResource resource, Date date);
+
+    List<AttendanceDetail> findAcrossDayByDate(AttendanceType type, Date date);
 
     PageInfo findDetail(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize);
 

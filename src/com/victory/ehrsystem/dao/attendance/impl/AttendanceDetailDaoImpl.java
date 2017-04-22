@@ -3,6 +3,7 @@ package com.victory.ehrsystem.dao.attendance.impl;
 import com.victory.ehrsystem.common.dao.impl.BaseDaoImpl;
 import com.victory.ehrsystem.dao.attendance.AttendanceDetailDao;
 import com.victory.ehrsystem.entity.attendance.AttendanceDetail;
+import com.victory.ehrsystem.entity.attendance.AttendanceType;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.vo.PageInfo;
 import org.hibernate.Criteria;
@@ -33,6 +34,11 @@ public class AttendanceDetailDaoImpl extends BaseDaoImpl<AttendanceDetail> imple
     @Override
     public List<AttendanceDetail> findByHrmResourceAndDate(HrmResource resource, Date date) {
         return find("select a from AttendanceDetail a where resource = ?0 and date = ?1",resource,date);
+    }
+
+    @Override
+    public List<AttendanceDetail> findAcrossDayByDate(AttendanceType type,Date date) {
+        return find("select a from AttendanceDetail a where attendanceType = ?0 and date <= ?1",type,date);
     }
 
     @Override
@@ -94,6 +100,8 @@ public class AttendanceDetailDaoImpl extends BaseDaoImpl<AttendanceDetail> imple
                 .add(Projections.sum("leave_business"))
                 .add(Projections.groupProperty("resource"))
         );
+        criteria.setFirstResult((pageNo - 1) * pageSize);
+        criteria.setMaxResults(pageSize);
         PageInfo pageInfo = new PageInfo(totals, criteria.list());
         return pageInfo;
     }

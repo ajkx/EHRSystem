@@ -82,7 +82,7 @@
                     <div class="ant-col-2 ant-form-item-label"><label class="">请假原因</label></div>
                     <div class="ant-col-14">
                         <div class="ant-form-item-control ">
-                            <textarea name="description" rows="3" class="ant-input">${record.reason}</textarea>
+                            <textarea name="reason" rows="3" class="ant-input">${record.reason}</textarea>
                         </div>
                     </div>
                 </div>

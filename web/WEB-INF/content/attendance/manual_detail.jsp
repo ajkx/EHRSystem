@@ -41,18 +41,8 @@
                     <div class="ant-col-2 ant-form-item-label"><label class="">签卡日期</label></div>
                     <div class="ant-col-10">
                         <div class="ant-form-item-control ">
-                            <input readonly="" value="${fn:substring(record.date.toString(),0,16)}" name="date" placeholder="请选择日期"
-                                   class="ant-input datetimepicker" style="width: 100px" id="date">
-                        </div>
-                    </div>
-                </div>
-                <div class="ant-row ant-form-item">
-                    <div class="ant-col-2 ant-form-item-label"><label class="">签卡时间</label></div>
-                    <div class="ant-col-10">
-                        <div class="ant-form-item-control ">
-                            <%--<input readonly="" value="${fn:substring(record.date.toString(),0,16)}${fn:substring(record.punchTime.toString(),0,5)}" name="time" placeholder="请选择时间"--%>
-                                   <%--class="ant-input datetimepicker" style="width: 100px" id="time">--%>
-                            <input readonly="" value="${fn:substring(record.punchTime.toString(),0,5)}" class="ant-input timepick" style="width: 100px" id="time" name="time" placeholder="请选择时间"/>
+                            <input readonly="" value="${record.date}" name="date" placeholder="请选择日期"
+                                   class="ant-input datetimepicker" style="width: 160px" id="date">
                         </div>
                     </div>
                 </div>
@@ -80,10 +70,10 @@
         var date = $('#date');
         var time = $('#time');
         date.datetimepicker({
-            format: 'yyyy-mm-dd',
+            format: 'yyyy-mm-dd hh:ii:ss',
             autoclose: true,
-            startView: 2,
-            minView: 2,
+            startView: 1,
+            minView: 0,
             maxView: 3,
             language: 'zh-CN',
             todayBtn: true,
@@ -92,21 +82,7 @@
             timezone: "中国标准时间",
         });
 
-//        time.datetimepicker({
-//            format: 'hh:ii',
-//            autoclose: true,
-//            startView: 0,
-//            minView: 0,
-//            maxView: 1,
-//            minuteStep:1,
-//            language: 'zh-CN',
-//            todayBtn: true,
-//            clearBtn:false,
-//            timezone: "中国标准时间",
-//        });
-        time.clockpicker({
-            autoclose: true
-        });
+
     });
 
 </script>

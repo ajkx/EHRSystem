@@ -1,5 +1,6 @@
 package com.victory.ehrsystem.service.attendance;
 
+import com.victory.ehrsystem.dao.attendance.AttendanceDetailDao;
 import com.victory.ehrsystem.dao.attendance.AttendanceScheduleDao;
 import com.victory.ehrsystem.dao.attendance.AttendanceScheduleInfoDao;
 import com.victory.ehrsystem.dao.attendance.OverTimeDao;
@@ -33,24 +34,35 @@ public class OverTimeRecordService extends BaseService<OverTimeRecord>{
     private OverTimeDao overTimeDao;
 
     @Autowired
+    private AttendanceDetailDao detailDao;
+
+//    @Autowired
+//    private AttendanceManager attendanceManager;
+
+    @Autowired
     private HrmResourceService resourceService;
 
-    public JsonVo updateRecord(int id){
-        JsonVo jsonVo = new JsonVo();
-        OverTimeRecord record = findOne(OverTimeRecord.class, id);
-        if (record.getStatus() != OverTimeRecord.Status.abnormal) {
-            jsonVo.setStatus(false);
-            jsonVo.setMsg("该加班申请不为异常状态");
-        }else{
-            record.setTimeUp(record.getDate());
-            record.setTimeDown(record.getEndDate());
-            record.setActualCount(record.getCount());
-            record.setStatus(OverTimeRecord.Status.success);
-            jsonVo.setStatus(true);
-            jsonVo.setMsg("修改成功");
-        }
-        return jsonVo;
-    }
+//    public JsonVo updateRecord(int id){
+//        JsonVo jsonVo = new JsonVo();
+//        OverTimeRecord record = findOne(OverTimeRecord.class, id);
+//        if (record.getStatus() != OverTimeRecord.Status.abnormal) {
+//            jsonVo.setStatus(false);
+//            jsonVo.setMsg("该加班申请不为异常状态");
+//        }else{
+//            record.setTimeUp(record.getDate());
+//            record.setTimeDown(record.getEndDate());
+//            record.setActualCount(record.getCount());
+//            record.setStatus(OverTimeRecord.Status.success);
+//            List<AttendanceDetail> detailList = detailDao.findByHrmResourceAndDate(record.getResource(), new Date(record.getDate().getTime()));
+//            AttendanceDetail detail = detailList.get(0);
+//            attendanceManager.updateDetailByOverTimeRecord(detail,record,2);
+//            attendanceManager.calculateTime(detail);
+//
+//            jsonVo.setStatus(true);
+//            jsonVo.setMsg("修改成功");
+//        }
+//        return jsonVo;
+//    }
     public void checkRepeat(OverTimeRecord record,int type){
         java.util.Date beginDate = record.getDate();
         java.util.Date endDate = record.getEndDate();

@@ -1,5 +1,7 @@
 package com.victory.ehrsystem.util;
 
+import com.victory.ehrsystem.entity.attendance.AttendanceType;
+
 import java.lang.reflect.Method;
 
 /**
@@ -24,5 +26,17 @@ public class ClassUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static AttendanceType invokeMethod(Object object,String method){
+        Class targetClass = object.getClass();
+        AttendanceType type = null;
+        try {
+            Method method1 = targetClass.getDeclaredMethod(method);
+            type = (AttendanceType) method1.invoke(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return type;
     }
 }

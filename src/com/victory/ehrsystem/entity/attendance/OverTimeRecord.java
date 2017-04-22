@@ -84,6 +84,10 @@ public class OverTimeRecord {
     @Column
     private String remark;
 
+    @ManyToOne(targetEntity = AttendanceDetail.class)
+    @JoinColumn(name = "detailId",referencedColumnName = "id")
+    private AttendanceDetail detail;
+
     public Integer getId() {
         return id;
     }
@@ -178,5 +182,28 @@ public class OverTimeRecord {
 
     public void setActualCount(Long actualCount) {
         this.actualCount = actualCount;
+    }
+
+    public AttendanceDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(AttendanceDetail detail) {
+        this.detail = detail;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)return true;
+
+        if(obj != null && obj.getClass() == OverTimeRecord.class){
+            return this.id == ((OverTimeRecord) obj).getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
     }
 }

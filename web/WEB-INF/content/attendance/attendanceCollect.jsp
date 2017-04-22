@@ -56,6 +56,9 @@
                 text: '实出勤天数',
                 width: '100px',
                 remind: '',
+                template:function(actual_attendance,rowObject){
+                    return Math.round(actual_attendance);
+                }
             },
             {
                 key: 'should_attendance_time',
@@ -238,7 +241,7 @@
             beginDate: document.querySelector('[name="beginDate"]').value,
             resources: document.querySelector('[name="resources"]').value,
         }
-        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', function () {
+        document.querySelector('table').GM('setQuery', query).GM('refreshGrid', true,function () {
             console.log('搜索成功...');
         });
     }

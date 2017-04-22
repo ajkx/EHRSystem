@@ -21,7 +21,7 @@ public interface AttendanceRecordDao extends BaseDao<AttendanceRecord>{
 
     List<AttendanceRecord> findByDate(Date date);
 
-    List<AttendanceRecord> findByResourceAndDate(HrmResource resource, Date date);
+    List<AttendanceRecord> findByResourceAndDate(HrmResource resource, java.util.Date beginDate,java.util.Date endDate);
 
     PageInfo listByMachine(Date beginDate, Date endDate, List<HrmResource> resources, int pageNo, int pageSize, int type);
 }

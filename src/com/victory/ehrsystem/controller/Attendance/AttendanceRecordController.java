@@ -136,7 +136,6 @@ public class AttendanceRecordController {
         String id = StringUtil.nullString(request.getParameter("id"));
         String resourceStr = StringUtil.nullString(request.getParameter("resources"));
         String dateStr = StringUtil.nullString(request.getParameter("date"));
-        String timeStr = StringUtil.nullString(request.getParameter("time"));
         String reason = StringUtil.nullString(request.getParameter("reason"));
 
         AttendanceRecord record = null;
@@ -150,12 +149,10 @@ public class AttendanceRecordController {
         }
 
         HrmResource resource = resourceService.findOne(HrmResource.class, Integer.parseInt(resourceStr));
-        Date date = DateUtil.parseDateByDay(dateStr);
-        Time time = Time.valueOf(timeStr + ":00");
+        java.util.Date date = DateUtil.parseUtilDate1(dateStr);
 
         record.setResource(resource);
         record.setDate(date);
-        record.setPunchTime(time);
         record.setReason(reason);
         record.setType(2);
 

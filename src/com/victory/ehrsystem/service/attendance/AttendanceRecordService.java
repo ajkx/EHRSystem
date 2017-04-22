@@ -59,7 +59,6 @@ public class AttendanceRecordService extends BaseService<AttendanceRecord>{
             map.put("department", record.getResource().getDepartment().getName());
             map.put("workCode", record.getResource().getWorkCode());
             map.put("date", record.getDate());
-            map.put("time", record.getPunchTime());
 
             if(type == 1) map.put("machine", StringUtil.nullString(record.getMachineNo()));
             if(type == 2) map.put("reason", StringUtil.nullString(record.getReason()));

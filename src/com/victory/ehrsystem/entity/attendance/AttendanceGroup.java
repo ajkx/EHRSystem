@@ -218,4 +218,19 @@ public class AttendanceGroup {
     public void setResourceStr(String resourceStr) {
         this.resourceStr = resourceStr;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)return true;
+
+        if(obj != null && obj.getClass() == AttendanceGroup.class){
+            return this.id == ((AttendanceGroup) obj).getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 }
