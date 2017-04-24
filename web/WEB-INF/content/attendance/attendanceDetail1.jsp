@@ -271,6 +271,15 @@
                 }
             },
             {
+                key: 'level_time',
+                text: '请假时间',
+                remind: '',
+                width: '120px',
+                template:function(level_time,rowObject){
+                    return Math.round(level_time/60000);
+                }
+            },
+            {
                 key: 'setting_time',
                 text: '规定出勤时间',
                 remind: '',

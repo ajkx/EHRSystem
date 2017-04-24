@@ -6,6 +6,7 @@ import com.victory.ehrsystem.entity.hrm.HrmDepartment;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
 import com.victory.ehrsystem.entity.hrm.HrmSubCompany;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,11 @@ public interface HrmResourceDao extends BaseDao<HrmResource>{
      * @return
      */
     List<HrmResource> findAllWorking();
+
+    /**
+     * 找出入职日期小于date的在职员工
+     */
+    List<HrmResource> findAllWorkingAndEntryDate(Date date);
 
     /**
      * 找出没有排班的员工

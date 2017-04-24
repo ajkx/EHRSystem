@@ -125,7 +125,7 @@
     <bean id="overTimeSettingDao" class="com.victory.ehrsystem.dao.attendance.impl.OverTimeSettingDaoImpl" parent="daoTemplate"/>
     <bean id="levelRecordDao" class="com.victory.ehrsystem.dao.attendance.impl.LevelRecordDaoImpl" parent="daoTemplate"/>
     <bean id="levelTypeDao" class="com.victory.ehrsystem.dao.attendance.impl.LevelTypeDaoImpl" parent="daoTemplate"/>
-    <bean id="customHolidayDao" class="com.victory.ehrsystem.dao.attendance.impl.CustomHolidayDaoImpl"/>
+    <bean id="customHolidayDao" class="com.victory.ehrsystem.dao.attendance.impl.CustomHolidayDaoImpl" parent="daoTemplate"/>
     <!--配置hibernate结束-->
 
     <!--配置hibernate事务-->
@@ -151,11 +151,11 @@
             <!-- 使用嵌套Bean的方式来定义任务Bean
     jobClass指定任务Bean的实现类 -->
             <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean" p:jobClass="com.victory.ehrsystem.service.schedule.AttendanceJob" p:durability="true">
-                <property name="jobDataAsMap">
-                    <map>
-                        <entry key="manager" value-ref="attendanceManager"/>
-                    </map>
-                </property>
+                <!--<property name="jobDataAsMap">-->
+                    <!--<map>-->
+                        <!--<entry key="manager" value-ref="attendanceManager"/>-->
+                    <!--</map>-->
+                <!--</property>-->
             </bean>
         </property>
     </bean>

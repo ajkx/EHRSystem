@@ -75,8 +75,8 @@
                     </div>
                 </div>
                 <div class="ant-row ant-form-item">
-                    合计加班时长<span id="timeCount">0小时0分钟</span>
-                    <span style="color: rgb(196, 196, 196);">（统计加班时长，会以此时间为准）</span>
+                    合计请假时长<span id="timeCount">0小时0分钟</span>
+                    <span style="color: rgb(196, 196, 196);">（统计请假时长，会以此时间为准）</span>
                 </div>
                 <div class="ant-row ant-form-item">
                     <div class="ant-col-2 ant-form-item-label"><label class="">请假原因</label></div>

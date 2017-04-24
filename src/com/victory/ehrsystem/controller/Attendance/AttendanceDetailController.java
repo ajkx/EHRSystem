@@ -65,9 +65,9 @@ public class AttendanceDetailController {
         return pageInfo;
     }
 
-//    @RequiresPermissions(value = "AttendanceDetail:update")
-//    @RequestMapping(value = "update/{id}/{type}")
-//    public @ResponseBody JsonVo updateDetail(@PathVariable int id,@PathVariable int type){
-//        return detailService.updateDetail(id, type);
-//    }
+    @RequiresPermissions(value = "AttendanceDetail:update")
+    @RequestMapping(value = "update/{id}/{type}")
+    public @ResponseBody JsonVo updateDetail(@PathVariable int id,@PathVariable int type){
+        return detailService.updateDetail(id, type);
+    }
 }

@@ -143,16 +143,16 @@ public class OverTimeRecordController {
         return jsonVo;
     }
 
-//    /**
-//     * 修改异常
-//     * @param id
-//     * @return
-//     */
-//    @RequiresPermissions(value = "OverTime:update")
-//    @RequestMapping(value = "update/{id}")
-//    public @ResponseBody JsonVo updateDetail(@PathVariable int id){
-//        return recordService.updateRecord(id);
-//    }
+    /**
+     * 修改异常
+     * @param id
+     * @return
+     */
+    @RequiresPermissions(value = "OverTime:update")
+    @RequestMapping(value = "update/{id}")
+    public @ResponseBody JsonVo updateDetail(@PathVariable int id){
+        return recordService.updateRecord(id);
+    }
 
     public JsonVo packagingByRequest(HttpServletRequest request,boolean isBatch) {
         String id = StringUtil.nullString(request.getParameter("id"));
@@ -183,6 +183,7 @@ public class OverTimeRecordController {
                 tempRecord.setReason(reason);
                 tempRecord.setStatus(OverTimeRecord.Status.normal);
                 tempRecord.setType(Integer.parseInt(type));
+                tempRecord.setLink(false);
                 tempRecord.setCount(DateUtil.getTimeInterval(beginDate,endDate));
                 recordService.save(tempRecord);
             }
@@ -204,6 +205,7 @@ public class OverTimeRecordController {
             record.setEndDate(endDate);
             record.setReason(reason);
             record.setStatus(OverTimeRecord.Status.normal);
+            record.setLink(false);
             record.setType(Integer.parseInt(type));
             record.setCount(DateUtil.getTimeInterval(beginDate,endDate));
 

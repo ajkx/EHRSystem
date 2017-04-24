@@ -12,6 +12,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -34,6 +35,11 @@ public class HrmResourceDaoImpl extends BaseDaoImpl<HrmResource> implements HrmR
     @Override
     public List<HrmResource> findAllWorking() {
         return find("select r from HrmResource r where r.status != 2");
+    }
+
+    @Override
+    public List<HrmResource> findAllWorkingAndEntryDate(Date date) {
+        return find("select r from HrmResource r where r.status != 2 and entryDate < ?0",date);
     }
 
     @Override

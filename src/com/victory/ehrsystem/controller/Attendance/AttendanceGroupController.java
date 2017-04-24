@@ -3,6 +3,7 @@ package com.victory.ehrsystem.controller.Attendance;
 import com.victory.ehrsystem.entity.attendance.AttendanceGroup;
 import com.victory.ehrsystem.entity.attendance.AttendanceSchedule;
 import com.victory.ehrsystem.entity.hrm.HrmResource;
+import com.victory.ehrsystem.service.attendance.AttendanceCalculate;
 import com.victory.ehrsystem.service.attendance.AttendanceGroupService;
 import com.victory.ehrsystem.service.attendance.AttendanceScheduleService;
 import com.victory.ehrsystem.service.hrm.impl.HrmResourceService;
@@ -38,14 +39,14 @@ public class AttendanceGroupController {
     @Autowired
     private HrmResourceService resourceService;
 
-//    @Autowired
-//    private AttendanceManager manager;
-//    @RequestMapping(value="/test")
-//    public void test(){
-//        System.out.println("===========开始执行自动考勤===========");
-//        manager.testAttendance();
-//        System.out.println("===========结束自动考勤===========");
-//    }
+    @Autowired
+    private AttendanceCalculate manager;
+    @RequestMapping(value="/test")
+    public void test(){
+        System.out.println("===========开始执行自动考勤===========");
+        manager.calculateAll();
+        System.out.println("===========结束自动考勤===========");
+    }
 
     @RequiresPermissions(value = "AttendanceGroup:view")
     @RequestMapping(method = RequestMethod.GET)

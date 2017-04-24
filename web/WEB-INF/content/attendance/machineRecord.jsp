@@ -50,18 +50,9 @@
                 text: '打卡日期',
                 width: '150px',
                 remind: '',
-//                template:function(beginDate,rowObject){
-//                    return new Date(beginDate).format('yyyy-MM-dd hh:mm');
-//                }
-            },
-            {
-                key: 'time',
-                text: '打卡时间',
-                width: '180px',
-                remind: '',
-//                template:function(endDate,rowObject){
-//                    return new Date(endDate).format('yyyy-MM-dd hh:mm');
-//                }
+                template:function(date,rowObject){
+                    return new Date(date).format('yyyy-MM-dd HH:mm:ss');
+                }
             },
             {
                 key: 'machine',

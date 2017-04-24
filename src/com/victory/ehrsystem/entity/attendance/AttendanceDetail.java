@@ -594,13 +594,14 @@ public class AttendanceDetail {
         if(this == obj)return true;
 
         if(obj != null && obj.getClass() == AttendanceDetail.class){
-            return this.id == ((AttendanceDetail) obj).getId();
+            AttendanceDetail detail = ((AttendanceDetail) obj);
+            return this.resource.getId() == detail.getId() && this.date.equals(detail.getDate());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return this.resource.hashCode() * 18 + this.date.hashCode() * 31;
     }
 }

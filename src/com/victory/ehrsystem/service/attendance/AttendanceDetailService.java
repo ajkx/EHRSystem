@@ -33,58 +33,58 @@ public class AttendanceDetailService extends BaseService<AttendanceDetail>{
     @Autowired
     private HrmResourceService resourceService;
 
-//    @Autowired
-//    private AttendanceManager attendanceManager;
+    @Autowired
+    private AttendanceCalculate attendanceCalculate;
 
     @Autowired
     private AttendanceTypeDao typeDao;
-//
-//    public JsonVo updateDetail(int id, int type) {
-//        AttendanceDetail detail = findOne(AttendanceDetail.class, id);
-//        JsonVo jsonVo = new JsonVo();
-//        if (detail == null) {
-//            jsonVo.setStatus(false);
-//            jsonVo.setMsg("该操作失效！");
-//        }else{
-//            AttendanceSchedule schedule = detail.getSchedule();
-//            switch (type) {
-//                case 1:
-//                    detail.setFirst_time_up(schedule.getFirst_time_up());
-//                    detail.setFirstUpType(typeDao.getNormalType());
-//                    jsonVo.put("time",schedule.getFirst_time_up());
-//                    break;
-//                case 2:
-//                    detail.setFirst_time_down(schedule.getFirst_time_down());
-//                    detail.setFirstDownType(typeDao.getNormalType());
-//                    jsonVo.put("time",schedule.getFirst_time_down());
-//                    break;
-//                case 3:
-//                    detail.setSecond_time_up(schedule.getSecond_time_up());
-//                    detail.setSecondUpType(typeDao.getNormalType());
-//                    jsonVo.put("time",schedule.getSecond_time_up());
-//                    break;
-//                case 4:
-//                    detail.setFirst_time_down(schedule.getSecond_time_down());
-//                    detail.setSecondDownType(typeDao.getNormalType());
-//                    jsonVo.put("time",schedule.getSecond_time_down());
-//                    break;
-//                case 5:
-//                    detail.setThird_time_up(schedule.getThird_time_up());
-//                    detail.setThirdUpType(typeDao.getNormalType());
-//                    jsonVo.put("time",schedule.getThird_time_up());
-//                    break;
-//                case 6:
-//                    detail.setThird_time_down(schedule.getThird_time_down());
-//                    detail.setThirdDownType(typeDao.getNormalType());
-//                    jsonVo.put("time",schedule.getThird_time_down());
-//                    break;
-//            }
-//            attendanceManager.calculateTime(detail);
-//            jsonVo.setStatus(true).setMsg("修改成功");
-//
-//        }
-//        return jsonVo;
-//    }
+
+    public JsonVo updateDetail(int id, int type) {
+        AttendanceDetail detail = findOne(AttendanceDetail.class, id);
+        JsonVo jsonVo = new JsonVo();
+        if (detail == null) {
+            jsonVo.setStatus(false);
+            jsonVo.setMsg("该操作失效！");
+        }else{
+            AttendanceSchedule schedule = detail.getSchedule();
+            switch (type) {
+                case 1:
+                    detail.setFirst_time_up(schedule.getFirst_time_up());
+                    detail.setFirstUpType(typeDao.getNormalType());
+                    jsonVo.put("time",schedule.getFirst_time_up());
+                    break;
+                case 2:
+                    detail.setFirst_time_down(schedule.getFirst_time_down());
+                    detail.setFirstDownType(typeDao.getNormalType());
+                    jsonVo.put("time",schedule.getFirst_time_down());
+                    break;
+                case 3:
+                    detail.setSecond_time_up(schedule.getSecond_time_up());
+                    detail.setSecondUpType(typeDao.getNormalType());
+                    jsonVo.put("time",schedule.getSecond_time_up());
+                    break;
+                case 4:
+                    detail.setFirst_time_down(schedule.getSecond_time_down());
+                    detail.setSecondDownType(typeDao.getNormalType());
+                    jsonVo.put("time",schedule.getSecond_time_down());
+                    break;
+                case 5:
+                    detail.setThird_time_up(schedule.getThird_time_up());
+                    detail.setThirdUpType(typeDao.getNormalType());
+                    jsonVo.put("time",schedule.getThird_time_up());
+                    break;
+                case 6:
+                    detail.setThird_time_down(schedule.getThird_time_down());
+                    detail.setThirdDownType(typeDao.getNormalType());
+                    jsonVo.put("time",schedule.getThird_time_down());
+                    break;
+            }
+            attendanceCalculate.calculateTime(detail);
+            detailDao.update(detail);
+            jsonVo.setStatus(true).setMsg("修改成功");
+        }
+        return jsonVo;
+    }
     //明细表的查询分页
     public PageInfo findByPageDetail(HttpServletRequest request){
 //        int pageNo = Integer.parseInt(request.getParameter("cPage"));
@@ -212,6 +212,17 @@ public class AttendanceDetailService extends BaseService<AttendanceDetail>{
             map.put("ot_normal", StringUtil.nullLong(detail.getOvertime_normal()));
             map.put("ot_weekend", StringUtil.nullLong(detail.getOvertime_weekend()));
             map.put("ot_festival", StringUtil.nullLong(detail.getOvertime_festival()));
+            //请假时间合计
+            long levelTime = StringUtil.nullLong(detail.getLeave_annual())
+                    + StringUtil.nullLong(detail.getLeave_sick())
+                    + StringUtil.nullLong(detail.getLeave_delivery())
+                    + StringUtil.nullLong(detail.getLeave_funeral())
+                    + StringUtil.nullLong(detail.getLeave_married())
+                    + StringUtil.nullLong(detail.getLeave_business())
+                    + StringUtil.nullLong(detail.getLeave_injury())
+                    + StringUtil.nullLong(detail.getLeave_personal())
+                    + StringUtil.nullLong(detail.getLeave_rest());
+            map.put("level_time",levelTime);
             map.put("setting_time", StringUtil.nullLong(detail.getShould_attendance_time()));
             map.put("actual_time", StringUtil.nullLong(detail.getActual_attendance_time()));
             mapList.add(map);

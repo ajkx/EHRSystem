@@ -84,7 +84,11 @@ public class OverTimeRecord {
     @Column
     private String remark;
 
-    @ManyToOne(targetEntity = AttendanceDetail.class)
+    //是否连班
+    @Column
+    private Boolean link;
+
+    @ManyToOne(targetEntity = AttendanceDetail.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "detailId",referencedColumnName = "id")
     private AttendanceDetail detail;
 
@@ -190,6 +194,14 @@ public class OverTimeRecord {
 
     public void setDetail(AttendanceDetail detail) {
         this.detail = detail;
+    }
+
+    public Boolean getLink() {
+        return link;
+    }
+
+    public void setLink(Boolean link) {
+        this.link = link;
     }
 
     @Override

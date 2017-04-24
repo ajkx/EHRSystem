@@ -28,7 +28,7 @@ import static com.victory.ehrsystem.util.DateUtil.clearDate;
  * 可优化的地方
  * 1.typeDao.getXXX()应该可以配置缓存或者将attendanceType改为枚举类型
  */
-@Service("attendanceManager")
+@Service
 public class AttendanceCalculate {
 
     public static final long ONE_DAY_TIME = 86400000;
@@ -112,10 +112,12 @@ public class AttendanceCalculate {
             detailDao.update(detail);
         }
         //计算所有在职员工
-        List<HrmResource> resourceList = resourceDao.findAllWorking();
-        for (HrmResource resource : resourceList) {
-            calculateByDateAndResource(date, resource);
-        }
+        List<HrmResource> resourceList = resourceDao.findAllWorkingAndEntryDate(date);
+//        for (HrmResource resource : resourceList) {
+//            calculateByDateAndResource(date, resource);
+//        }
+        HrmResource resource = resourceDao.get(HrmResource.class, 2212);
+        calculateByDateAndResource(date,resource);
 
     }
 
@@ -153,6 +155,28 @@ public class AttendanceCalculate {
             AttendanceSchedule schedule = null;
 
             boolean flag = true;
+
+            //根据考勤组获取对应的班次
+            int groupType = group.getGroupType();
+            switch (groupType) {
+                case 1:
+                    System.out.println("固定班制");
+                    schedule = fixedScheduling(group, date);
+                    break;
+                case 2:
+                    arrangeScheduling(resource, group);
+                    System.out.println("排班制");
+                    break;
+                case 3:
+                    freeScheduling(resource, group);
+                    System.out.println("自由打卡");
+                    break;
+            }
+            detail.setSchedule(schedule);
+            //判断schedule是否为休息的班次
+            if (schedule.getRest() != null && schedule.getRest()) {
+                flag = false;
+            }
             //判断当前时期是否为设定的假期
             Set<Date> holidays = customHoldayService.findAllDate();
             if (holidays.contains(date)) {
@@ -170,23 +194,6 @@ public class AttendanceCalculate {
                 flag = true;
             }
             if(flag){
-                //根据考勤组获取对应的班次
-                int groupType = group.getGroupType();
-                switch (groupType) {
-                    case 1:
-                        System.out.println("固定班制");
-                        schedule = fixedScheduling(group, date);
-                        break;
-                    case 2:
-                        arrangeScheduling(resource, group);
-                        System.out.println("排班制");
-                        break;
-                    case 3:
-                        freeScheduling(resource, group);
-                        System.out.println("自由打卡");
-                        break;
-                }
-                detail.setSchedule(schedule);
                 calculateDetail(detail);
             }else{
                 detail.setAttendanceType(typeDao.getRestType());
@@ -271,31 +278,22 @@ public class AttendanceCalculate {
     public void calculateDetail(AttendanceDetail detail) {
         AttendanceSchedule schedule = detail.getSchedule();
 
-        //判断schedule是否为休息的班次
-        if (schedule.getRest() != null && schedule.getRest()) {
-            detail.setShould_attendance_time(0L);
-            detail.setActual_attendance_time(0L);
 
-            detail.setShould_attendance_day(0);
-            detail.setActual_attendance_day(0D);
-            detail.setAttendanceType(typeDao.getRestType());
+        //判断是否跨天 这里因觉得没必要还去typeDao.getAcrossDay().getName(),直接用了直接量判断
+        if (schedule.getAcrossDay() != null && schedule.getAcrossDay() && detail.getAttendanceType() != null && "待计算".equals(detail.getAttendanceType().getName())) {
+            //设置明细数据为待计算类型（跨天）
+            detail.setAttendanceType(typeDao.getAcrossDayType());
         } else {
-            //判断是否跨天 这里因觉得没必要还去typeDao.getAcrossDay().getName(),直接用了直接量判断
-            if (schedule.getAcrossDay() != null && schedule.getAcrossDay() && detail.getAttendanceType() != null && "待计算".equals(detail.getAttendanceType().getName())) {
-                //设置明细数据为待计算类型（跨天）
-                detail.setAttendanceType(typeDao.getAcrossDayType());
-            } else {
 
-                //初始化规定出勤的时数和天数
-                detail.setShould_attendance_time(StringUtil.nullLong(schedule.getAttendanceTime()));
-                detail.setShould_attendance_day(1);
-
-                //请假或普通的考勤计算
-                calculateLevelRecord(detail);
-                //加班计算
-                calculateOverTimeByDetail(detail);
-            }
+            //初始化规定出勤的时数和天数
+            detail.setShould_attendance_time(StringUtil.nullLong(schedule.getAttendanceTime()));
+            detail.setShould_attendance_day(1);
+            //请假或普通的考勤计算
+            calculateLevelRecord(detail);
+            //加班计算
+            calculateOverTimeByDetail(detail);
         }
+
     }
 
     /**
@@ -317,12 +315,18 @@ public class AttendanceCalculate {
         time.setLevelTime(0L);
 
         if (scheduleType > 0) {
+            detail.setShould_first_time_up(schedule.getFirst_time_up());
+            detail.setShould_first_time_down(schedule.getFirst_time_down());
             calculateLevelTime(detail, time, schedule.getFirst_time_up().getTime(), schedule.getFirst_time_down().getTime(), "First");
         }
         if (scheduleType > 1) {
+            detail.setShould_second_time_up(schedule.getSecond_time_up());
+            detail.setShould_second_time_down(schedule.getSecond_time_down());
             calculateLevelTime(detail, time, schedule.getSecond_time_up().getTime(), schedule.getSecond_time_down().getTime(), "Second");
         }
         if (scheduleType > 2) {
+            detail.setThird_time_up(schedule.getThird_time_up());
+            detail.setThird_time_down(schedule.getThird_time_down());
             calculateLevelTime(detail, time, schedule.getThird_time_up().getTime(), schedule.getThird_time_down().getTime(), "Third");
         }
 
@@ -351,8 +355,8 @@ public class AttendanceCalculate {
 
         //存起最后一次规定的打卡时间，用于判断跨天，因判断请假的跨天和判断考勤明细的跨天是平行的，所有用两个相同的变量做重复的判断操作
         long currentTime = timeVo.getCurrentTime();
-        //每个班次的请假时间
-        long totalLevel = timeVo.getLevelTime();
+        //每个班次的请假时间,控制同一班次下有多条请假记录的合计请假时间多于班次时间
+        long totalLevel = 0;
 
         HrmResource resource = detail.getResource();
 
@@ -365,7 +369,8 @@ public class AttendanceCalculate {
         }
         currentTime = time_down;
 
-        long dateTime = detail.getDate().getTime();
+        //加上8小时的时区时间，存在严重的耦合，临时解决
+        long dateTime = detail.getDate().getTime()+28800000;
         //原始的上班时间
         long attendanceTime = time_down - time_up;
         time_up += dateTime;
@@ -469,20 +474,20 @@ public class AttendanceCalculate {
                 totalLevel += levelTime;
 
                 //添加双向关联 这里存在detail可能重复add同一个record，存在性能损耗?
-                Set<LevelRecord> recordSet = detail.getLevelRecords();
+                Set<LevelRecord> recordSet = detail.getLevelRecords() == null ? new HashSet<>() : detail.getLevelRecords();
                 recordSet.add(record);
                 detail.setLevelRecords(recordSet);
 
-                Set<AttendanceDetail> detailSet = record.getDetails();
-                detailSet.add(detail);
-                record.setDetails(detailSet);
+//                Set<AttendanceDetail> detailSet = record.getDetails() == null ? new HashSet<>() : record.getDetails();
+//                detailSet.add(detail);
+//                record.setDetails(detailSet);
                 record.setStatus(OverTimeRecord.Status.success);
                 levelRecordDao.update(record);
 
             }
         }
         timeVo.setCurrentTime(currentTime);
-        timeVo.setLevelTime(totalLevel);
+//        timeVo.setLevelTime(totalLevel);
     }
 
     /**
@@ -499,8 +504,24 @@ public class AttendanceCalculate {
     public void calculateAttendanceType(AttendanceDetail detail, long time_up, long time_down, String order) {
 
 
+
         //初始化需要的变量
         AttendanceSchedule schedule = detail.getSchedule();
+        int scheduleType = schedule.getScheduleType();
+        if (scheduleType > 0) {
+            detail.setShould_first_time_up(schedule.getFirst_time_up());
+            detail.setShould_first_time_down(schedule.getFirst_time_down());
+        }
+
+        if (scheduleType > 1) {
+            detail.setShould_second_time_up(schedule.getSecond_time_up());
+            detail.setShould_second_time_down(schedule.getSecond_time_down());
+        }
+
+        if (scheduleType > 2) {
+            detail.setShould_third_time_up(schedule.getThird_time_up());
+            detail.setShould_third_time_down(schedule.getThird_time_down());
+        }
         HrmResource resource = detail.getResource();
         long scope_up = schedule.getScope_up();
         long scope_down = schedule.getScope_down();
@@ -898,7 +919,19 @@ public class AttendanceCalculate {
         } else {
             detail.setAttendanceType(typeDao.getAbnormalType());
         }
-        detail.setActual_attendance_time(schedule.getAttendanceTime() - lateTime - earlyTime - absenteeismTime);
+
+        //统计请假时间
+        long levelTime = StringUtil.nullLong(detail.getLeave_annual())
+                + StringUtil.nullLong(detail.getLeave_sick())
+                + StringUtil.nullLong(detail.getLeave_delivery())
+                + StringUtil.nullLong(detail.getLeave_funeral())
+                + StringUtil.nullLong(detail.getLeave_married())
+                + StringUtil.nullLong(detail.getLeave_business())
+                + StringUtil.nullLong(detail.getLeave_injury())
+                + StringUtil.nullLong(detail.getLeave_personal())
+                + StringUtil.nullLong(detail.getLeave_rest());
+
+        detail.setActual_attendance_time(schedule.getAttendanceTime() - lateTime - earlyTime - absenteeismTime - levelTime);
 
     }
 
@@ -919,7 +952,7 @@ public class AttendanceCalculate {
         int calculateType = setting.getCalculateType();
 
         //与对应的加班记录做关联
-        Set<OverTimeRecord> recordSet = detail.getOverTimeRecords();
+        Set<OverTimeRecord> recordSet = detail.getOverTimeRecords() == null ? new HashSet<>() : detail.getOverTimeRecords();
 
         //判断是否连班 获取当天班次的最后一班
         AttendanceSchedule schedule = detail.getSchedule();
@@ -975,17 +1008,10 @@ public class AttendanceCalculate {
             long actualDown = 0;
             int timeSize = timeList.size();
 
-            if(isLink) {
-                if (timeSize < 1) {
-                    record.setStatus(OverTimeRecord.Status.abnormal);
-                    record.setRemark("该连班下班卡为空");
-                } else {
-
-                }
-            }
 
             if(timeSize < 1) {
                 record.setStatus(OverTimeRecord.Status.abnormal);
+                record.setActualCount(0L);
                 record.setRemark("无相应打卡数据");
             } else if (timeSize == 1) {
                 if (isLink) {
@@ -1032,43 +1058,12 @@ public class AttendanceCalculate {
                     record.setRemark("实际加班时间小于申请加班时间!");
                 }
             }
+            //将请假记录设为连班状态，主要用于之后的判断
 
+            record.setLink(isLink);
             //更新detail里的加班数据
-
-            if(isLink){
-                //连班必定为平时加班
-                detail.setOvertime_normal(StringUtil.nullLong(detail.getOvertime_normal()) + record.getActualCount());
-                switch (detail.getSchedule().getScheduleType()) {
-                    case 1:
-                        detail.setFirst_time_down(new Time(record.getTimeUp().getTime()));
-                        detail.setFirstDownType(typeDao.getNormalType());
-                        break;
-                    case 2:
-                        detail.setSecond_time_down(new Time(record.getTimeUp().getTime()));
-                        detail.setSecondDownType(typeDao.getNormalType());
-                        break;
-                    case 3:
-                        detail.setThird_time_down(new Time(record.getTimeUp().getTime()));
-                        detail.setThirdDownType(typeDao.getNormalType());
-                        break;
-                }
-            }else{
-                switch (record.getType()) {
-                    case 1:
-                        detail.setOvertime_normal(StringUtil.nullLong(detail.getOvertime_normal()) + record.getActualCount());
-                        break;
-                    case 2:
-                        detail.setOvertime_weekend(StringUtil.nullLong(detail.getOvertime_weekend()) + record.getActualCount());
-                        break;
-                    case 3:
-                        detail.setOvertime_festival(StringUtil.nullLong(detail.getOvertime_festival()) + record.getActualCount());
-                        break;
-                }
-            }
-            //双方添加关联
-            record.setDetail(detail);
+            updateDetailByOverTimeRecord(detail,record);
             recordSet.add(record);
-
             overTimeDao.update(record);
         }
         detail.setOverTimeRecords(recordSet);
@@ -1076,9 +1071,54 @@ public class AttendanceCalculate {
 
     }
 
+    /**
+     * 功能：根据加班的数据来更新考勤明细的加班时数
+     *
+     * 使用情景：一个是正常的加班计算，一个是用户进行加班异常的修改触发
+     *
+     * 上层方法：calculateOverTimeByDetail    ，  updateRecord
+     * @param detail
+     * @param record
+     */
+    public void updateDetailByOverTimeRecord(AttendanceDetail detail, OverTimeRecord record) {
+        boolean isLink = record.getLink();
 
+        if(isLink){
+            //连班必定为平时加班
+            detail.setOvertime_normal(StringUtil.nullLong(detail.getOvertime_normal()) + record.getActualCount());
+            switch (detail.getSchedule().getScheduleType()) {
+                case 1:
+                    detail.setFirst_time_down(new Time(record.getTimeUp().getTime()));
+                    detail.setFirstDownType(typeDao.getNormalType());
+                    break;
+                case 2:
+                    detail.setSecond_time_down(new Time(record.getTimeUp().getTime()));
+                    detail.setSecondDownType(typeDao.getNormalType());
+                    break;
+                case 3:
+                    detail.setThird_time_down(new Time(record.getTimeUp().getTime()));
+                    detail.setThirdDownType(typeDao.getNormalType());
+                    break;
+            }
+        }else{
+            switch (record.getType()) {
+                case 1:
+                    detail.setOvertime_normal(StringUtil.nullLong(detail.getOvertime_normal()) + record.getActualCount());
+                    break;
+                case 2:
+                    detail.setOvertime_weekend(StringUtil.nullLong(detail.getOvertime_weekend()) + record.getActualCount());
+                    break;
+                case 3:
+                    detail.setOvertime_festival(StringUtil.nullLong(detail.getOvertime_festival()) + record.getActualCount());
+                    break;
+            }
+        }
+        //双方添加关联
+        record.setDetail(detail);
+
+    }
 
     public long returnTime(long l) {
-        return l > ONE_DAY_TIME ? l - ONE_DAY_TIME : l;
+        return l > ONE_DAY_TIME ? l%ONE_DAY_TIME : l;
     }
 }

@@ -189,7 +189,8 @@ public class DateUtil {
     }
 
     public static java.util.Date parseStrToDate(Date beginDate,long time){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return null;
     }
     public static Time parseTime(String str){
         SimpleDateFormat sdf = new SimpleDateFormat();
