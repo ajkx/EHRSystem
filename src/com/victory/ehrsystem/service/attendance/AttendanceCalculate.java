@@ -28,7 +28,7 @@ import static com.victory.ehrsystem.util.DateUtil.clearDate;
  * 可优化的地方
  * 1.typeDao.getXXX()应该可以配置缓存或者将attendanceType改为枚举类型
  */
-@Service("attendanceManager")
+@Service
 public class AttendanceCalculate {
 
     public static final long ONE_DAY_TIME = 86400000;
